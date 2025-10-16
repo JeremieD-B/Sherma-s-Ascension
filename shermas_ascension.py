@@ -43,4 +43,16 @@ if R == "2":
   print("Vous continuez votre périple")
   
 else: 
-  # Branche Jérémie
+   print("Vous arrivez dans une pièce sombre, seuls quelques rayon de lumière percent au travers de la dense végétation qui vous entoure")
+   print("L'atmosphère est pesante, des bruits inquiétant d'insecte percent au travers du silence qui vous entoure")
+   print("Après avoir marcher quelques minutes, determiné à avancer vers la Citadelle Mélodieuse, vous faites face à un étrange insecte")
+   print("Cet insecte ressemble à une énorme chenille, elle vous arrive au genoux et est couverte de poils vert formant une fourure")
+   R = input("Pour continuer vous n'avez d'autre choix que de faire bouger cette invité indésirable,\n" 
+            "1.)Essayer de la pousser doucement pour passer à coté \n"
+            "2.) Lancer une pierre dessus en espérant la faire fuir \n")
+   if R == "2":
+        print("en vous approchannt")
+   else :
+        print("cool")
+   R = input("choix 2")
+   quit()
