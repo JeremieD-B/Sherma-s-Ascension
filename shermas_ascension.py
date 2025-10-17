@@ -1,4 +1,10 @@
 import random
+# Import du module random qui permet de générer des nombres aléatoires
+
+from time import sleep
+# Autorisé exceptionnellement par le professeur 
+# La fonction sleep du module time permet de mettre un temps d'arrêt dans le programme
+# Elle permet donc de faire attendre le joueur à certain moment pour leur donner plus de crédibilité
 
 ### Stats de base
 
@@ -14,35 +20,121 @@ Agi = 0
 # Arriver à la porte
 print("Vous arrivez à la porte, vous décidez de la franchir")
  
-R = input("Souhaitez-vous partir à gauche ou à droite ?"
-      "\n    1. Gauche"
-      "\n    2. Droite"
-      "\nVotre réponse : ")
+R = input("Souhaitez-vous partir à gauche ou à droite ?\n"
+      "    1. Gauche\n"
+      "    2. Droite\n"
+      "Votre réponse : ")
 if R == "2": 
-  # Branche Sacha
-  print("blabla")
-  R = input("Observez autour de vous ?"
-           "\n    1. Oui"
-           "\n    2. Non"
-           "Votre réponse : ")
-  if R == "2": 
-    pass
-  else: 
-    print("Vous observez le paysage, il est beau")
-  print("Vous arrivez devant un ennemi")
-  R = input("Combattre cet ennemi ?"
-  "\n    1. Combattre"
-  "\n    2. Esquive"
-  "\nVotre réponse : ")
-  if R == "2":
-    print("Vous décidez de contourner l'ennemi, il ne vous a pas aperçu.")
-  else:
-    print("Vous décidez de combattre l'ennemi, celui-ci vous inflige 1 de dégât et vous donne 1 carapace")
-    PV -= 1
-    Inv["Carapaces"] += 1
-  print("Vous continuez votre périple")
-
-
+# Branche Sacha
+	print("-----\n" # Branche 1
+	"Vous changez d'atmosphère\n")
+	R = input("Observez autour de vous ?\n"
+	"    1. Oui\n"
+	"    2. Non\n"
+	"Votre réponse : ")
+	if R == "2": 
+		pass
+	else: 
+		print("Vous observez le paysage, il est beau")
+	print("\nVous arrivez devant un ennemi")
+	R = input("Combattre cet ennemi ?\n"
+ 	"    1. Combattre\n"
+ 	"    2. Esquive\n"
+	"Votre réponse : ")
+	if R == "2":
+		print("Vous décidez de contourner l'ennemi, il ne vous a pas aperçu.")
+	else:
+		print("Vous décidez de combattre l'ennemi\n"
+		">>> Vous perdez 1 PV\n"
+		">>> Vous gagnez 1 fragment de carapace")
+		PV -= 1
+		Inv["Carapaces"] += 1
+		print("Vous continuez votre périple")
+	R = input("Votre lacet s'est dénoué sur votre chaussure gauche, vous avez du mal à refaire vos lacets mais finissez toujours par y arriver.\n"
+	"Souhaitez-vous le refaire (Cela prendra un cours instant) ?\n"
+	"    1. Continuer sur le chemin\n"
+	"    2. Refaire les lacets avec difficulté\n"
+	"Votre Réponse : ")
+	if R == "2":
+		print("Vous refaites vos lacets")
+		while i < 100:
+			sleep(1)
+			i += randint(10, 30)
+			if i >= 100:
+				print(".....  100%")
+				lacets_faits = True
+				break
+			else: 
+        			print(f"..... {i}")
+	else: 
+		lacets_faits = False
+	# Branche 1 (suite)
+	print("-----\n"
+	"Vous arrivez dans une nouvelle zone sombre. Cette zone est pu humide, la pierre est donc très friable.\n"
+	"Afin de monter plus haut dans la caverne, vous devez monter sur les pierres. En revanche, vous apercevez une lumière dans un coin.")
+	R = input("Qu'allez-vous faire ?\n"
+	"    1. Monter sur les pierres\n"
+ 	"    2. Se diriger vers la lumière\n"
+	"Votre réponse : ")
+	if R == "2":
+		# Branche 1.2
+    		print("Vous vous approchez prudemment de cette mystérieuse lumière\n")
+		# Pas safe : lumière
+		pass
+ 	else: 
+		# Branche 1.1 
+		print("Vous escaladez les pierres, vous avez beaucoup de difficulté à avancer mais parvenez à vous frayez un chemin.\n"
+		">>> Vous gagnez 1 d'Agilité.")
+		Agi += 1
+		print("Presque en haut, une pierre casse et tombe sur votre chaussure")
+		if (lacets_faits):
+			# Branche 1.1.2
+			print("Par chance, vous avez refaits vos lacets au préalable. Vous continuez donc votre ascension.")
+		else: 
+      			# Branche 1.1.1
+     			print("Votre chaussure n'étant pas bien attaché, celle-ci s'enlève et tombe tout en bas")
+			R = input("Allez chercher votre chaussure ?\n"
+     			"    1. Continuer\n"
+     			"    2. Descendre\n"
+     			"    3. Descendre rapidement\n"
+			"Votre réponse : ")
+			if R == "2":
+				# Branche 1.1.1.2
+				print("Vous descendez prudemment jusqu'à atteindre votre chaussure.")
+				while i < 100:
+          				sleep(1)
+					i += randint(10, 30)
+					if i >= 100:
+						print(f".....  100%")
+						break
+					else: 
+						print(f"..... {i}")
+        			print("Vous êtes en bas, vous remettez votre chaussure. La lumière entre aperçu plus tôt a disparu.\n"
+        			"Etait-ce un mirage ? Une illusion ?")
+        			R = input("Que souhaitez-vous faire ?\n"
+        			"    1. Reprendre l'ascension vertigineuse\n"
+        			"    2. Revenir en arrière\n"
+        			"Votre réponse : ")
+        			if R == "2":
+	  				# Branche 1.1.1.2.2
+          				print("La famille de l'ennemi de tout à l'heure ont vu votre présence et suive désormais vos pas\n"
+	  				"Vous vous dirigez vers eux sans le savoir. Vous entendez un bruit")
+	  				input("Vous paniquez, que choisissez-vous de faire ?\n"
+	  				"    1. Se cacher\n"
+	  				"    2. Aller combattre\n"
+	  				"    3. Reprendre l'ascension\n")
+	  				# Safe : famille
+      			if R == "3":
+        		print("Vous ne voulez pas perdre de temps et choisissez de dégringoler cette pente.\n"
+        		"Cependant, vous glissez sur une pierre et tomber la tête la première par terre.\n"
+        		"Cette chaussure ne valait peut être pas d'être récupérée ...\n"
+        		">>> Vous êtes mort.")
+        		quit() 
+    			else:
+      				# Branche 1.1.1.1 
+      				print("Vous arrivez finalement en haut ...\n"
+      				">>> Vous gagnez 1 point d'Agilité.")
+      				# Pas safe : ascension
 ### Branche 1 : Jérémie
 else: 
    #Branche 1.1
