@@ -90,9 +90,10 @@ else:
          "  1. Commencer à courir espérant avoir assez de force pour atteindre le haut sans tomber. \n"
          "  2. Attraper les prises doucement une par une.\n"
          "Votre réponse : ")
+      print("")
       #Branche 1.2.2.2
       if R == "2":
-         print("\nMalgré toutes les précautions que vous avez su prendre, \n"
+         print("Malgré toutes les précautions que vous avez su prendre, \n"
             "Les prises ne tiennent pas sous votre poids pendant plus d'une seconde. \n"
             "C'est durant votre dernière chute que vous réalisiez que cette fois ci, \n"
             "La précipitation était le bon choix\n")
@@ -109,37 +110,66 @@ else:
          "Sous chacun de vos pas, la prise que vous utilisez se brise,\n"
          "Sans votre élan vous n'arriveriez jamais à grimper.\n"
          "Il est certain qu'avoir couru était l'unique solution\n")
-   #Branche 1.3 (suite)
+   #Branche 1.3 
    print("-----\n"
       "Vous faites maintenant face à une grande allée dégagée,\n"
       "Les rayons de lumières qui percent a travers la végétation toujours denses\n"
       "Donnent une atmosphère particulière à la pièces\n")
-   R = input("Grande allée ou recoin ?")
+   R = input("Vous remarquez un petit couloir à votre droite \n"
+      "  1. Vous allez explorer ce couloir sombre.\n"
+      "  2. Vous préfèrez continuer dans cette grande allée.\n"
+      "Votre réponse :")
+   print()
    if R == "2" :
       #Branche 1.3.2
-      print("Allée")
+      print("Vous traversez cette grande allée et observez autour de vous \n"
+         "La végétation de ces cavernes est extrêmement développée.\n"
+         "Vous ne connaissiez aucune de ces espèces avant de venir ici \n"
+         "Les différentes plantes et arbres autour de vous vous parraissent très jolis \n"
+         "Cet arbre là par exemple, ses branches sont toutes courbées, pas une seule partie de l'arbre n'est rectili...\n"
+         "BRRAOUUUUUMMMMMM\n"
+         "Vous venez d'entendre le couloir que vous aviez vu précédemment s'effondrer.\n"
+         "Cette caverne n'est définitivement pas accueillante. \n")
    else :
       #Branche 1.3.1
-      print("Recoin into effondrement")
-      # + Perles
-      R = input("Chercher un chemin ou creuser")
+      print("En entrant dans ce couloir, la visibilitée est très faible. \n"
+         "Vous voyez des gouttes perler du plafonds, la pièce est très humide \n"
+         "Alors que vous continuiez votre avancée, vouss entendez l'entrée de ce couloir s'effondrer \n"
+         "Il va être difficile de ressortir.\n"
+         "Au moins vous avez trouver un chapelet contenant 30 perles.\n")
+      print(">>> Vous gagnez 30 perles\n")
+      #A finir !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      R = input("Pour ressortir d'ici il va falloir choisir a quoi se consacrer.\n"
+         "  1. Chercher une autre sortie\n"
+         "  2. Ecarter les pierres qui se sont effondrer pour revenir en arrière\n"
+         "Votre réponse :")
+      print("")
       #Branche 1.3.2 
       if R == "2":
-         print("Creuser, difficile")
+         print("Vous creusez de toutes vos forces pour paser cet amas de pierre\n"
+            "Malgré la difficulté manifeste de cette action vous réussisez a vous en sortir.\n")
          print(">>> Vous perdez 1 PV")
          PV -= 1
       #Branche 1.3.1
       else :
-         print("Aucune sortie")
-         input(">>> Vous êtes mort.")
+         print("Après des heures d'errances vous n'avez trouvez aucune sortie.\n"
+            "Malgré tous vos effort les heures passes, le temps passe et aucune sortie n'est décelable.\n"
+            "Vos recherches font du bruit, des vers géant qui vivent dans les murs de cette cavernes viennent vous rendre visites.\n")
+         input(">>> Vous êtes mort.\n")
          quit()
    #Branche 1.4
-   print("ennemis volant")
-   R = input("passer en dessous, ou tirer dessus")
+   print("Après avoir avancer dans cette grande allée, vous faites à un nouvel ennemis.\n"
+      "Physiquement il ressemble fortement à la chenille croisée auparavant, mais celle-ci vole !\n")
+   R = input("Pour atteindre le bout de cette allée il va falloir passer. \n"
+      "  1. Lancer une pierre sur l'insecte volant dans l'espoir de le faire fuir.\n"
+      "  2. Courir de toutes vos forces en dessous pour atteindre la porte avant qu'il ne réagisse\n"
+      "Votre réponse : ")
+   print("")
    #Branche 1.4.2
    if R == "2" :
-      print("courir")
-      print(">>> Vous perdez 1 PV")
+      print("En courant vers la porte, vous trébuchez et vous faites remarquer par l'ennemis, \n"
+         "Il tire en votre direction et vous blesse à la jambe.\n")
+      print(">>> Vous perdez 1 PV\n")
       R = input("faux choix")
       #Branche 1.4.2.2 
       if R == "2" :
