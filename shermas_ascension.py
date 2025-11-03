@@ -78,10 +78,54 @@ if R == "2":
 	"Votre réponse : ")
 	if R == "2":
 		# Branche 1.2
-    		print("Vous vous approchez prudemment de cette mystérieuse lumière\n")
-		# Pas safe : lumière
-		pass
- 	else: 
+    	print("Vous vous approchez prudemment de cette mystérieuse lumière\n")
+		"Vous constatez que cette lumière provient du Soleil entre les pierres, ce n'est pas ce que vous recherchiez.\n"
+		"Cependant, votre curiosité vous force à creuser les murs et ainsi sortir de la grotte."
+        R = input("Enfin dehors, on monstre vous aperçoit et souhaite prévenir les aitres de votre présence\n"
+			 "    1. Le combattre pour ne pas qu'il informe les autres\n"
+			 "    2. Se cacher\n"
+		     "Votre réponse : ")
+		if R == "2": 
+			# Branche 1.2.2
+			print("Vous attendez longuement afin de ne pas vous faire repérer, le monstre a prévenu ses acolytes et sont à votre recherche./n")
+			R = input("Vous décidez d'agir : \n"
+				 "    1. Combattre tous les monstres\n"
+				 "    2. Rester cacher\n"
+			     "Votre réponse : ")
+			if R == "2": 
+				# Branche 1.2.2.2
+				print("Vous vous fatiguez et tombez le long des pierres qui vous tenait jusque là en position\n"
+					 ">>> Vous perdez 1 point de vie")
+				PV -= 1
+				R = input("Vous vous faites remarquer et les monstres vous attaque tous ensemble\n"
+					 "    1. Combattre\n"
+					 "    2. Fuir\n"
+			         "Votre réponse : ")
+				if R == 1: 
+					print("Les monstres sont trop nombreux, vous êtes surpassé\n>>> Vous êtes mort.")
+				else: 
+					print("Vous fuyez mais glissez sur une pierre, les monstres vous rattrape\n>>> Vous êtes mort.")
+				input()
+				quit()
+			 else: 
+				 #Branche 1.2.2.1
+				 print("Vous êtes sur de vous et attaquez les monstres\n"
+					  ">>> Vous perdez 1 point de vie")
+				 PV -= 1
+				 while PV > 0: 
+					 print("Vous êtes persévérant et continuez à combattre\n"
+						  ">>> Vous perdez 1 point de vie")
+					 PV -= 1
+				 print("Vous n'avez plus de vie\n"
+					  ">>> Vous êtes mort.")
+				 input()
+				 quit()
+		else: 
+			# Branche 1.2.1
+			print("Vous descendez des pierres et attaquez le monstre, finalement vous voyez qu'il y en a une cinquantaine autour de lui\n"
+				  "Tous les monstres vous chassent\n"
+				  ">>> Vous êtes mort")
+	else: 
 		# Branche 1.1 
 		print("Vous escaladez les pierres, vous avez beaucoup de difficulté à avancer mais parvenez à vous frayez un chemin.\n"
 		">>> Vous gagnez 1 d'Agilité.")
@@ -91,8 +135,8 @@ if R == "2":
 			# Branche 1.1.2
 			print("Par chance, vous avez refaits vos lacets au préalable. Vous continuez donc votre ascension.")
 		else: 
-      			# Branche 1.1.1
-     			print("Votre chaussure n'étant pas bien attaché, celle-ci s'enlève et tombe tout en bas")
+      		# Branche 1.1.1
+     		print("Votre chaussure n'étant pas bien attaché, celle-ci s'enlève et tombe tout en bas")
 			R = input("Allez chercher votre chaussure ?\n"
      			"    1. Continuer\n"
      			"    2. Descendre\n"
@@ -119,22 +163,33 @@ if R == "2":
 	  				# Branche 1.1.1.2.2
           				print("La famille de l'ennemi de tout à l'heure ont vu votre présence et suive désormais vos pas\n"
 	  				"Vous vous dirigez vers eux sans le savoir. Vous entendez un bruit")
-	  				input("Vous paniquez, que choisissez-vous de faire ?\n"
+	  				R = input("Vous paniquez, que choisissez-vous de faire ?\n"
 	  				"    1. Se cacher\n"
 	  				"    2. Aller combattre\n"
 	  				"    3. Reprendre l'ascension\n")
 	  				# Safe : famille
-      			if R == "3":
+      		if R == "3":
+				# Branche 1.1.1.3
         		print("Vous ne voulez pas perdre de temps et choisissez de dégringoler cette pente.\n"
         		"Cependant, vous glissez sur une pierre et tomber la tête la première par terre.\n"
         		"Cette chaussure ne valait peut être pas d'être récupérée ...\n"
         		">>> Vous êtes mort.")
+			    input()
         		quit() 
-    			else:
-      				# Branche 1.1.1.1 
-      				print("Vous arrivez finalement en haut ...\n"
-      				">>> Vous gagnez 1 point d'Agilité.")
-      				# Pas safe : ascension
+    		else:
+      			# Branche 1.1.1.1 
+      			print("Vous arrivez finalement en haut ...\n"
+      			">>> Vous gagnez 1 point d'Agilité.")
+				Agi += 1
+                R = input("Vous arrivez à une intersection 2 choix s'offre à vous\n"
+					"    1. Aller à gauche\n"
+					"    2. Aller à droite\n")
+                if R == 2: 
+					# Branche 1.1.1.1.2 (pas safe)
+					pass
+				else : 
+					# Branche 1.1.1.1.1 (pas safe)
+					pass
 ### Branche 1 : Jérémie
 else: 
    #Branche 1.1
