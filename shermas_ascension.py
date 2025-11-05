@@ -1,4 +1,4 @@
-import random
+from random import randint
 # Import du module random qui permet de générer des nombres aléatoires
 
 from time import sleep
@@ -10,16 +10,18 @@ from time import sleep
 
 PV = 5
 Inv = {"Arme": "Baguette de métal", 
-        "Mélodies" : [],
-        "Carapaces" : 0,
-        "Objets" : []}
+      "Mélodies" : [],
+      "Carapaces" : 0,
+      "Objets" : []}
 Atk = 0
 Def = 0
 Agi = 0
 
 # Arriver à la porte
-print("Vous arrivez à la porte, vous décidez de la franchir")
- 
+# Sera implémenter partout avec une fonction plus tard 
+for c in "Vous arrivez à la porte, vous décidez de la franchir\n":
+	sleep(0.025); print(c, end="", flush=True)
+	
 R = None
 print()
 while R not in ("1","2","Q","q"):
@@ -30,6 +32,7 @@ while R not in ("1","2","Q","q"):
     print()
 if R in ("q","Q"):
         quit()
+        
 ### Branche 1 : Jérémie
 elif R == "1": 
     #Branche 1.1
@@ -234,147 +237,115 @@ elif R == "1":
         print(">>> Vous regagnez 1 PV")
         if PV < 5 :
             PV += 1
-### Branche Sacha
-elif R == "2": 
-    print("-----\n" # Branche 1
+### Branche 2 : Sacha
+if R == "2": 
+    print("-----\n" 
     "Vous changez d'atmosphère\n")
     R = input("Observez autour de vous ?\n"
     "    1. Oui\n"
     "    2. Non\n"
     "Votre réponse : ")
-    if R == "2": 
-        pass
-    else: 
+    if R == "1": 
         print("Vous observez le paysage, il est beau")
+    elif R == "2": 
+        pass
     print("\nVous arrivez devant un ennemi")
     R = input("Combattre cet ennemi ?\n"
     "    1. Combattre\n"
     "    2. Esquive\n"
     "Votre réponse : ")
-    if R == "2":
-        print("Vous décidez de contourner l'ennemi, il ne vous a pas aperçu.")
-    else:
-        print("Vous décidez de combattre l'ennemi\n"
+    if R == "1":
+        print("Vous décidez de combattre l'ennemi\n\n"
         ">>> Vous perdez 1 PV\n"
-        ">>> Vous gagnez 1 fragment de carapace")
+        ">>> Vous gagnez 1 fragment de carapace\n")
         PV -= 1
-        if PV <= 0:
-            input(">>> Vous êtes mort.")
         Inv["Carapaces"] += 1
         print("Vous continuez votre périple")
+    elif R == "2":
+        print("Vous décidez de contourner l'ennemi, il ne vous a pas aperçu.")
     R = input("Votre lacet s'est dénoué sur votre chaussure gauche, vous avez du mal à refaire vos lacets mais finissez toujours par y arriver.\n"
     "Souhaitez-vous le refaire (Cela prendra un cours instant) ?\n"
     "    1. Continuer sur le chemin\n"
     "    2. Refaire les lacets avec difficulté\n"
-    "Votre Réponse : ")
-    if R == "2":
+    "Votre Réponse : ")	
+    if R == "1": 
+        lacets_faits = False
+    elif R == "2":
         print("Vous refaites vos lacets")
+        i = 0
         while i < 100:
             sleep(1)
             i += randint(10, 30)
             if i >= 100:
-                print(".....  100%")
+                print("..... 100%")
                 lacets_faits = True
                 break
             else: 
-                    print(f"..... {i}")
-    else: 
-        lacets_faits = False
-    # Branche 1 (suite)
+                print(f"..... {i}%")
+    # Branche 2 (suite)
     print("-----\n"
-    "Vous arrivez dans une nouvelle zone sombre. Cette zone est pu humide, la pierre est donc très friable.\n"
+    "Vous arrivez dans une nouvelle zone sombre. Cette zone est plus humide, la pierre est donc très friable.\n"
     "Afin de monter plus haut dans la caverne, vous devez monter sur les pierres. En revanche, vous apercevez une lumière dans un coin.")
     R = input("Qu'allez-vous faire ?\n"
     "    1. Monter sur les pierres\n"
     "    2. Se diriger vers la lumière\n"
     "Votre réponse : ")
-    if R == "2":
-        # Branche 1.2
-        print("Vous vous approchez prudemment de cette mystérieuse lumière\n")
-        "Vous constatez que cette lumière provient du Soleil entre les pierres, ce n'est pas ce que vous recherchiez.\n"
-        "Cependant, votre curiosité vous force à creuser les murs et ainsi sortir de la grotte."
-        R = input("Enfin dehors, on monstre vous aperçoit et souhaite prévenir les aitres de votre présence\n"
-             "    1. Le combattre pour ne pas qu'il informe les autres\n"
-             "    2. Se cacher\n"
-              "Votre réponse : ")
-        if R == "2": 
-            # Branche 1.2.2
-            print("Vous attendez longuement afin de ne pas vous faire repérer, le monstre a prévenu ses acolytes et sont à votre recherche./n")
-            R = input("Vous décidez d'agir : \n"
-                 "    1. Combattre tous les monstres\n"
-                 "    2. Rester cacher\n"
-                  "Votre réponse : ")
-            if R == "2": 
-                # Branche 1.2.2.2
-                print("Vous vous fatiguez et tombez le long des pierres qui vous tenait jusque là en position\n"
-                     ">>> Vous perdez 1 point de vie")
-                PV -= 1
-                if PV <= 0:
-                    input(">>> Vous êtes mort.")
-                R = input("Vous vous faites remarquer et les monstres vous attaque tous ensemble\n"
-                     "    1. Combattre\n"
-                     "    2. Fuir\n"
-                        "Votre réponse : ")
-                if R == 1: 
-                    print("Les monstres sont trop nombreux, vous êtes surpassé\n>>> Vous êtes mort.")
-                else: 
-                    print("Vous fuyez mais glissez sur une pierre, les monstres vous rattrape\n>>> Vous êtes mort.")
-                input()
-                quit()
-            else: 
-                #Branche 1.2.2.1
-                print("Vous êtes sur de vous et attaquez les monstres\n"
-                      ">>> Vous perdez 1 point de vie")
-                PV -= 1
-                while PV > 0: 
-                     print("Vous êtes persévérant et continuez à combattre\n"
-                          ">>> Vous perdez 1 point de vie")
-                     PV -= 1
-                print("Vous n'avez plus de vie\n"
-                      ">>> Vous êtes mort.")
-                input()
-                quit()
-        else: 
-            # Branche 1.2.1
-            print("Vous descendez des pierres et attaquez le monstre, finalement vous voyez qu'il y en a une cinquantaine autour de lui\n"
-                  "Tous les monstres vous chassent\n"
-                  ">>> Vous êtes mort")
-    else: 
-        # Branche 1.1 
-        print("Vous escaladez les pierres, vous avez beaucoup de difficulté à avancer mais parvenez à vous frayez un chemin.\n"
-        ">>> Vous gagnez 1 d'Agilité.")
+    if R == "1": 
+        # Branche 2.1 
+        print("Vous escaladez les pierres, vous avez beaucoup de difficulté à avancer mais parvenez à vous frayez un chemin.\n\n"
+        ">>> Vous gagnez 1 d'Agilité.\n")
         Agi += 1
         print("Presque en haut, une pierre casse et tombe sur votre chaussure")
         if (lacets_faits):
-            # Branche 1.1.2
+            # Branche 2.1.2
             print("Par chance, vous avez refaits vos lacets au préalable. Vous continuez donc votre ascension.")
+            # ...
         else: 
-                # Branche 1.1.1
+            # Branche 2.1.1
             print("Votre chaussure n'étant pas bien attaché, celle-ci s'enlève et tombe tout en bas")
             R = input("Allez chercher votre chaussure ?\n"
-                "    1. Continuer\n"
-                "    2. Descendre\n"
-                "    3. Descendre rapidement\n"
-            "Votre réponse : ")
-            if R == "2":
-                # Branche 1.1.1.2
-                print("Vous descendez prudemment jusqu'à atteindre votre chaussure.")
-                while i < 100:
-                        sleep(1)
-                        i += randint(10, 30)
-                        if i >= 100:
-                            print(f".....  100%")
-                            break
-                        else: 
-                            print(f"..... {i}")
-                print("Vous êtes en bas, vous remettez votre chaussure. La lumière entre aperçu plus tôt a disparu.\n"
-                            "Etait-ce un mirage ? Une illusion ?")
-                R = input("Que souhaitez-vous faire ?\n"
-                    "    1. Reprendre l'ascension vertigineuse\n"
-                    "    2. Revenir en arrière\n"
+               "    1. Continuer\n"
+               "    2. Descendre\n"
+               "    3. Descendre rapidement\n"
+               "Votre réponse : ")
+            if R == "1":
+                # Branche 2.1.1.1 
+                print("Vous arrivez finalement en haut ...\n\n"
+                ">>> Vous gagnez 1 point d'Agilité.\n")
+                Agi += 1
+                R = input("Vous arrivez à une intersection 2 choix s'offre à vous\n"
+                    "    1. Aller à gauche\n"
+                    "    2. Aller à droite\n"
                     "Votre réponse : ")
+                if R == "1": 
+                    # Branche 2.1.1.1.1 (pas safe)
+                    pass
+                elif R == 2: 
+                    # Branche 2.1.1.1.2 (pas safe)
+                    pass
+            elif R == "2":
+                # Branche 2.1.1.2
+                print("Vous descendez prudemment jusqu'à atteindre votre chaussure.")
+                i = 0
+                while i < 100:
+                    sleep(1)
+                    i += randint(10, 30)
+                    if i >= 100:
+                        print(f".....  100%")
+                        break
+                    else: 
+                        print(f"..... {i}")
+                print("Vous êtes en bas, vous remettez votre chaussure. La lumière entre aperçu plus tôt a disparu.\n"
+                         "Etait-ce un mirage ? Une illusion ?")
+                R = input("Que souhaitez-vous faire ?\n"
+                   "    1. Reprendre l'ascension vertigineuse\n"
+                   "    2. Revenir en arrière\n"
+                   "Votre réponse : ")
+                if R == "1": 
+                	# Pas safe : Reprendre ascension
+                	pass
                 if R == "2":
-                    # Branche 1.1.1.2.2
+                    # Branche 2.1.1.2.2
                     print("La famille de l'ennemi de tout à l'heure ont vu votre présence et suive désormais vos pas\n"
                     "Vous vous dirigez vers eux sans le savoir. Vous entendez un bruit")
                     R = input("Vous paniquez, que choisissez-vous de faire ?\n"
@@ -382,29 +353,64 @@ elif R == "2":
                     "    2. Aller combattre\n"
                     "    3. Reprendre l'ascension\n")
                     # Safe : famille
-                if R == "3":
-                # Branche 1.1.1.3
-                    print("Vous ne voulez pas perdre de temps et choisissez de dégringoler cette pente.\n"
-                "Cependant, vous glissez sur une pierre et tomber la tête la première par terre.\n"
-                "Cette chaussure ne valait peut être pas d'être récupérée ...\n"
-                ">>> Vous êtes mort.")
+            elif R == "3":
+               # Branche 2.1.1.3
+               print("Vous ne voulez pas perdre de temps et choisissez de dégringoler cette pente.\n"
+               "Cependant, vous glissez sur une pierre et tomber la tête la première par terre.\n"
+               "Cette chaussure ne valait peut être pas d'être récupérée ...\n\n"
+               ">>> Vous êtes mort.\n")
+               input()
+               quit() 
+    elif R == "2":
+        # Branche 2.2
+        print("Vous vous approchez prudemment de cette mystérieuse lumière\n")
+        "Vous constatez que cette lumière provient du Soleil entre les pierres, ce n'est pas ce que vous recherchiez.\n"
+        "Cependant, votre curiosité vous force à creuser les murs et ainsi sortir de la grotte."
+        R = input("Enfin dehors, on monstre vous aperçoit et souhaite prévenir les aitres de votre présence\n"
+            "    1. Le combattre pour ne pas qu'il informe les autres\n"
+            "    2. Se cacher\n"
+            "Votre réponse : ")
+        if R == "1": 
+            # Branche 2.2.1
+            print("Vous descendez des pierres et attaquez le monstre, finalement vous voyez qu'il y en a une cinquantaine autour de lui\n"
+              "Tous les monstres vous chassent\n\n"
+              ">>> Vous êtes mort.\n")
+        elif R == "2": 
+            # Branche 2.2.2
+            print("Vous attendez longuement afin de ne pas vous faire repérer, le monstre a prévenu ses acolytes et sont à votre recherche./n")
+            R = input("Vous décidez d'agir : \n"
+                "    1. Combattre tous les monstres\n"
+                "    2. Rester cacher\n"
+                "Votre réponse : ")
+            if R == "1": 
+                #Branche 2.2.2.1
+                print("Vous êtes sur de vous et attaquez les monstres\n\n"
+                     ">>> Vous perdez 1 point de vie\n")
+                PV -= 1
+                while PV > 0: 
+                    print("Vous êtes persévérant et continuez à combattre\n\n"
+                    ">>> Vous perdez 1 point de vie\n")
+                    PV -= 1
+                print("Vous n'avez plus de vie\n\n"
+                     ">>> Vous êtes mort.\n")
                 input()
-                quit() 
-            else:
-                # Branche 1.1.1.1 
-                print("Vous arrivez finalement en haut ...\n"
-                ">>> Vous gagnez 1 point d'Agilité.")
-                Agi += 1
-                R = input("Vous arrivez à une intersection 2 choix s'offre à vous\n"
-                    "    1. Aller à gauche\n"
-                    "    2. Aller à droite\n")
-                if R == 2: 
-                    # Branche 1.1.1.1.2 (pas safe)
-                    pass
-                else : 
-                    # Branche 1.1.1.1.1 (pas safe)
-                    pass
+                quit()
+            elif R == "2": 
+                # Branche 2.2.2.2
+                print("Vous vous fatiguez et tombez le long des pierres qui vous tenait jusque là en position\n\n"
+                    ">>> Vous perdez 1 point de vie\n")
+                PV -= 1
+                R = input("Vous vous faites remarquer et les monstres vous attaque tous ensemble\n"
+                    "    1. Combattre\n"
+                    "    2. Fuir\n"
+                    "Votre réponse : ")
+                if R == "1": 
+                    print("Les monstres sont trop nombreux, vous êtes surpassé\n\n>>> Vous êtes mort.")
+                elif R == "2": 
+                    print("Vous fuyez mais glissez sur une pierre, les monstres vous rattrape\n\n>>> Vous êtes mort.")
+                input()
+                quit()
 
-#Branche 2.
+#Branche B.
 input("FIN.")
 quit()
