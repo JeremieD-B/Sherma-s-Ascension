@@ -20,10 +20,7 @@ Agi = 0
 # Arriver à la porte
 print("Vous arrivez à la porte, vous décidez de la franchir")
  
-R = input("Souhaitez-vous partir à gauche ou à droite ?\n"
-        "    1. Gauche\n"
-        "    2. Droite\n"
-        "Votre réponse : ")
+R = None
 print()
 while R not in ("1","2","Q","q"):
     R =input("Souhaitez-vous partir à gauche ou à droite ?\n"
@@ -41,10 +38,7 @@ elif R == "1":
         "L'atmosphère est pesante, des bruits inquiétant d'insecte percent au travers du silence qui vous entoure\n"
         "Après avoir marcher quelques minutes, determiné à avancer vers la Citadelle Mélodieuse, vous faites face à un étrange insecte\n"
         "Cet insecte ressemble à une énorme chenille, elle vous arrive au genoux et est couverte de poils vert formant une fourure\n")
-    R = input("Pour continuer vous n'avez d'autre choix que de faire bouger cette invité indésirable,\n" 
-                "  1. Lancer une pierre dessus en espérant la faire fuir \n"
-                "  2. Essayer de la pousser doucement pour passer à coté \n"
-                "Votre réponse :")
+    R = None
     while R not in ("1","2","Q","q"):
         R = input("Pour continuer vous n'avez d'autre choix que de faire bouger cette invité indésirable,\n" 
                 "  1. Lancer une pierre dessus en espérant la faire fuir \n"
@@ -73,10 +67,7 @@ elif R == "1":
         "Continuant votre avancée, vous arrivez face à une pente que vous devrez escalader,\n"
         "Vous regardez de plus près les différentes prises qui vous seront disponibles.\n"
         "Elles sont petites et ne semblent pas stables, l'escalade sera difficile.\n")
-    R = input("Ils vous faut choisir :\n"
-        "    1. Essayer d'escalader rapidement espérant que les pierres tiennent le coup\n"
-        "    2. Prendre son temps avec le maximum de précautions\n"
-        "Votre réponse : ")
+    R = None
     while R not in ("1","2","Q","q"):
         R = input("Ils vous faut choisir :\n"
         "    1. Essayer d'escalader rapidement espérant que les pierres tiennent le coup\n"
@@ -97,10 +88,7 @@ elif R == "1":
             "En essayant de changer d'appui, vous glissez et retombez en bas de cette pente.\n")
         PV -= 1
         print(">>> Vous perdez 1 PV\n")
-        R = input("Vous n'avez d'autre choix que de réessayer de monter.\n"
-            "  1. Commencer à courir espérant avoir assez de force pour atteindre le haut sans tomber. \n"
-            "  2. Attraper les prises doucement une par une.\n"
-            "Votre réponse : ")
+        R = None
         print("")
         while R not in ("1","2","Q","q"):
             R = input("Vous n'avez d'autre choix que de réessayer de monter.\n"
@@ -127,10 +115,7 @@ elif R == "1":
         "Vous faites maintenant face à une grande allée dégagée,\n"
         "Les rayons de lumières qui percent a travers la végétation toujours denses\n"
         "Donnent une atmosphère particulière à la pièces\n")
-    R = input("Vous remarquez un petit couloir à votre droite \n"
-        "  1. Vous allez explorer ce couloir sombre.\n"
-        "  2. Vous préfèrez continuer dans cette grande allée.\n"
-        "Votre réponse :")
+    R = None
     print()
     while R not in ("1","2","Q","q"):
         R = input("Vous remarquez un petit couloir à votre droite \n"
@@ -148,11 +133,7 @@ elif R == "1":
             "Il va être difficile de ressortir.\n"
             "Au moins vous avez trouver un chapelet contenant 30 perles.\n")
         print(">>> Vous gagnez 30 perles\n")
-        R = input("Pour ressortir d'ici il va falloir choisir a quoi se consacrer.\n"
-            "  1. Chercher une autre sortie\n"
-            "  2. Ecarter les pierres qui se sont effondrer pour revenir en arrière\n"
-            "Votre réponse :")
-        print("")
+        R = None
         while R not in ("1","2","Q","q"):
             R = input("Pour ressortir d'ici il va falloir choisir a quoi se consacrer.\n"
             "  1. Chercher une autre sortie\n"
@@ -188,10 +169,7 @@ elif R == "1":
     #Branche 1.4
     print("Après avoir avancer dans cette grande allée, vous faites à un nouvel ennemis.\n"
         "Physiquement il ressemble fortement à la chenille croisée auparavant, mais celle-ci vole !\n")
-    R = input("Pour atteindre le bout de cette allée il va falloir passer. \n"
-        "  1. Lancer une pierre sur l'insecte volant dans l'espoir de le faire fuir.\n"
-        "  2. Courir de toutes vos forces en dessous pour atteindre la porte avant qu'il ne réagisse\n"
-        "Votre réponse : ")
+    R = None
     print()
     while R not in ("1","2","Q","q"):
         R = input("Pour atteindre le bout de cette allée il va falloir passer. \n"
@@ -214,10 +192,7 @@ elif R == "1":
         PV -= 1 
         if PV <= 0:
             input(">>> Vous êtes mort.")
-        R = input("Pour atteindre le bout de cette allée est nécessaire de s'échapper de cette situation. \n"
-            "  1. Courir de plus belle vers la sortie.\n"
-            "  2. Foncer vers l'ennemi afin de le faire tomber et de l'abattre.\n"
-            "Votre réponse : ")
+        R = None
         print()
         while R not in ("1","2","Q","q"):
             R = input("Pour atteindre le bout de cette allée est nécessaire de s'échapper de cette situation. \n"
@@ -239,10 +214,7 @@ elif R == "1":
             quit()
     ##Branche 1.5
     print("Vous arrivez finalement vers une grande porte entrouverte un léger filet de lumière la traverse.\n")
-    R = input("Vous apercevez un petit recoin dans lequel vous pourriez vous faufiler pour explorer\n"
-            "  1. Traverser cette énorme porte et avancer vers la Citadelle\n"
-            "  2. Commencer par explorer ce petit recoin.\n"
-            "Votre réponse : ")
+    R = None
     print()
     while R not in ("1","2","Q","q"):
         R = input("Vous apercevez un petit recoin dans lequel vous pourriez vous faufiler pour explorer\n"
