@@ -148,7 +148,6 @@ elif R == "1":
             "Il va être difficile de ressortir.\n"
             "Au moins vous avez trouver un chapelet contenant 30 perles.\n")
         print(">>> Vous gagnez 30 perles\n")
-        #A finir !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         R = input("Pour ressortir d'ici il va falloir choisir a quoi se consacrer.\n"
             "  1. Chercher une autre sortie\n"
             "  2. Ecarter les pierres qui se sont effondrer pour revenir en arrière\n"
@@ -171,7 +170,7 @@ elif R == "1":
             quit()
         #Branche 1.3.1.2 
         elif R == "2":
-            print("Vous creusez de toutes vos forces pour paser cet amas de pierre\n"
+            print("Vous creusez de toutes vos forces pour passer cet amas de pierre\n"
                 "Malgré la difficulté manifeste de cette action vous réussisez a vous en sortir.\n")
             PV -= 1 
             if PV <= 0:
@@ -204,7 +203,7 @@ elif R == "1":
         quit()
     #Branche 1.4.1 
     elif R == "1" :
-        print("Tir cool")
+        print("Vous lancez une pierre vers l'insecte, il perd l'équilibre de son vole et s'écrase au sol\n")
         print(">>> Vous gagnez 1 Fragment de carapace")
         Inv["Carapaces"] += 1
     #Branche 1.4.2
@@ -263,8 +262,8 @@ elif R == "1":
         print(">>> Vous regagnez 1 PV")
         if PV < 5 :
             PV += 1
-if R == "2": 
-# Branche Sacha
+### Branche Sacha
+elif R == "2": 
     print("-----\n" # Branche 1
     "Vous changez d'atmosphère\n")
     R = input("Observez autour de vous ?\n"
@@ -287,6 +286,8 @@ if R == "2":
         ">>> Vous perdez 1 PV\n"
         ">>> Vous gagnez 1 fragment de carapace")
         PV -= 1
+        if PV <= 0:
+            input(">>> Vous êtes mort.")
         Inv["Carapaces"] += 1
         print("Vous continuez votre périple")
     R = input("Votre lacet s'est dénoué sur votre chaussure gauche, vous avez du mal à refaire vos lacets mais finissez toujours par y arriver.\n"
@@ -336,6 +337,8 @@ if R == "2":
                 print("Vous vous fatiguez et tombez le long des pierres qui vous tenait jusque là en position\n"
                      ">>> Vous perdez 1 point de vie")
                 PV -= 1
+                if PV <= 0:
+                    input(">>> Vous êtes mort.")
                 R = input("Vous vous faites remarquer et les monstres vous attaque tous ensemble\n"
                      "    1. Combattre\n"
                      "    2. Fuir\n"
