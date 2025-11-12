@@ -19,6 +19,17 @@ Agi = 0
 
 # Arriver à la porte
 # Sera implémenter partout avec une fonction plus tard 
+for c in """
+Avant de jouer a ce jeu, quelques informations :
+A chaque choix que vous effectuerez, écire Q ou q permettra de quitter le jeu
+Si vous répondez par quelque chose autre que ce qui est accepté par le jeu,
+La question vous sera reposée
+
+Merci d'avoir voulu jouer à Sherma's Ascension, 
+Bon jeu !
+""":
+    sleep(0.025); print(c, end="", flush=True) 
+input()
 for c in "Vous arrivez à la porte, vous décidez de la franchir\n":
     sleep(0.025); print(c, end="", flush=True)
     
