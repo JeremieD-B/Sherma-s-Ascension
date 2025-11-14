@@ -232,7 +232,7 @@ elif R == "1":
     elif R == "1" :
         print("Vous lancez une pierre vers l'insecte, il perd l'équilibre de son vole et s'écrase au sol\n")
         print(">>> Vous gagnez 1 Fragment de carapace")
-        Inv["Carapaces"] += 1
+        carapaces += 1
     #Branche 1.4.2
     elif R == "2" :
         print("En courant vers la porte, vous trébuchez et vous faites remarquer par l'ennemis, \n"
