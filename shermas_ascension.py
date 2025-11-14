@@ -284,7 +284,6 @@ elif R == "1":
         if PV < 5 :
             PV += 1
 ## TODO : 
-# Test PV à chaque perte de PV
 # - # Branche 2.1.2
 # - # Branche 2.1.1.1.1 (pas safe)
 # - # Branche 2.1.1.1.2 (pas safe)
@@ -327,6 +326,9 @@ if R == "2":
         ">>> Vous perdez 1 PV\n"
         ">>> Vous gagnez 1 fragment de carapace\n")
         PV -= 1
+        if PV == 0: 
+            print(">>> Vous êtes mort.")
+            quit()
         carapaces += 1
         print("Vous continuez votre périple")
     elif R == "2":
@@ -402,6 +404,9 @@ if R == "2":
                 print("Vous décidez de continuer votre ascension vertigineuse qui ne semble plus en finir.\n\n"
                 ">>> Vous perdez 1 PV.\n")
                 PV -= 1
+                if PV == 0: 
+                    print(">>> Vous êtes mort.")
+                    quit()
                 chaussure_gauche = False
                 
             elif R == "2":
@@ -539,6 +544,9 @@ if R == "2":
                 print("Vous vous fatiguez et tombez le long des pierres qui vous tenait jusque là en position.\n"
                     ">>> Vous perdez 1 point de vie\n")
                 PV -= 1
+                if PV == 0: 
+                    print(">>> Vous êtes mort.")
+                    quit()
                 R = None
                 print()
                 while R not in ("1","2","Q","q"):
