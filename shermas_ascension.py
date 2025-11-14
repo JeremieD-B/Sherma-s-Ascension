@@ -1,49 +1,84 @@
 from random import randint
-# Import du module random qui permet de générer des nombres aléatoires
+# Import du module random qui permet de générer des nombres entiers aléatoires
 
 from time import sleep
 # Autorisé exceptionnellement par le professeur 
 # La fonction sleep du module time permet de mettre un temps d'arrêt dans le programme
-# Elle permet donc de faire attendre le joueur à certain moment pour leur donner plus de crédibilité
+# Elle permet donc de faire attendre le joueur à certains moments pour leur donner plus de crédibilité
 
 ### Stats de base
 
-PV = 5
+PV = 5 # Points de vie
+arme = "Baguette de métal"
+melodies = []
+carapaces = 0
+objets = []
+""" Implémenter dans le prochain peer reviewing
 Inv = {"Arme": "Baguette de métal", 
       "Mélodies" : [],
       "Carapaces" : 0,
       "Objets" : []}
+"""
 Atk = 0
 Def = 0
-Agi = 0
+Agi = 0 # Agilité
+
+# Tutoriel
+
+tex1 = """
+Bienvenue.
+Vous êtez une jeune aventurière du nom de Sherma, la musique est votre vie, et ainsi vous souhaitez atteindre la Citadelle Mélodieuse pour apprendre les plus grands secrets.
+Avant tout, une petite explication sur vos capacités : 
+- Vous êtes capable faire des choix au fur et à mesure de votre avancée et de prendre les meilleurs décisions tout au long de votre aventure.
+- Vous pouvez quitter à tout moment l'aventure en appuyant sur 'q' ou 'Q'."""
+vitesse_texte = 0.025 # 0.025 vitesse normale
+vitesse_pause = 0.5 # 0.5 vitesse normale
+
+"""
+Sera implémenter partout avec une fonction au prochain peer review 
+Ajoute une animation au texte 
+"""
+for c in tex1:
+    sleep(vitesse_texte) 
+    print(c, end="", flush=True)
+    if c in (",", "."):
+        sleep(vitesse_pause) 
+
+R = None
+while R not in ("1","2","Q","q"):
+    R = input("Commencer l'aventure ?\n"
+        "    1. Partir en exploration\n"
+        "    q ou Q. Quitter le jeu\n"
+        "Votre réponse : ")
+    print()
+if R in ("q","Q"):
+    print("Vous avez quitté l'aventure.")
+    quit()
 
 # Arriver à la porte
-# Sera implémenter partout avec une fonction plus tard 
-for c in """
-Avant de jouer a ce jeu, quelques informations :
-A chaque choix que vous effectuerez, écire Q ou q permettra de quitter le jeu
-Si vous répondez par quelque chose autre que ce qui est accepté par le jeu,
-La question vous sera reposée
+tex1 = """Le silence est dense. Une brume dorée se dissipe lentement autour de vous. Devant, se dresse une porte scellée, haute et fine, faite d’un métal chantant.
+Chaque souffle de vent fait vibrer sa surface, produisant un écho lointain — comme un souvenir d’hymne oublié.
+Derrière vous, les profondeurs. Devant, la Citadelle Mélodieuse, si haute que ses sommets se perdent dans les nuées. Vous savez qu’il faut atteindre son sommet — mais la voie reste voilée.
+À votre gauche, un sentier s’enfonce dans les forêts sombres où se cache derrière un mont juxtaposé à la Citadelle.
+À votre droite, un escalier de pierre descend vers des cavernes où l’eau résonne comme une harpe. Une lumière turquoise y palpite, irrégulière."""
 
-Merci d'avoir voulu jouer à Sherma's Ascension, 
-Bon jeu !
-""":
-    sleep(0.025); print(c, end="", flush=True) 
-input()
-for c in "Vous arrivez à la porte, vous décidez de la franchir\n":
-    sleep(0.025); print(c, end="", flush=True)
-    
+for c in tex1:
+    sleep(vitesse_texte)
+    print(c, end="", flush=True)
+    if c in (",", "."):
+        sleep(vitesse_pause)
+
 R = None
 print()
 while R not in ("1","2","Q","q"):
-    R =input("Souhaitez-vous partir à gauche ou à droite ?\n"
+    R = input("Souhaitez-vous partir à gauche ou à droite ?\n"
         "    1. Gauche\n"
         "    2. Droite\n"
         "Votre réponse : ")
     print()
 if R in ("q","Q"):
         quit()
-        
+  
 ### Branche 1 : Jérémie
 elif R == "1": 
     #Branche 1.1
