@@ -32,7 +32,7 @@ Avant tout, une petite explication sur vos capacités :
 - Vous êtes capable faire des choix au fur et à mesure de votre avancée et de prendre les meilleurs décisions tout au long de votre aventure.
 - Vous pouvez quitter à tout moment l'aventure en appuyant sur 'q' ou 'Q'."""
 vitesse_texte = 0.025 # 0.025 vitesse normale
-vitesse_pause = 0.5 # 0.5 vitesse normale
+vitesse_pause = 0.35 # 0.35 vitesse normale
 
 """
 Sera implémenter partout avec une fonction au prochain peer review 
