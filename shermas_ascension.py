@@ -27,7 +27,7 @@ Agi = 0 # Agilité
 
 tex1 = """
 Bienvenue.
-Vous êtez une jeune aventurière du nom de Sherma, la musique est votre vie, et ainsi vous souhaitez atteindre la Citadelle Mélodieuse pour apprendre les plus grands secrets.
+Vous êtes une jeune aventurière du nom de Sherma, la musique est votre vie, et ainsi vous souhaitez atteindre la Citadelle Mélodieuse pour apprendre les plus grands secrets.
 Avant tout, une petite explication sur vos capacités : 
 - Vous êtes capable faire des choix au fur et à mesure de votre avancée et de prendre les meilleurs décisions tout au long de votre aventure.
 - Vous pouvez quitter à tout moment l'aventure en appuyant sur 'q' ou 'Q'."""
@@ -290,7 +290,7 @@ elif R == "1":
 # Pas safe : Reprendre ascension
 # Safe : famille
 ### Branche 2 : Sacha
-if R == "2": 
+elif R == "2": 
     print("-----\n" 
         "Vous tournez à droite.\n"
         "Le sentier se fait étroit, bordé d’arbres aux troncs torsadés, dont les branches s’élancent comme des doigts vers le ciel.\n"
