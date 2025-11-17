@@ -283,12 +283,6 @@ elif R == "1":
         print(">>> Vous regagnez 1 PV")
         if PV < 5 :
             PV += 1
-## TODO : 
-# - # Branche 2.1.2
-# - # Branche 2.1.1.1.1 (pas safe)
-# - # Branche 2.1.1.1.2 (pas safe)
-# Pas safe : Reprendre ascension
-# Safe : famille
 ### Branche 2 : Sacha
 elif R == "2": 
     print("-----\n" 
@@ -328,6 +322,7 @@ elif R == "2":
         PV -= 1
         if PV == 0: 
             print(">>> Vous êtes mort.")
+            input()
             quit()
         carapaces += 1
         print("Vous continuez votre périple")
@@ -358,7 +353,7 @@ elif R == "2":
                 break
             else: 
                 print(f"..... {i}%")
-    # Branche 2 (suite)
+    ## Branche 2
     print("-----\n"
     "Vous avancez dans la montagne, et arrivez dans une nouvelle zone sombre. Cette zone est plus humide, la pierre est donc très friable.\n"
     "Afin de monter plus haut dans la caverne, vous devez monter sur les pierres. En revanche, vous apercevez une lueur blanchâtre dans un coin similaire à celui d'une lanterne.")
@@ -406,6 +401,7 @@ elif R == "2":
                 PV -= 1
                 if PV == 0: 
                     print(">>> Vous êtes mort.")
+                    input()
                     quit()
                 chaussure_gauche = False
                 
@@ -455,9 +451,23 @@ elif R == "2":
                         print()
                     if R in ("q","Q"):
                         quit()  
-                    if R == 1: pass # pas safe
-                    if R == 2: pass # pas safe
-                    if R == 3: pass # safe 
+                    if R == 1:
+                        print("Vous vous cachez, pendant un très long moment. Personne ne vous remarque.")
+                        print("\n>>> Vous perdez 1 point d'agilité\n")
+                        Agi -= 1
+                        print("Vous décidez de reprendre l'ascension.")
+                    elif R == 2:
+                        print(f"Vous brandissez votre {arme} et combattez les ennemis. Ceux-ci prennent peur sauf un."
+                              "Vous le combattez et êtes légèrement blessé.")
+                        print("\n>>> Vous perdez 1 PV\n")
+                        PV -= 1
+                        if PV == 0: 
+                            print(">>> Vous êtes achevé.")
+                            input()
+                            quit()                        
+                        print("Vous décidez de reprendre l'ascension.")
+                    elif R == 3: 
+                        print("Vous décidez de reprendre l'ascension.")
             elif R == "3":
                # Branche 2.1.1.3
                print("Vous ne voulez pas perdre de temps et choisissez de dégringoler cette pente.\n"
@@ -478,18 +488,18 @@ elif R == "2":
         while R not in ("1","2","Q","q"):
             R = input("Devant vous, deux passages se dessinent dans la paroi :\n"
                 "    1. À gauche, une fissure étroite d’où s’échappe une lueur rougeâtre et un grondement profond.\n"
-                "    2. À droite, un balcon naturel, suspendu au-dessus du vide, baigné d’une lumière pâle émanant de la Citadelle, que l’on distingue enfin — immense, lointaine, presque irréelle.\n"
+                "    2. À droite, un passage peu éclairé d'un ton blanc pâle."
                 "Votre réponse : ")
             print("")
         if R in ("q","Q"):
             quit()
         elif R == "1": 
-            print("")
-            # Branche 2.1.1.1.1 (pas safe)
-            pass
+            print("Vous arrivez dans une chmabre magmatique, la roche glisse et tombez dans de la lave.")
+            print(">>> Vous êtes mort.")
+            input()
+            quit()
         elif R == 2: 
-            # Branche 2.1.1.1.2 (safe)
-            pass
+            print("Vous continuez votre chemin, vous apercevez une porte. Vous décidez donc de la franchir.")
     elif R == "2":
         # Branche 2.2
         print("Vous vous approchez prudemment de cette mystérieuse lumière.\n"
@@ -546,6 +556,7 @@ elif R == "2":
                 PV -= 1
                 if PV == 0: 
                     print(">>> Vous êtes mort.")
+                    input()
                     quit()
                 R = None
                 print()
@@ -563,7 +574,9 @@ elif R == "2":
                     print("Vous fuyez mais glissez sur une pierre, les monstres vous rattrape.\n\n>>> Vous êtes mort.")
                 input()
                 quit()
+    
 
 #Branche B.
-input("FIN.")
+print("Vous avez fini la 1ère étape dans votre quête de la Citadelle...")
+input("la Fin n'est jamais vraiment la fin mais juste un nouveau commencement.\n - Sensei Wu ")
 quit()
