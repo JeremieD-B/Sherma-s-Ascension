@@ -29,9 +29,36 @@ Souhaitez-vous partir à gauche ou à droite ?
     1. Gauche    
     2. Droite
 Votre réponse : """
-TEntreeDeplacementPossible = ("1","2")
+TEntreeDeplacementRep = ("1","2")
+
+
 TGrotteHumideDesc = """
+-----
+    Vous arrivez dans une pièce sombre, seuls quelques rayon de lumière percent au travers de la dense végétation qui vous entoure
+L'atmosphère est pesante, des bruits inquiétant d'insecte percent au travers du silence qui vous entoure
+Après avoir marcher quelques minutes, determiné à avancer vers la Citadelle Mélodieuse, vous faites face à un étrange insecte
+Cet insecte ressemble à une énorme chenille, elle vous arrive au genoux et est couverte de poils vert formant une fourure
 """
+TGrotteHumideQEvent = """
+Pour continuer vous n'avez d'autre choix que de faire bouger cette invité indésirable,
+    1. Lancer une pierre dessus en espérant la faire fuir
+    2. Essayer de la pousser doucement pour passer à coté 
+Votre réponse :"""
+TGrotteHumideQEventRep = ("1","2")
+TGrotteHumideTEvent1 = """
+    Vous décidez de ramasser une pierre de la taille de votre main et la lancez sur l'étrange insecte qui vous bloque
+Après avoir sursauté en recevant la pierre sur son dos, l'insecte se mets à trembler
+Après quelque seconde d'étranges pics aussi longs qu'un bras sortent tout d'un coup de tout son corps
+Vous avez bien fait de ne pas vous approcher
+Vous pouvez donc continuer votre avancée en contournant cet ennemis
+"""
+TGrotteHumideTEvent2 = """
+    Lorsque que vous vous approchez de cet étrange insecte,
+Vous le voyez pousser un faible cri aigu avant de se mettre à trembler
+Lorsque d'un coup de nombreux pics aussi long qu'un bras et ascérées comme des couteaux sortent de son corps
+N'ayant pas le temps de réagir vous ne pouvez que vous protéger avec votre bras
+"""
+
 TGrandeAlleeDesc = """
 """
 TPetitCouloirDesc = """
@@ -67,7 +94,7 @@ Salles = {
     "GouffreDOs" : {"NomAffichee" : "Gouffre d'Os","Desc" : TGouffreDOsDesc, "EventPast" : False, "Successeurs": ["GrandeAllee"]}
 }
 Fin = False
-##### FONCTIONS :
+###### FONCTIONS :
 
 def question(text : str,rep : tuple) -> str:
     """
@@ -121,40 +148,19 @@ ecrire(TIntro)
 sleep(1)
 # Arriver à la porte
 ecrire(Salles["Entree"]["Desc"])
-R = question(TEntreeDeplacement,TEntreeDeplacementPossible)
+R = question(TEntreeDeplacement,TEntreeDeplacementRep)
 
 ### Branche 1 : Jérémie
 if R == "1": 
     #Branche 1.1
-    ecrire("""
------
-    Vous arrivez dans une pièce sombre, seuls quelques rayon de lumière percent au travers de la dense végétation qui vous entoure
-L'atmosphère est pesante, des bruits inquiétant d'insecte percent au travers du silence qui vous entoure
-Après avoir marcher quelques minutes, determiné à avancer vers la Citadelle Mélodieuse, vous faites face à un étrange insecte
-Cet insecte ressemble à une énorme chenille, elle vous arrive au genoux et est couverte de poils vert formant une fourure
-""")
-    R = question("""
-Pour continuer vous n'avez d'autre choix que de faire bouger cette invité indésirable,
-    1. Lancer une pierre dessus en espérant la faire fuir
-    2. Essayer de la pousser doucement pour passer à coté 
-Votre réponse :""",("1","2"))
+    ecrire(Salles["GrotteHumide"]["Desc"])
+    R = question(TGrotteHumideQEvent,TGrotteHumideQEventRep)
     #Branche 1.1.1
     if R == "1" :
-          ecrire("""
-    Vous décidez de ramasser une pierre de la taille de votre main et la lancez sur l'étrange insecte qui vous bloque
-Après avoir sursauté en recevant la pierre sur son dos, l'insecte se mets à trembler
-Après quelque seconde d'étranges pics aussi longs qu'un bras sortent tout d'un coup de tout son corps
-Vous avez bien fait de ne pas vous approcher
-Vous pouvez donc continuer votre avancée en contournant cet ennemis
-""")
+          ecrire(TGrotteHumideTEvent1)
     #Branche 1.1.2
     elif R == "2":
-        ecrire("""
-    Lorsque que vous vous approchez de cet étrange insecte,
-Vous le voyez pousser un faible cri aigu avant de se mettre à trembler
-Lorsque d'un coup de nombreux pics aussi long qu'un bras et ascérées comme des couteaux sortent de son corps
-N'ayant pas le temps de réagir vous ne pouvez que vous protéger avec votre bras
-""")
+        ecrire(TGrotteHumideTEvent2)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     ##Branche 1.2
     ecrire("""-----
@@ -599,4 +605,3 @@ La Fin n'est jamais vraiment la fin mais juste un nouveau commencement.
   -  Sensei Wu""")
 input()
 quit()
-
