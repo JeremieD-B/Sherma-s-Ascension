@@ -68,8 +68,8 @@ TGouffreDOsDesc = """
 #### Autres constantes 
 
 PV_MAX = 5
-vitesse_texte = 0.005 # 0.025 vitesse normale
-vitesse_pause = 0.005 # 0.35 vitesse normale
+vitesse_texte = 0 # 0.025 vitesse normale
+vitesse_pause = 0 # 0.35 vitesse normale
 
 ### Stats de base
 
@@ -398,8 +398,8 @@ Vous refaites vos lacets""")
     ## Branche 2
     ecrire("""
 -----
-    Vous avancez dans la montagne, et arrivez dans une nouvelle zone sombre. Cette zone est plus humide, la pierre est donc très friable.
-Afin de monter plus haut dans la caverne, vous devez monter sur les pierres. En revanche, vous apercevez une lueur blanchâtre dans un coin similaire à celui d'une lanterne.""")
+    Vous avancez dans une caverne, et arrivez dans une nouvelle zone sombre. Cette zone est plus humide, la pierre est donc très friable.
+Afin de monter plus haut, vous devez monter sur les pierres. En revanche, vous apercevez une lueur blanchâtre dans un coin similaire à celui d'une lanterne.""")
     R = question("""
 Qu'allez-vous faire ?
     1. Monter sur les pierres
@@ -447,7 +447,8 @@ Vous décidez de continuer votre ascension vertigineuse qui ne semble plus en fi
             elif R == "2":
                 # Branche 2.1.1.2
                 ecrire("""
-Vous descendez prudemment jusqu'à atteindre votre chaussure.""")
+Vous descendez prudemment jusqu'à atteindre votre chaussure.
+""")
                 i = 0
                 while i < 100:
                     sleep(1)
@@ -461,16 +462,15 @@ Vous descendez prudemment jusqu'à atteindre votre chaussure.""")
 Vous êtes en bas, vous remettez votre chaussure. La lumière entre aperçu plus tôt a disparu.
 Etait-ce un mirage ? Une illusion ?""")
                 R = question("""
-Aller chercher votre chaussure ?
-    1. Continuer
-    2. Descendre
-    3. Descendre rapidement
+Que faire maintenant ?
+    1. Reprendre l'ascension
+    2. Aller vers le sentier
 Votre réponse : """, ("1", "2"))
                 if R == "1": 
                     ecrire("""
     Votre ascension reprend de plus belle, vous pressez le pas au risque de vous faire repérer.
 Cependant, vous apercevez à travers des pierres une petite lumière.
-En vous posant correctement et en creusant, vous apercevez une sorte de vieux papier contenant des inscriptions musicales.
+En vous posant correctement et en creusant, vous apercevez une sorte de vieux papier contenant des inscriptions musicales très éffacées.
                            
 >>> Vous récupérer le parchemin : Entre pierres et cordes.""")
                     Inv["Objets"] += ["Parchemin : Entre pierres et cordes"]
@@ -478,8 +478,8 @@ En vous posant correctement et en creusant, vous apercevez une sorte de vieux pa
                 elif R == "2":
                     # Branche 2.1.1.2.2
                     ecrire("""
-La famille de l'ennemi de tout à l'heure ont vu votre présence et suive désormais vos pas.
-Vous vous dirigez vers eux sans le savoir. Vous entendez un bruit""")
+La famille de l'ennemi du sentier ont vu votre présence et suive désormais vos pas.
+Vous vous dirigez vers eux sans le savoir. Vous entendez un bruit et stopper le pas.""")
                     R = question("""
 Vous paniquez, que choisissez-vous de faire ?
     1. Se cacher
@@ -501,7 +501,7 @@ Vous le combattez et êtes légèrement blessé.
 >>> Vous perdez 1 PV""")
                         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
                     elif R == 3: 
-                        pass # Reprend directment l'ascension
+                        pass # Reprend directement l'ascension
                     ecrire("""
 Vous décidez de reprendre l'ascension.""")
             elif R == "3":
@@ -600,7 +600,9 @@ Votre réponse : """, ("1", "2"))
                 quit()
 #Branche B.
 ecrire("""
-Vous avez fini la 1ère étape dans votre quête de la Citadelle...
+La porte se ferme brutalement, il vous est impossible de revenir en arrière.
+Vous pensez être sur le bon chemin, une 1ère étape vient d'être franchi et venez de comprendre les bases. 
+Est-ce la fin ? Non ...
 La Fin n'est jamais vraiment la fin mais juste un nouveau commencement.
   -  Sensei Wu""")
 input()
