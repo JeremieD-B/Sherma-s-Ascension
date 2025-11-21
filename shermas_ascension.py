@@ -6,25 +6,61 @@ from time import sleep
 # La fonction sleep du module time permet de mettre un temps d'arrêt dans le programme
 # Elle permet donc de faire attendre le joueur à certain moment pour leur donner plus de crédibilité
 
-vitesse_texte = 0.005 # 0.025 vitesse normale
-vitesse_pause = 0.005 # 0.35 vitesse normale
+
+##### Constantes
+#### Tout les textes
+T_intro = """
+Bienvenue.
+    Vous êtes une jeune aventurière du nom de Sherma, la musique est votre vie, et ainsi vous souhaitez atteindre la Citadelle Mélodieuse pour apprendre les plus grands secrets.
+Avant tout, une petite explication sur vos capacités : 
+- Vous êtes capable faire des choix au fur et à mesure de votre avancée et de prendre les meilleurs décisions tout au long de votre aventure.
+- Vous pouvez quitter à tout moment l'aventure en appuyant sur 'q' ou 'Q'.
+- Bon jeu !
+"""
+T_entree_desc = """
+    Le silence est dense. Une brume dorée se dissipe lentement autour de vous. Devant, se dresse une porte scellée, haute et fine, faite d’un métal chantant.
+Chaque souffle de vent fait vibrer sa surface, produisant un écho lointain — comme un souvenir d’hymne oublié.
+Derrière vous, les profondeurs. Devant, la Citadelle Mélodieuse, si haute que ses sommets se perdent dans les nuées. Vous savez qu’il faut atteindre son sommet — mais la voie reste voilée.
+À votre gauche, un sentier s’enfonce dans les forêts sombres où se cache derrière un mont juxtaposé à la Citadelle.
+À votre droite, un escalier de pierre descend vers des cavernes où l’eau résonne comme une harpe. Une lumière turquoise y palpite, irrégulière.
+"""
+
+#### Autres constantes 
+
+PV_MAX = 5
+vitesse_texte = 0.025 # 0.025 vitesse normale
+vitesse_pause = 0.35 # 0.35 vitesse normale
+
 ### Stats de base
 
-PV = 5
-PV_MAX = 5
 Inv = {"Arme": "Baguette de métal", 
         "Mélodies" : [],
         "Carapaces" : 0,
         "Objets" : []}
-Atk = 0
-Def = 0
-Agi = 0
+Sherma = {
+"PV": 5,
+"Inv" : Inv, 
+"Atk": 0,
+"Def" : 0,
+"Agi" : 0,
+"Emplacement" : "Entree"
+}
+Salles = {
+    "Entree" : {"NomAffichee" : "Entrée","Desc" : TEntreeDesc, "EventPast" : False, "Successeurs": ["GrotteHumide","Caverne"]},
+    "GrotteHumide" : {"NomAffichee" : "Grotte humide","Desc" : TGrotteHumideDesc, "EventPast" : False, "Successeurs": ["GrandeAllee","PetitCouloir"]},
+    "GrandeAllee" : {"NomAffichee" : "Grande Allée","Desc" : TGrandeAlleeDesc, "EventPast" : False, "Successeurs": ["GouffreDOs"]},
+    "PetitCouloir" : {"NomAffichee" : "Petit Couloir","Desc" : TPetitCouloirDesc, "EventPast" : False, "Successeurs": []},
+    "Caverne" : {"NomAffichee" : "Caverne","Desc" : None, "EventPast" : False, "Successeurs": [None]}, #A finir 
+    "GouffreDOs" : {"NomAffichee" : "Gouffre d'Os","Desc" : TGouffreDOsDesc, "EventPast" : False, "Successeurs": ["GrandeAllee"]}
+}
+Fin = False
 ##### FONCTIONS :
 
 def question(text : str,rep : tuple) -> str:
     """
     Pose la question "text"
     Si les réponse est q ou Q : quitte le programme
+    R est la Réponse que l'on attend
     """
     R = None
     tour = 0
@@ -32,7 +68,7 @@ def question(text : str,rep : tuple) -> str:
         if tour == 0 :
             ecrire(text)
         else : 
-            ecrire(text, 0.005)
+            ecrire(text, 0.005,0.01)
         R = input()
         tour +=1
     if R in ("q","Q") :
@@ -54,8 +90,7 @@ def perdre_pv(pv : int, pv_perdu :int):
     ecrire(f">>> Vous perdez {pv_perdu} PV. \n")
     pv -= pv_perdu
     if pv <= 0 :
-        input("""
->>> Vous n'avez plus aucun PV. Vous êtes mort.""")
+        input("\n>>> Vous n'avez plus aucun PV. Vous êtes mort.")
         quit()
     return pv
 
@@ -67,24 +102,12 @@ def gagner_pv(pv : int, pv_gagne :int):
 
 ###### JEU
 
+
 ## TUTORIEL :
-ecrire("""
-Bienvenue.
-    Vous êtes une jeune aventurière du nom de Sherma, la musique est votre vie, et ainsi vous souhaitez atteindre la Citadelle Mélodieuse pour apprendre les plus grands secrets.
-Avant tout, une petite explication sur vos capacités : 
-- Vous êtes capable faire des choix au fur et à mesure de votre avancée et de prendre les meilleurs décisions tout au long de votre aventure.
-- Vous pouvez quitter à tout moment l'aventure en appuyant sur 'q' ou 'Q'.
-- Bon jeu !
-""")
+ecrire(T_intro)
 sleep(1)
 # Arriver à la porte
-ecrire("""
-    Le silence est dense. Une brume dorée se dissipe lentement autour de vous. Devant, se dresse une porte scellée, haute et fine, faite d’un métal chantant.
-Chaque souffle de vent fait vibrer sa surface, produisant un écho lointain — comme un souvenir d’hymne oublié.
-Derrière vous, les profondeurs. Devant, la Citadelle Mélodieuse, si haute que ses sommets se perdent dans les nuées. Vous savez qu’il faut atteindre son sommet — mais la voie reste voilée.
-À votre gauche, un sentier s’enfonce dans les forêts sombres où se cache derrière un mont juxtaposé à la Citadelle.
-À votre droite, un escalier de pierre descend vers des cavernes où l’eau résonne comme une harpe. Une lumière turquoise y palpite, irrégulière.
-""")
+ecrire(Salles["Entree"]["Desc"])
 R = question("""
 Souhaitez-vous partir à gauche ou à droite ?
     1. Gauche    
@@ -293,6 +316,7 @@ Votre réponse : """,("1","2"))
 Vous profitez de ce moment de calme pour vous asseoir un moment
 """)
         PV = gagner_pv(PV,1)
+            
 ### Branche 2 : Sacha
 elif R == "2": 
     ecrire("""
@@ -566,3 +590,4 @@ La Fin n'est jamais vraiment la fin mais juste un nouveau commencement.
   -  Sensei Wu""")
 input()
 quit()
+
