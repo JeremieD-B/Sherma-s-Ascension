@@ -55,7 +55,7 @@ def perdre_pv(pv : int, pv_perdu :int):
     pv -= pv_perdu
     if pv <= 0 :
         input("""
->>> Vous n'avez plus aucun PV, vous êtes mort """)
+>>> Vous n'avez plus aucun PV. Vous êtes mort.""")
         quit()
     return pv
 
@@ -64,6 +64,7 @@ def gagner_pv(pv : int, pv_gagne :int):
         pv += pv_gagne
         ecrire(f">>> Vous gagnez {pv_gagne} PV. \n")
     return pv
+
 ###### JEU
 
 ## TUTORIEL :
@@ -73,7 +74,7 @@ Bienvenue.
 Avant tout, une petite explication sur vos capacités : 
 - Vous êtes capable faire des choix au fur et à mesure de votre avancée et de prendre les meilleurs décisions tout au long de votre aventure.
 - Vous pouvez quitter à tout moment l'aventure en appuyant sur 'q' ou 'Q'.
-- Bon jeu !!
+- Bon jeu !
 """)
 sleep(1)
 # Arriver à la porte
@@ -292,71 +293,48 @@ Votre réponse : """,("1","2"))
 Vous profitez de ce moment de calme pour vous asseoir un moment
 """)
         PV = gagner_pv(PV,1)
-## TODO : 
-# - # Branche 2.1.2
-# - # Branche 2.1.1.1.1 (pas safe)
-# - # Branche 2.1.1.1.2 (pas safe)
-# Pas safe : Reprendre ascension
-# Safe : famille
 ### Branche 2 : Sacha
 elif R == "2": 
-    print("-----\n" 
-        "Vous tournez à droite.\n"
-        "Le sentier se fait étroit, bordé d’arbres aux troncs torsadés, dont les branches s’élancent comme des doigts vers le ciel.\n"
-        "La lumière s’amenuise à mesure que vous avancez.")
-    R = None
-    print()
-    while R not in ("1","2","Q","q"):
-        R = input("Observez autour de vous ?\n"
-            "    1. Oui\n"
-            "    2. Non\n"
-            "Votre réponse : ")
-        print("")
-    if R in ("q","Q"):
-        quit()
-    elif R == "1": 
-        print("L’air est saturé d’humidité et d’un parfum âcre de mousse et de sève. Sous vos pas, le sol chante à peine — un bruissement discret, presque un murmure.\n"
-            "Au loin, au-delà de la canopée, se dresse un mont gigantesque, une masse sombre collée contre la Citadelle Mélodieuse. Ses pentes abruptes semblent fusionner avec les fondations mêmes de la tour. À sa base, les arbres se tordent, comme attirés ou repoussés par la musique silencieuse qui émane de la Citadelle.\n"
-            "Par moments, un son traverse la forêt — une note isolée, pure, qui résonne dans l’air avant de se dissoudre dans le vent. Était-ce un instrument, un oiseau, ou la montagne elle-même qui soupire ?\n"
-            "\nVous sentez que cette voie mène à quelque chose d’enfoui, peut-être une entrée dissimulée. Les branches s’entrelacent au-dessus de vous, formant une voûte presque organique. L’obscurité devient tangible, épaisse, comme une étoffe que l’on pourrait écarter d’un geste.\n")
-    print("Puis soudain, un ennemi apparait d'entre les branches, celui-ci est laid et n'aurait peur de rien. Pris de panique, il décide de vous attaquer.")
-    R = None
-    print()
-    while R not in ("1","2","Q","q"):
-        R = input("Combattre cet ennemi ?\n"
-            "    1. Combattre\n"
-            "    2. Esquive\n"
-            "Votre réponse : ")
-        print("")
-    if R in ("q","Q"):
-        quit()
-    elif R == "1":
-        print("Vous décidez de combattre l'ennemi\n\n"
-        ">>> Vous perdez 1 PV\n"
-        ">>> Vous gagnez 1 fragment de carapace\n")
-        PV -= 1
-        if PV == 0: 
-            print(">>> Vous êtes mort.")
-            quit()
-        carapaces += 1
-        print("Vous continuez votre périple")
+    ecrire(""""-----
+        Vous tournez à droite.
+        Le sentier se fait étroit, bordé d’arbres aux troncs torsadés, dont les branches s’élancent comme des doigts vers le ciel.
+        La lumière s’amenuise à mesure que vous avancez.""")
+    R = question("""Observez autour de vous ?
+                1. Oui
+                2. Non
+            Votre réponse : """, ("1"))
+    if R == "1": 
+        ecrire("""
+            L’air est saturé d’humidité et d’un parfum âcre de mousse et de sève. Sous vos pas, le sol chante à peine — un bruissement discret, presque un murmure.
+            Au loin, au-delà de la canopée, se dresse un mont gigantesque, une masse sombre collée contre la Citadelle Mélodieuse. Ses pentes abruptes semblent fusionner avec les fondations mêmes de la tour. À sa base, les arbres se tordent, comme attirés ou repoussés par la musique silencieuse qui émane de la Citadelle.
+            Par moments, un son traverse la forêt — une note isolée, pure, qui résonne dans l’air avant de se dissoudre dans le vent. Était-ce un instrument, un oiseau, ou la montagne elle-même qui soupire ?
+            \nVous sentez que cette voie mène à quelque chose d’enfoui, peut-être une entrée dissimulée. Les branches s’entrelacent au-dessus de vous, formant une voûte presque organique. L’obscurité devient tangible, épaisse, comme une étoffe que l’on pourrait écarter d’un geste.""")
+    ecrire("Puis soudain, un ennemi apparait d'entre les branches, celui-ci est laid et n'aurait peur de rien. Pris de panique, il décide de vous attaquer.")
+    R = question("""Combattre cet ennemi ?
+                1. Combattre
+                2. Esquive
+            Votre réponse : """, ("1", "2"))
+    if R == "1":
+        ecrire("""Vous décidez de combattre l'ennemi
+        \n>>> Vous perdez 1 PV
+        >>> Vous gagnez 1 fragment de carapace""")
+        perdre_pv(PV, 1)
+        Inv["Carapaces"] += 1
     elif R == "2":
-        print("Vous décidez de contourner l'ennemi, celui-ci est finalement très lent il ne vous rattrape pas.")
-    R = None
-    print()
-    while R not in ("1","2","Q","q"):
-        R = input("Votre lacet s'est dénoué sur votre chaussure gauche, vous avez du mal à refaire vos lacets mais finissez toujours par y arriver.\n"
-            "Souhaitez-vous le refaire (Cela prendra un cours instant) ?\n"
-            "    1. Continuer sur le chemin\n"
-            "    2. Refaire les lacets avec difficulté\n"
-            "Votre Réponse : ")
-        print("")
-    if R in ("q","Q"):
-        quit()
-    elif R == "1": 
+        ecrire("""
+               Vous décidez de contourner l'ennemi, celui-ci est finalement très lent il ne vous rattrape pas.""")
+    ecrire("""
+           Vous continuez votre périple""")
+    R = question("""Votre lacet s'est dénoué sur votre chaussure gauche, vous avez du mal à refaire vos lacets mais finissez toujours par y arriver.
+            Souhaitez-vous le refaire (Cela prendra un cours instant) ?
+                1. Continuer sur le chemin
+                2. Refaire les lacets avec difficulté
+            Votre Réponse : """, ("1", "2"))
+    if R == "1": 
         lacets_faits = False
     elif R == "2":
-        print("Vous refaites vos lacets")
+        ecrire("""
+               Vous refaites vos lacets""")
         i = 0
         while i < 100:
             sleep(1)
@@ -367,60 +345,45 @@ elif R == "2":
                 break
             else: 
                 print(f"..... {i}%")
-    # Branche 2 (suite)
-    print("-----\n"
-    "Vous avancez dans la montagne, et arrivez dans une nouvelle zone sombre. Cette zone est plus humide, la pierre est donc très friable.\n"
-    "Afin de monter plus haut dans la caverne, vous devez monter sur les pierres. En revanche, vous apercevez une lueur blanchâtre dans un coin similaire à celui d'une lanterne.")
-    R = None
-    print()
-    while R not in ("1","2","Q","q"):
-        R = input("Qu'allez-vous faire ?\n"
-            "    1. Monter sur les pierres\n"
-            "    2. Se diriger vers la lumière\n"
-            "Votre réponse : ")
-        print("")
-    if R in ("q","Q"):
-        quit()
-    elif R == "1": 
+    ## Branche 2
+    ecrire("""-----
+    Vous avancez dans la montagne, et arrivez dans une nouvelle zone sombre. Cette zone est plus humide, la pierre est donc très friable.
+    Afin de monter plus haut dans la caverne, vous devez monter sur les pierres. En revanche, vous apercevez une lueur blanchâtre dans un coin similaire à celui d'une lanterne.""")
+    R = question("""Qu'allez-vous faire ?
+                1. Monter sur les pierres
+                2. Se diriger vers la lumière
+            Votre réponse : """, ("1", "2"))
+    if R == "1": 
         # Branche 2.1 
-        print("Vous commencez à grimper. Les pierres sont glissantes, couvertes d’un lichen argenté.\n"
-            "Sous vos doigts, certaines vibrent faiblement, comme si elles gardaient en elles la trace d’un ancien chant.\n\n"
-            ">>> Vous gagnez 1 d'Agilité.\n")
+        ecrire("""Vous commencez à grimper. Les pierres sont glissantes, couvertes d’un lichen argenté.
+            Sous vos doigts, certaines vibrent faiblement, comme si elles gardaient en elles la trace d’un ancien chant.\n
+            >>> Vous gagnez 1 d'Agilité.""")
         Agi += 1
-        print("Puis vient le grondement.\n"
-            "Une note fausse, un craquement, et la montagne semble s’éveiller. Des pierres roulent en contrebas. Le sol se dérobe un instant sous vos pieds.\n"
-            "Votre chaussure est prise dans ces pierres.")
+        ecrire("""Puis vient le grondement.
+            Une note fausse, un craquement, et la montagne semble s’éveiller. Des pierres roulent en contrebas. Le sol se dérobe un instant sous vos pieds.
+            Votre chaussure est prise dans ces pierres.""")
         if lacets_faits:
             # Branche 2.1.2
-            print("Par chance, vous avez refaits vos lacets au préalable et votre chaussure reste intacte. Vous continuez donc votre ascension.\n")
+            ecrire("Par chance, vous avez refaits vos lacets au préalable et votre chaussure reste intacte. Vous continuez donc votre ascension.")
             chaussure_gauche = True
         else: 
             # Branche 2.1.1
-            print("Votre chaussure n'étant pas bien attaché, celle-ci s'enlève et tombe tout en bas.\n")
-            R = None
-            print()
-            while R not in ("1","2","3","Q","q"):
-                R = input("Aller chercher votre chaussure ?\n"
-                    "    1. Continuer\n"
-                    "    2. Descendre\n"
-                    "    3. Descendre rapidement\n"
-                    "Votre réponse : ")
-                print("")
-            if R in ("q","Q"):
-                quit()
-            elif R == "1":
+            ecrire("Votre chaussure n'étant pas bien attaché, celle-ci s'enlève et tombe tout en bas.")
+            question("""Aller chercher votre chaussure ?
+                        1. Continuer
+                        2. Descendre
+                        3. Descendre rapidement
+                    Votre réponse : """, ("1", "2", "3"))
+            if R == "1":
                 # Branche 2.1.1.1 
-                print("Vous décidez de continuer votre ascension vertigineuse qui ne semble plus en finir.\n\n"
-                ">>> Vous perdez 1 PV.\n")
-                PV -= 1
-                if PV == 0: 
-                    print(">>> Vous êtes mort.")
-                    quit()
+                ecrire("""Vous décidez de continuer votre ascension vertigineuse qui ne semble plus en finir.\n
+                >>> Vous perdez 1 PV.""")
+                perdre_pv(PV, 1)
                 chaussure_gauche = False
                 
             elif R == "2":
                 # Branche 2.1.1.2
-                print("Vous descendez prudemment jusqu'à atteindre votre chaussure.")
+                ecrire("Vous descendez prudemment jusqu'à atteindre votre chaussure.")
                 i = 0
                 while i < 100:
                     sleep(1)
@@ -430,24 +393,20 @@ elif R == "2":
                         break
                     else: 
                         print(f"..... {i}%")
-                print("Vous êtes en bas, vous remettez votre chaussure. La lumière entre aperçu plus tôt a disparu.\n"
-                         "Etait-ce un mirage ? Une illusion ?")
-                R = None
-                print()
-                while R not in ("1","2","Q","q"):
-                    R = input("Que souhaitez-vous faire ?\n"
-                   "    1. Reprendre l'ascension vertigineuse\n"
-                   "    2. Revenir en arrière\n"
-                   "Votre réponse : ")
-                    print("")
-                if R in ("q","Q"):
-                    quit()  
-                elif R == "1": 
+                ecrire("""Vous êtes en bas, vous remettez votre chaussure. La lumière entre aperçu plus tôt a disparu.
+                        Etait-ce un mirage ? Une illusion ?""")
+                question("""Aller chercher votre chaussure ?
+                        1. Continuer
+                        2. Descendre
+                        3. Descendre rapidement
+                    Votre réponse : """, ("1", "2"))
+                ## REPRENDRE CHANGEMENT FONCTIONNEL ICI
+                if R == "1": 
                     print("Votre ascension reprend de plus belle, vous pressez le pas au risque de vous faire repérer.\n"
                         "Cependant, vous apercevez à travers des pierres une petite lumière.\n"
                         "En vous posant correctement et en creusant, vous apercevez une sorte de vieux papier contenant des inscriptions musicales.\n")
                     print(">>> Vous obtenez la musique : Entre pierres et cordes\n")
-                    melodies += ["Entre pierres et cordes"]
+                    Inv["Mélodies"] += ["Entre pierres et cordes"]
                     chaussure_gauche = True
                 elif R == "2":
                     # Branche 2.1.1.2.2
@@ -464,9 +423,23 @@ elif R == "2":
                         print()
                     if R in ("q","Q"):
                         quit()  
-                    if R == 1: pass # pas safe
-                    if R == 2: pass # pas safe
-                    if R == 3: pass # safe 
+                    if R == 1:
+                        print("Vous vous cachez, pendant un très long moment. Personne ne vous remarque.")
+                        print("\n>>> Vous perdez 1 point d'agilité\n")
+                        Agi -= 1
+                        print("Vous décidez de reprendre l'ascension.")
+                    elif R == 2:
+                        print(f"Vous brandissez votre {Inv['Arme']} et combattez les ennemis. Ceux-ci prennent peur sauf un."
+                              "Vous le combattez et êtes légèrement blessé.")
+                        print("\n>>> Vous perdez 1 PV\n")
+                        PV -= 1
+                        if PV == 0: 
+                            print(">>> Vous êtes achevé.")
+                            input()
+                            quit()                        
+                        print("Vous décidez de reprendre l'ascension.")
+                    elif R == 3: 
+                        print("Vous décidez de reprendre l'ascension.")
             elif R == "3":
                # Branche 2.1.1.3
                print("Vous ne voulez pas perdre de temps et choisissez de dégringoler cette pente.\n"
@@ -487,18 +460,18 @@ elif R == "2":
         while R not in ("1","2","Q","q"):
             R = input("Devant vous, deux passages se dessinent dans la paroi :\n"
                 "    1. À gauche, une fissure étroite d’où s’échappe une lueur rougeâtre et un grondement profond.\n"
-                "    2. À droite, un balcon naturel, suspendu au-dessus du vide, baigné d’une lumière pâle émanant de la Citadelle, que l’on distingue enfin — immense, lointaine, presque irréelle.\n"
+                "    2. À droite, un passage peu éclairé d'un ton blanc pâle."
                 "Votre réponse : ")
             print("")
         if R in ("q","Q"):
             quit()
         elif R == "1": 
-            print("")
-            # Branche 2.1.1.1.1 (pas safe)
-            pass
+            print("Vous arrivez dans une chmabre magmatique, la roche glisse et tombez dans de la lave.")
+            print(">>> Vous êtes mort.")
+            input()
+            quit()
         elif R == 2: 
-            # Branche 2.1.1.1.2 (safe)
-            pass
+            print("Vous continuez votre chemin, vous apercevez une porte. Vous décidez donc de la franchir.")
     elif R == "2":
         # Branche 2.2
         print("Vous vous approchez prudemment de cette mystérieuse lumière.\n"
@@ -555,6 +528,7 @@ elif R == "2":
                 PV -= 1
                 if PV == 0: 
                     print(">>> Vous êtes mort.")
+                    input()
                     quit()
                 R = None
                 print()
@@ -572,7 +546,8 @@ elif R == "2":
                     print("Vous fuyez mais glissez sur une pierre, les monstres vous rattrape.\n\n>>> Vous êtes mort.")
                 input()
                 quit()
-
 #Branche B.
-input("FIN.")
+print("Vous avez fini la 1ère étape dans votre quête de la Citadelle...")
+input("la Fin n'est jamais vraiment la fin mais juste un nouveau commencement.\n - Sensei Wu ")
 quit()
+
