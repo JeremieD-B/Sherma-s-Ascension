@@ -3,7 +3,7 @@
 Sherma's Ascension est un jeu où le personnage principal **Sherma** doit atteindre une citadelle en hauteur. C'est un jeu textuel.
 
 To do list :
-Écrire les dictionnaires correspondant a chaque salle
+Écrire les dictionnaires correspondant a chaque salle \n
 Implémenter la variable "Fin" qui permet de quitter le jeu
 Écrire la fonction permettant d'observer une salle
 Implémenter notre fonction script qui contiendra les évènements de chaques salle en et les réalisera si le joueur est dans ladite salle 
