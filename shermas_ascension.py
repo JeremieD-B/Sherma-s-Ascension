@@ -1,119 +1,3 @@
-from random import randint
-# Import du module random qui permet de générer des nombres aléatoires
-
-from time import sleep
-# Autorisé exceptionnellement par le professeur 
-# La fonction sleep du module time permet de mettre un temps d'arrêt dans le programme
-# Elle permet donc de faire attendre le joueur à certain moment pour leur donner plus de crédibilité
-
-
-##### Constantes
-#### Tout les textes
-T_intro = """
-Bienvenue.
-    Vous êtes une jeune aventurière du nom de Sherma, la musique est votre vie, et ainsi vous souhaitez atteindre la Citadelle Mélodieuse pour apprendre les plus grands secrets.
-Avant tout, une petite explication sur vos capacités : 
-- Vous êtes capable faire des choix au fur et à mesure de votre avancée et de prendre les meilleurs décisions tout au long de votre aventure.
-- Vous pouvez quitter à tout moment l'aventure en appuyant sur 'q' ou 'Q'.
-- Bon jeu !
-"""
-T_entree_desc = """
-    Le silence est dense. Une brume dorée se dissipe lentement autour de vous. Devant, se dresse une porte scellée, haute et fine, faite d’un métal chantant.
-Chaque souffle de vent fait vibrer sa surface, produisant un écho lointain — comme un souvenir d’hymne oublié.
-Derrière vous, les profondeurs. Devant, la Citadelle Mélodieuse, si haute que ses sommets se perdent dans les nuées. Vous savez qu’il faut atteindre son sommet — mais la voie reste voilée.
-À votre gauche, un sentier s’enfonce dans les forêts sombres où se cache derrière un mont juxtaposé à la Citadelle.
-À votre droite, un escalier de pierre descend vers des cavernes où l’eau résonne comme une harpe. Une lumière turquoise y palpite, irrégulière.
-"""
-
-#### Autres constantes 
-
-PV_MAX = 5
-vitesse_texte = 0.025 # 0.025 vitesse normale
-vitesse_pause = 0.35 # 0.35 vitesse normale
-
-### Stats de base
-
-Inv = {"Arme": "Baguette de métal", 
-        "Mélodies" : [],
-        "Carapaces" : 0,
-        "Objets" : []}
-Sherma = {
-"PV": 5,
-"Inv" : Inv, 
-"Atk": 0,
-"Def" : 0,
-"Agi" : 0,
-"Emplacement" : "Entree"
-}
-Salles = {
-    "Entree" : {"NomAffichee" : "Entrée","Desc" : TEntreeDesc, "EventPast" : False, "Successeurs": ["GrotteHumide","Caverne"]},
-    "GrotteHumide" : {"NomAffichee" : "Grotte humide","Desc" : TGrotteHumideDesc, "EventPast" : False, "Successeurs": ["GrandeAllee","PetitCouloir"]},
-    "GrandeAllee" : {"NomAffichee" : "Grande Allée","Desc" : TGrandeAlleeDesc, "EventPast" : False, "Successeurs": ["GouffreDOs"]},
-    "PetitCouloir" : {"NomAffichee" : "Petit Couloir","Desc" : TPetitCouloirDesc, "EventPast" : False, "Successeurs": []},
-    "Caverne" : {"NomAffichee" : "Caverne","Desc" : None, "EventPast" : False, "Successeurs": [None]}, #A finir 
-    "GouffreDOs" : {"NomAffichee" : "Gouffre d'Os","Desc" : TGouffreDOsDesc, "EventPast" : False, "Successeurs": ["GrandeAllee"]}
-}
-Fin = False
-##### FONCTIONS :
-
-def question(text : str,rep : tuple) -> str:
-    """
-    Pose la question "text"
-    Si les réponse est q ou Q : quitte le programme
-    R est la Réponse que l'on attend
-    """
-    R = None
-    tour = 0
-    while R not in rep and R not in ("Q","q"):
-        if tour == 0 :
-            ecrire(text)
-        else : 
-            ecrire(text, 0.005,0.01)
-        R = input()
-        tour +=1
-    if R in ("q","Q") :
-        quit()
-    return R
-
-def ecrire(text: str, vitesse = vitesse_texte, vitesse_pause = vitesse_pause) -> None:
-    """
-    Permet d'écrire a l'écran un texte de manière progressive
-    """
-    for lettre in text:
-        sleep(vitesse)
-        print(lettre,end="", flush=True)
-        if lettre in (",",".",">"):
-            sleep(vitesse_pause)
-        # end="" permet de ne pas passer de ligne ; flush= True permet d'écrire le texte progressivement
-
-def perdre_pv(pv : int, pv_perdu :int):
-    ecrire(f">>> Vous perdez {pv_perdu} PV. \n")
-    pv -= pv_perdu
-    if pv <= 0 :
-        input("\n>>> Vous n'avez plus aucun PV. Vous êtes mort.")
-        quit()
-    return pv
-
-def gagner_pv(pv : int, pv_gagne :int):
-    if pv <= PV_MAX :
-        pv += pv_gagne
-        ecrire(f">>> Vous gagnez {pv_gagne} PV. \n")
-    return pv
-
-###### JEU
-
-
-## TUTORIEL :
-ecrire(T_intro)
-sleep(1)
-# Arriver à la porte
-ecrire(Salles["Entree"]["Desc"])
-R = question("""
-Souhaitez-vous partir à gauche ou à droite ?
-    1. Gauche    
-    2. Droite
-Votre réponse : """,("1","2"))
-
 ### Branche 1 : Jérémie
 if R == "1": 
     #Branche 1.1
@@ -146,7 +30,7 @@ Vous le voyez pousser un faible cri aigu avant de se mettre à trembler
 Lorsque d'un coup de nombreux pics aussi long qu'un bras et ascérées comme des couteaux sortent de son corps
 N'ayant pas le temps de réagir vous ne pouvez que vous protéger avec votre bras
 """)
-        PV = perdre_pv(PV,1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     ##Branche 1.2
     ecrire("""-----
     Continuant votre avancée, vous arrivez face à une pente que vous devrez escalader,
@@ -172,7 +56,7 @@ Il est certain qu'avoir couru était l'unique solution""")
 Vous vous rendez compte qu'elle n'est pas stable, 
 En essayant de changer d'appui, vous glissez et retombez en bas de cette pente.
 """)
-        PV = perdre_pv(PV,1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
         R = question("""
 Vous n'avez d'autre choix que de réessayer de monter.
     1. Commencer à courir espérant avoir assez de force pour atteindre le haut sans tomber. 
@@ -238,7 +122,7 @@ Vos recherches font du bruit, des vers géant qui vivent dans les murs de cette 
     Vous creusez de toutes vos forces pour passer cet amas de pierre
 Malgré la difficulté manifeste de cette action vous réussisez a vous en sortir.
 """)
-            PV = perdre_pv(PV,1)
+            Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     elif R == "2" :
         #Branche 1.3.2
         ecrire("""
@@ -275,7 +159,7 @@ Votre réponse : """,("1","2"))
     En courant vers la porte, vous trébuchez et vous faites remarquer par l'ennemis,
 En trébuchant vous vous blessez a la jambe
 """)
-        PV = perdre_pv(PV,1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
         R = question("""
 Pour atteindre le bout de cette allée est nécessaire de s'échapper de cette situation.
   1. Courir de plus belle vers la sortie.
@@ -315,7 +199,7 @@ Votre réponse : """,("1","2"))
     En entrant dans ce recoin vous trouver une pierre ayant la forme d'un banc
 Vous profitez de ce moment de calme pour vous asseoir un moment
 """)
-        PV = gagner_pv(PV,1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
             
 ### Branche 2 : Sacha
 elif R == "2": 
@@ -350,7 +234,7 @@ Vous décidez de combattre l'ennemi
 >>> Vous perdez 1 PV
 >>> Vous gagnez 1 fragment de carapace
 """)
-        perdre_pv(PV, 1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
         Inv["Carapaces"] += 1
     elif R == "2":
         ecrire("""
@@ -398,7 +282,7 @@ Sous vos doigts, certaines vibrent faiblement, comme si elles gardaient en elles
 
 >>> Vous gagnez 1 d'Agilité.
 """)
-        Agi += 1
+        Sherma["Agi"] += 1
         ecrire("""
 
 Puis vient un grondement.
@@ -426,7 +310,7 @@ Votre réponse : """, ("1", "2", "3"))
 Vous décidez de continuer votre ascension vertigineuse qui ne semble plus en finir.\n
 
 >>> Vous perdez 1 PV.""")
-                perdre_pv(PV, 1)
+                Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
                 chaussure_gauche = False
                 
             elif R == "2":
@@ -477,14 +361,14 @@ Vous vous cachez, pendant un très long moment. Personne ne vous remarque.
 >>> Vous perdez 1 point d'agilité.
 
 Vous décidez de reprendre l'ascension.""")
-                        Agi -= 1
+                        Sherma["Agi"] -= 1
                     elif R == 2:
                         ecrire(f"""
 Vous brandissez votre {Inv['Arme']} et combattez les ennemis. Ceux-ci prennent peur sauf un.
 Vous le combattez et êtes légèrement blessé.
 
 >>> Vous perdez 1 PV""")
-                        perdre_pv(PV, 1)
+                        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
                     elif R == 3: 
                         pass # Reprend directment l'ascension
                     ecrire("""
@@ -507,7 +391,7 @@ En vous élevant, vous comprenez que l’éboulis tout entier est un instrument,
 Vous sentez la fatigue dans vos membres, la poussière dans vos poumons, mais aussi un appel : la montagne semble vous éprouver, jauger votre détermination.\n")
 
 >>> Vous gagnez 1 point d'Agilité.""")
-        Agi += 1
+        Sherma["Agi"] += 1
         R = question("""
 Devant vous, deux passages se dessinent dans la paroi :
     1. À gauche, une fissure étroite d’où s’échappe une lueur rougeâtre et un grondement profond.
@@ -557,13 +441,13 @@ Votre réponse : """, ("1", "2"))
                 ecrire(""""
 Vous êtes sur de vous et attaquez les monstres.
 >>> Vous perdez 1 point de vie""")
-                perdre_pv(1)
+                Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
                 sleep(1)
-                while PV > 0: 
+                while Sherma["PV"] > 0: 
                     ecrire("""
 Vous êtes persévérant et continuez à combattre.
 >>> Vous perdez 1 point de vie.""")
-                    perdre_pv(PV, 1)
+                    Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
                     sleep(2)
             elif R == "2": 
                 # Branche 2.2.2.2
@@ -571,7 +455,7 @@ Vous êtes persévérant et continuez à combattre.
 Vous vous fatiguez et tombez le long des pierres qui vous tenait jusque là en position.
 
 >>> Vous perdez 1 point de vie""")
-                perdre_pv(PV, 1)
+                Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
                 R = question("""
 Vous vous faites remarquer et les monstres vous attaque tous ensemble.
     1. Combattre
@@ -590,4 +474,3 @@ La Fin n'est jamais vraiment la fin mais juste un nouveau commencement.
   -  Sensei Wu""")
 input()
 quit()
-
