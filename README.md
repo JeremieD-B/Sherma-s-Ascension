@@ -4,7 +4,9 @@ Sherma's Ascension est un jeu où le personnage principal **Sherma** doit attein
 
 To do list :
 
-Écrire les dictionnaires correspondant a chaque salle 
+Écrire les dictionnaires correspondant a chaque salle  50%
+
+Ecrire Les constantes de textes
 
 Implémenter la variable "Fin" qui permet de quitter le jeu
 
