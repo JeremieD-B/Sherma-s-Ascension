@@ -9,7 +9,7 @@ from time import sleep
 
 ##### Constantes
 #### Tout les textes
-T_intro = """
+TIntro = """
 Bienvenue.
     Vous êtes une jeune aventurière du nom de Sherma, la musique est votre vie, et ainsi vous souhaitez atteindre la Citadelle Mélodieuse pour apprendre les plus grands secrets.
 Avant tout, une petite explication sur vos capacités : 
@@ -17,25 +17,32 @@ Avant tout, une petite explication sur vos capacités :
 - Vous pouvez quitter à tout moment l'aventure en appuyant sur 'q' ou 'Q'.
 - Bon jeu !
 """
-T_entree_desc = """
+TEntreeDesc = """
     Le silence est dense. Une brume dorée se dissipe lentement autour de vous. Devant, se dresse une porte scellée, haute et fine, faite d’un métal chantant.
 Chaque souffle de vent fait vibrer sa surface, produisant un écho lointain — comme un souvenir d’hymne oublié.
 Derrière vous, les profondeurs. Devant, la Citadelle Mélodieuse, si haute que ses sommets se perdent dans les nuées. Vous savez qu’il faut atteindre son sommet — mais la voie reste voilée.
 À votre gauche, un sentier s’enfonce dans les forêts sombres où se cache derrière un mont juxtaposé à la Citadelle.
 À votre droite, un escalier de pierre descend vers des cavernes où l’eau résonne comme une harpe. Une lumière turquoise y palpite, irrégulière.
 """
-
-TEntreeDesc = ""
-TGrotteHumideDesc = ""
-TGrandeAlleeDesc = ""
-TPetitCouloirDesc = ""
-TGouffreDOsDesc = ""
-
+TEntreeDeplacement = """
+Souhaitez-vous partir à gauche ou à droite ?
+    1. Gauche    
+    2. Droite
+Votre réponse : """
+TEntreeDeplacementPossible = ("1","2")
+TGrotteHumideDesc = """
+"""
+TGrandeAlleeDesc = """
+"""
+TPetitCouloirDesc = """
+"""
+TGouffreDOsDesc = """
+"""
 #### Autres constantes 
 
 PV_MAX = 5
-vitesse_texte = 0.025 # 0.025 vitesse normale
-vitesse_pause = 0.35 # 0.35 vitesse normale
+vitesse_texte = 0.005 # 0.025 vitesse normale
+vitesse_pause = 0.005 # 0.35 vitesse normale
 
 ### Stats de base
 
@@ -110,15 +117,11 @@ def gagner_pv(pv : int, pv_gagne :int):
 
 
 ## TUTORIEL :
-ecrire(T_intro)
+ecrire(TIntro)
 sleep(1)
 # Arriver à la porte
 ecrire(Salles["Entree"]["Desc"])
-R = question("""
-Souhaitez-vous partir à gauche ou à droite ?
-    1. Gauche    
-    2. Droite
-Votre réponse : """,("1","2"))
+R = question(TEntreeDeplacement,TEntreeDeplacementPossible)
 
 ### Branche 1 : Jérémie
 if R == "1": 
@@ -596,3 +599,4 @@ La Fin n'est jamais vraiment la fin mais juste un nouveau commencement.
   -  Sensei Wu""")
 input()
 quit()
+
