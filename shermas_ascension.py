@@ -92,6 +92,45 @@ Vous le voyez pousser un faible cri aigu avant de se mettre à trembler
 Lorsque d'un coup de nombreux pics aussi long qu'un bras et ascérées comme des couteaux sortent de son corps
 N'ayant pas le temps de réagir vous ne pouvez que vous protéger avec votre bras
 """
+TGrotteHumideTEvent2 = """
+-----
+    Continuant votre avancée, vous arrivez face à une pente que vous devrez escalader,
+Vous regardez de plus près les différentes prises qui vous seront disponibles.
+Elles sont petites et ne semblent pas stables, l'escalade sera difficile.
+"""
+TGrotteHumideQEvent2 = """
+Ils vous faut choisir :
+    1. Essayer d'escalader rapidement espérant que les pierres tiennent le coup
+    2. Prendre son temps avec le maximum de précautions
+Votre réponse : """
+TGrotteHumideQEvent2Rep =("1","2") 
+TGrotteHumideTEvent2_1 = """
+    Vous vous mettez à courir le plus rapidement possible
+Sous chacun de vos pas, la prise que vous utilisez se brise,
+Sans votre élan vous n'arriveriez jamais à grimper.
+Il est certain qu'avoir couru était l'unique solution"""
+TGrotteHumideTEvent2_2 = """
+    Vous escaladez tout doucement, sauf qu'en posant le pied sur la première prises, 
+Vous vous rendez compte qu'elle n'est pas stable, 
+En essayant de changer d'appui, vous glissez et retombez en bas de cette pente.
+""" 
+TGrotteHumideQEvent2_1 = """
+Vous n'avez d'autre choix que de réessayer de monter.
+    1. Commencer à courir espérant avoir assez de force pour atteindre le haut sans tomber. 
+    2. Attraper les prises doucement une par une.
+Votre réponse : """
+TGrotteHumideQEvent2_1Rep = ("1","2")
+TGrotteHumideTEvent2_1_1 = """
+    Vous vous mettez à courir le plus rapidement possible
+Dans votre élan vous réussissez à atteindre la haut de la peinte
+Fière de vos efforts vous avancez désormais vers une nouvelle pièce
+"""
+TGrotteHumideTEvent2_1_2 = """
+    Malgré toutes les précautions que vous avez su prendre, 
+Les prises ne tiennent pas sous votre poids pendant plus d'une seconde. 
+C'est durant votre dernière chute que vous réalisiez que cette fois ci, 
+La précipitation était le bon choix
+"""
 
 TGrotteHumideDesc = """
 -----
@@ -99,6 +138,117 @@ TGrotteHumideDesc = """
 L'atmosphère est pesante, des bruits inquiétant d'insecte percent au travers du silence qui vous entoure
 Après avoir marcher quelques minutes, determiné à avancer vers la Citadelle Mélodieuse, vous faites face à un étrange insecte
 Cet insecte ressemble à une énorme chenille, elle vous arrive au genoux et est couverte de poils vert formant une fourure
+"""
+
+TGrandeAlleeT1 = """-----
+    Vous faites maintenant face à une grande allée dégagée,
+Les rayons de lumières qui percent à travers la végétation toujours denses
+Donnent une atmosphère particulière à la pièce
+"""
+
+TGrandeAlleeQEvent ="""
+Vous remarquez un petit couloir à votre droite 
+    1. Vous allez explorer ce couloir sombre.
+    2. Vous préfèrez continuer dans cette grande allée.
+Votre réponse :"""
+TGrandeAlleeQEvent1Rep = ("1","2")
+
+TGrandeAlleeTEvent1_1 = """
+-----
+    En entrant dans ce couloir, la visibilitée est très faible. 
+Vous voyez des gouttes perler du plafonds, la pièce est très humide 
+Alors que vous continuiez votre avancée, vouss entendez l'entrée de ce couloir s'effondrer 
+Il va être difficile de ressortir.
+Au moins vous avez trouver un chapelet contenant 30 perles.)
+
+>>> Vous gagnez 30 perles.
+""" 
+
+TGrandeAlleeQEvent1_1 = """
+Pour ressortir d'ici il va falloir choisir à quoi se consacrer.
+    1. Chercher une autre sortie
+    2. Ecarter les pierres qui se sont effondrer pour revenir en arrière
+Votre réponse :"""
+TGrandeAlleeQEvent1_1Rep = ("1","2")
+
+TGrandeAlleeTEvent1_1_1 = """
+    Après des heures d'errances vous n'avez trouvez aucune sortie.
+Malgré tous vos effort les heures passes, le temps passe et aucune sortie n'est décelable.
+Vos recherches font du bruit, des vers géant qui vivent dans les murs de cette cavernes viennent vous rendre visites.
+"""
+
+TGrandeAlleeQEvent1_1_2 = """
+    Vous creusez de toutes vos forces pour passer cet amas de pierre
+Malgré la difficulté manifeste de cette action vous réussisez a vous en sortir.
+"""
+
+TGrandeAlleeTEvent1_2 = """
+    Vous traversez cette grande allée et observez autour de vous 
+La végétation de ces cavernes est extrêmement développée.
+Vous ne connaissiez aucune de ces espèces avant de venir ici 
+Les différentes plantes et arbres autour de vous vous parraissent très jolis 
+Cet arbre là par exemple, ses branches sont toutes courbées, pas une seule partie de l'arbre n'est rectili...
+        BRRAOUUUUUMMMMMM
+Vous venez d'entendre le couloir que vous aviez vu précédemment s'effondrer.
+Cette caverne n'est définitivement pas accueillante.
+"""
+
+TGrandeAlleeT2 = """
+    Après avoir avancer dans cette grande allée, vous faites à un nouvel ennemis.
+Physiquement il ressemble fortement à la chenille croisée auparavant, mais celle-ci vole !
+"""
+
+TGrandeAlleeQEvent2 ="""
+Pour atteindre le bout de cette allée il va falloir passer. 
+    1. Lancer une pierre sur l'insecte volant dans l'espoir de le faire fuir.
+    2. Courir de toutes vos forces en dessous pour atteindre la porte avant qu'il ne réagisse
+Votre réponse : """
+TGrandeAlleeQEvent2Rep = ("1","2")
+
+TGrandeAlleeTEvent2_1 = """
+    Vous lancez une pierre vers l'insecte, il perd l'équilibre de son vol et s'écrase au sol
+
+>>> Vous gagnez 1 Fragment de carapace
+"""
+
+TGrandeAlleeTEvent2_2 = """
+    En courant vers la porte, vous trébuchez et vous faites remarquer par l'ennemis,
+En trébuchant vous vous blessez a la jambe
+"""
+
+TGrandeAlleeQEvent2_1 = """
+Pour atteindre le bout de cette allée est nécessaire de s'échapper de cette situation.
+  1. Courir de plus belle vers la sortie.
+  2. Foncer vers l'ennemi afin de le faire tomber et de l'abattre.
+Votre réponse : """
+TGrandeAlleeQEvent2_1Rep = ("1","2")
+
+TGrandeAlleeTEvent2_1_1 = """
+    Vous avez trébuché de nouveau, vous ne sentez même plus votre jambe blessée, cet insecte approche vers vous.
+"""
+
+TGrandeAlleeTEvent2_1_2 = """
+    En fonçant vers cet insecte il descend a vive allure vers vous son dard diriger vers votre tête.
+"""
+
+TGrandeAlleeT3= """
+    Vous arrivez finalement vers une grande porte entrouverte un léger filet de lumière la traverse.
+"""
+
+TGrandeAlleeQEvent3 = """
+Vous apercevez un petit recoin dans lequel vous pourriez vous faufiler pour explorer
+    1. Traverser cette énorme porte et avancer vers la Citadelle
+    2. Commencer par explorer ce petit recoin.
+Votre réponse : """
+TGrandeAlleeQEvent3Rep = ("1","2")
+
+TGrandeAlleeTEvent3_1 = """
+    Vous traversez la grande porte, vous ne saurez jamais ce qu'il y avait dans ce recoin.
+"""
+TGrandeAlleeTEvent3_2 = """
+
+    En entrant dans ce recoin vous trouver une pierre ayant la forme d'un banc
+Vous profitez de ce moment de calme pour vous asseoir un moment
 """
 
 TSentierQEvent1 = """
@@ -347,8 +497,6 @@ Salles = {
 
 Fin = False
 
-
-
 ###### FONCTIONS :
 
 def question(text : str,rep : tuple) -> str:
@@ -414,182 +562,85 @@ R = question(TEntreeDeplacement,TEntreeDeplacementRep)
 if R == "1": 
     #Branche 1.1
     ecrire(Salles["GrotteHumide"]["Desc"])
-    R = question(TGrotteHumideQEvent,TGrotteHumideQEventRep)
+    R = question(TGrotteHumideQEvent1,TGrotteHumideQEvent1Rep)
     #Branche 1.1.1
     if R == "1" :
-          ecrire(TGrotteHumideTEvent1)
+          ecrire(TGrotteHumideTEvent1_1)
     #Branche 1.1.2
     elif R == "2":
-        ecrire(TGrotteHumideTEvent2)
+        ecrire(TGrotteHumideTEvent1_2)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     ##Branche 1.2
-    ecrire("""-----
-    Continuant votre avancée, vous arrivez face à une pente que vous devrez escalader,
-Vous regardez de plus près les différentes prises qui vous seront disponibles.
-Elles sont petites et ne semblent pas stables, l'escalade sera difficile.
-""")
-    R = question("""
-Ils vous faut choisir :
-    1. Essayer d'escalader rapidement espérant que les pierres tiennent le coup
-    2. Prendre son temps avec le maximum de précautions
-Votre réponse : """,("1","2"))
+    ecrire(TGrotteHumideTEvent2)
+    R = question(TGrotteHumideQEvent2,TGrotteHumideQEvent2Rep)
     #Branche 1.2.1
     if R == "1" :
-        ecrire("""
-    Vous vous mettez à courir le plus rapidement possible
-Sous chacun de vos pas, la prise que vous utilisez se brise,
-Sans votre élan vous n'arriveriez jamais à grimper.
-Il est certain qu'avoir couru était l'unique solution""")
+        ecrire(TGrotteHumideTEvent2_1)
     #Branche 1.2.2
     elif R == "2" :
-        ecrire("""
-    Vous escaladez tout doucement, sauf qu'en posant le pied sur la première prises, 
-Vous vous rendez compte qu'elle n'est pas stable, 
-En essayant de changer d'appui, vous glissez et retombez en bas de cette pente.
-""")
+        ecrire(TGrotteHumideTEvent2_2)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
-        R = question("""
-Vous n'avez d'autre choix que de réessayer de monter.
-    1. Commencer à courir espérant avoir assez de force pour atteindre le haut sans tomber. 
-    2. Attraper les prises doucement une par une.
-Votre réponse : """,("1","2"))    
+        R = question(TGrotteHumideQEvent2_1,TGrotteHumideQEvent2_1Rep)    
         #Branche 1.2.2.1
         if R == "1" : 
-            ecrire("""
-    Vous vous mettez à courir le plus rapidement possible
-Dans votre élan vous réussissez à atteindre la haut de la peinte
-Fière de vos efforts vous avancez désormais vers une nouvelle pièce
-""")
+            ecrire(TGrotteHumideTEvent2_1_1)
         #Branche 1.2.2.2
         elif R == "2":
-            ecrire("""
-    Malgré toutes les précautions que vous avez su prendre, 
-Les prises ne tiennent pas sous votre poids pendant plus d'une seconde. 
-C'est durant votre dernière chute que vous réalisiez que cette fois ci, 
-La précipitation était le bon choix
-""")
+            ecrire(TGrotteHumideTEvent2_1_2)
             input(">>> Vous êtes mort.")
             quit()
     ##Branche 1.3 
-    ecrire("""-----
-    Vous faites maintenant face à une grande allée dégagée,
-Les rayons de lumières qui percent a travers la végétation toujours denses
-Donnent une atmosphère particulière à la pièces
-""")
-    R = question("""
-Vous remarquez un petit couloir à votre droite 
-    1. Vous allez explorer ce couloir sombre.
-    2. Vous préfèrez continuer dans cette grande allée.
-Votre réponse :""",("1","2"))
+
+    ecrire(TGrandeAlleeDesc1)
+    R = question(TGrandeAlleeQEvent1,TGrandeAlleeQEvent1Rep) 
     #Branche 1.3.1
     if R == "1" :
-        ecrire("""
------
-    En entrant dans ce couloir, la visibilitée est très faible. 
-Vous voyez des gouttes perler du plafonds, la pièce est très humide 
-Alors que vous continuiez votre avancée, vouss entendez l'entrée de ce couloir s'effondrer 
-Il va être difficile de ressortir.
-Au moins vous avez trouver un chapelet contenant 30 perles.)
-
->>> Vous gagnez 30 perles.
-""")
-        R = question("""
-Pour ressortir d'ici il va falloir choisir à quoi se consacrer.
-    1. Chercher une autre sortie
-    2. Ecarter les pierres qui se sont effondrer pour revenir en arrière
-Votre réponse :""",("1","2"))
+        ecrire(TGrandeAlleeTEvent1_1)
+        R = question(TGrandeAlleeQEvent1_1,TGrandeAlleeQEvent1_1Rep)
         #Branche 1.3.1.1
         if R == "1" :
-            ecrire("""
-    Après des heures d'errances vous n'avez trouvez aucune sortie.
-Malgré tous vos effort les heures passes, le temps passe et aucune sortie n'est décelable.
-Vos recherches font du bruit, des vers géant qui vivent dans les murs de cette cavernes viennent vous rendre visites.
-""")
-            input(">>> Vous êtes mort.")
+            ecrire(TGrandeAlleeTEvent1_1_1)
+            ecrire(">>> Vous êtes mort.")
+            input()
             quit()
         #Branche 1.3.1.2 
         elif R == "2":
-            ecrire("""
-    Vous creusez de toutes vos forces pour passer cet amas de pierre
-Malgré la difficulté manifeste de cette action vous réussisez a vous en sortir.
-""")
+            ecrire(TGrandeAlleeQEvent1_1_2)
             Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     elif R == "2" :
         #Branche 1.3.2
-        ecrire("""
-    Vous traversez cette grande allée et observez autour de vous 
-La végétation de ces cavernes est extrêmement développée.
-Vous ne connaissiez aucune de ces espèces avant de venir ici 
-Les différentes plantes et arbres autour de vous vous parraissent très jolis 
-Cet arbre là par exemple, ses branches sont toutes courbées, pas une seule partie de l'arbre n'est rectili...
-        BRRAOUUUUUMMMMMM
-Vous venez d'entendre le couloir que vous aviez vu précédemment s'effondrer.
-Cette caverne n'est définitivement pas accueillante.
-""")
+        ecrire(TGrandeAlleeTEvent1_2)
     #Branche 1.4
-    ecrire("""
-    Après avoir avancer dans cette grande allée, vous faites à un nouvel ennemis.
-Physiquement il ressemble fortement à la chenille croisée auparavant, mais celle-ci vole !
-""")
-    R = question("""
-Pour atteindre le bout de cette allée il va falloir passer. 
-    1. Lancer une pierre sur l'insecte volant dans l'espoir de le faire fuir.
-    2. Courir de toutes vos forces en dessous pour atteindre la porte avant qu'il ne réagisse
-Votre réponse : """,("1","2"))
+    ecrire(TGrandeAlleeT2)
+    R = question(TGrandeAlleeQEvent2,("1","2"))
     #Branche 1.4.1 
     if R == "1" :
-        ecrire("""
-    Vous lancez une pierre vers l'insecte, il perd l'équilibre de son vol et s'écrase au sol
-
->>> Vous gagnez 1 Fragment de carapace
-""")
+        ecrire(TGrandeAlleeTEvent2_1)
         Inv["Carapaces"] += 1
     #Branche 1.4.2
     elif R == "2" :
-        ecrire("""
-    En courant vers la porte, vous trébuchez et vous faites remarquer par l'ennemis,
-En trébuchant vous vous blessez a la jambe
-""")
+        ecrire(TGrandeAlleeTEvent2_2)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
-        R = question("""
-Pour atteindre le bout de cette allée est nécessaire de s'échapper de cette situation.
-  1. Courir de plus belle vers la sortie.
-  2. Foncer vers l'ennemi afin de le faire tomber et de l'abattre.
-Votre réponse : """,("1","2"))
+        R = question(TGrandeAlleeQEvent2_1,TGrandeAlleeQEvent2_1Rep)
         #Branche 1.4.2.1
         if R == "1" :
-            ecrire("""
-    Vous avez trébuché de nouveau, vous ne sentez même plus votre jambe blessée, cet insecte approche vers vous.
-""")
+            ecrire(TGrandeAlleeTEvent2_1_1)
             input(">>> Vous êtes mort.")
             quit()
         #Branche 1.4.2.2 
         elif R == "2" :
-            ecrire("""
-    En fonçant vers cet insecte il descend a vive allure vers vous son dard diriger vers votre tête.
-""")
+            ecrire(TGrandeAlleeTEvent2_1_2)
             input(">>> Vous êtes mort.")
             quit()
     ##Branche 1.5
-    ecrire("""
-    Vous arrivez finalement vers une grande porte entrouverte un léger filet de lumière la traverse.
-""")
-    R = question("""
-Vous apercevez un petit recoin dans lequel vous pourriez vous faufiler pour explorer
-    1. Traverser cette énorme porte et avancer vers la Citadelle
-    2. Commencer par explorer ce petit recoin.
-Votre réponse : """,("1","2"))
+    ecrire(TGrandeAlleeT3)
+    R = question(TGrandeAlleeQEvent3,TGrandeAlleeQEvent3Rep)
     #Branche 1.5.1
     if R == "1" :
-        ecrire("""
-    Vous traversez la grande porte, vous ne saurez jamais ce qu'il y avait dans ce recoin.
-""")
+        ecrire(TGrandeAlleeTEvent3_1)
     #Branche 1.5.2
     elif R == "2" :
-        ecrire("""
-    En entrant dans ce recoin vous trouver une pierre ayant la forme d'un banc
-Vous profitez de ce moment de calme pour vous asseoir un moment
-""")
+        ecrire(TGrandeAlleeTEvent3_2)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
             
 ### Branche 2 : Sacha
@@ -732,4 +783,5 @@ Vous êtes persévérant et continuez à combattre.
 ecrire(TFIN)
 input()
 quit()
+
 
