@@ -557,32 +557,42 @@ def Entree():
         Sherma["Emplacement"] = "Sentier"
 
 def GrotteHumide():
+    #Branche 1.1 
     GrotteHumide1()
     GrotteHumide2()
     Sherma["Emplacement"] = "GrandeAllee"
 def GrotteHumide1():
+    #Branche 1.1
     ecrire(Salles["GrotteHumide"]["Desc"])
     R = question(TGrotteHumideQEvent1,TGrotteHumideQEvent1Rep)
     if R == "1" :
-          ecrire(TGrotteHumideTEvent1_1)
+        #Branche 1.1.1
+        ecrire(TGrotteHumideTEvent1_1)
     elif R == "2":
+        #Branche 1.1.2
         ecrire(TGrotteHumideTEvent1_2)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
 def GrotteHumide2():
+    #Branche 1.2
     ecrire(TGrotteHumideTEvent2)
     R = question(TGrotteHumideQEvent2,TGrotteHumideQEvent2Rep)
     if R == "1" :
+        #Branche 1.2.1
         ecrire(TGrotteHumideTEvent2_1)
     elif R == "2" :
+        #Branche 1.2.2
         ecrire(TGrotteHumideTEvent2_2)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
         R = question(TGrotteHumideQEvent2_1,TGrotteHumideQEvent2_1Rep)    
-        if R == "1" : 
+        if R == "1" :
+            #Branche 1.2.2.1 
             ecrire(TGrotteHumideTEvent2_1_1)
         elif R == "2":
+            #Branche 1.2.2.2
             mourir(TGrotteHumideTEvent2_1_2)
 
 def GrandeAllee(): 
+    #Branche 1.3
     GrandeAllee1()
     GrandeAllee2()
     GrandeAllee3()
@@ -821,3 +831,4 @@ def jouer():
 ###### JEU
 
 jouer()
+
