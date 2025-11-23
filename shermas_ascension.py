@@ -11,6 +11,19 @@ vitesse_pause = 0.35 # 0.35 vitesse normale
 
 ### Constantes de description de salles
 
+# QEvent = Question event
+# QEventRep = Réponse autorisé du Question event 
+# TEvent = Texte event
+
+TIntro = """
+Bienvenue.
+    Vous êtes une jeune aventurière du nom de Sherma, la musique est votre vie, et ainsi vous souhaitez atteindre la Citadelle Mélodieuse pour apprendre les plus grands secrets.
+Avant tout, une petite explication sur vos capacités : 
+- Vous êtes capable faire des choix au fur et à mesure de votre avancée et de prendre les meilleurs décisions tout au long de votre aventure.
+- Vous pouvez quitter à tout moment l'aventure en appuyant sur 'q' ou 'Q'.
+Bon jeu !
+"""
+
 TEntreeDesc = """
     Le silence est dense. Une brume dorée se dissipe lentement autour de vous. Devant, se dresse une porte scellée, haute et fine, faite d’un métal chantant.
 Chaque souffle de vent fait vibrer sa surface, produisant un écho lointain — comme un souvenir d’hymne oublié.
@@ -18,15 +31,6 @@ Derrière vous, les profondeurs. Devant, la Citadelle Mélodieuse, si haute que 
 À votre gauche, un sentier s’enfonce dans les forêts sombres où se cache derrière un mont juxtaposé à la Citadelle.
 À votre droite, un escalier de pierre descend vers des cavernes où l’eau résonne comme une harpe. Une lumière turquoise y palpite, irrégulière.
 """
-
-TGrotteHumideDesc = """
------
-    Vous arrivez dans une pièce sombre, seuls quelques rayon de lumière percent au travers de la dense végétation qui vous entoure
-L'atmosphère est pesante, des bruits inquiétant d'insecte percent au travers du silence qui vous entoure
-Après avoir marcher quelques minutes, determiné à avancer vers la Citadelle Mélodieuse, vous faites face à un étrange insecte
-Cet insecte ressemble à une énorme chenille, elle vous arrive au genoux et est couverte de poils vert formant une fourure
-"""
-
 TGrandeAlleeDesc = """
 """
 TPetitCouloirDesc = """
@@ -60,47 +64,6 @@ TExterieurDesc = """
 Vous constatez que cette lumière provient du Soleil entre les pierres, ce n'est pas ce que vous recherchiez.
 Cependant, votre curiosité vous force à creuser les murs et ainsi sortir de la grotte."""
 
-### Stats de base
-
-Inv = {"Arme": "Baguette de métal", 
-        "Mélodies" : [],
-        "Carapaces" : 0,
-        "Objets" : []}
-Sherma = {
-"PV": 5,
-"Inv" : Inv, 
-"Atk": 0,
-"Def" : 0,
-"Agi" : 0,
-"Emplacement" : "Entree"
-}
-Salles = {
-    "Entree" : {"NomAffichee" : "Entrée","Desc" : TEntreeDesc, "EventPast" : False, "Successeurs": ["GrotteHumide","Caverne"]},
-    "GrotteHumide" : {"NomAffichee" : "Grotte humide","Desc" : TGrotteHumideDesc, "EventPast" : False, "Successeurs": ["GrandeAllee","PetitCouloir"]},
-    "GrandeAllee" : {"NomAffichee" : "Grande Allée","Desc" : TGrandeAlleeDesc, "EventPast" : False, "Successeurs": ["GouffreDOs"]},
-    "PetitCouloir" : {"NomAffichee" : "Petit Couloir","Desc" : TPetitCouloirDesc, "EventPast" : False, "Successeurs": []},
-    "GouffreDOs" : {"NomAffichee" : "Gouffre d'Os","Desc" : TGouffreDOsDesc, "EventPast" : False, "Successeurs": ["GrandeAllee"]},
-    "Sentier": {"NomAffichee" : "Sentier","Desc" : TSentierDesc, "EventPast" : False, "Successeurs": ["Caverne"]},
-    "Caverne": {"NomAffichee" : "Caverne","Desc" : TCaverneDesc, "EventPast" : False, "Successeurs": ["Pierres", "Exterieur"]},
-    "Pierres": {"NomAffichee" : "Pierres","Desc" : TPierresDesc, "EventPast" : False, "Successeurs": ["Ascension"]},
-    "Exterieur": {"NomAffichee" : "Extérieur","Desc" : TExterieurDesc, "EventPast" : False, "Successeurs": None},
-}
-Fin = False
-
-##### Constantes Textes
-
-# QEvent = Question event
-# QEventRep = Réponse autorisé du Question event 
-# TEvent = Texte event
-
-TIntro = """
-Bienvenue.
-    Vous êtes une jeune aventurière du nom de Sherma, la musique est votre vie, et ainsi vous souhaitez atteindre la Citadelle Mélodieuse pour apprendre les plus grands secrets.
-Avant tout, une petite explication sur vos capacités : 
-- Vous êtes capable faire des choix au fur et à mesure de votre avancée et de prendre les meilleurs décisions tout au long de votre aventure.
-- Vous pouvez quitter à tout moment l'aventure en appuyant sur 'q' ou 'Q'.
-Bon jeu !
-"""
 
 TEntreeDeplacement = """
 Souhaitez-vous partir à gauche ou à droite ?
@@ -130,7 +93,13 @@ Lorsque d'un coup de nombreux pics aussi long qu'un bras et ascérées comme des
 N'ayant pas le temps de réagir vous ne pouvez que vous protéger avec votre bras
 """
 
-
+TGrotteHumideDesc = """
+-----
+    Vous arrivez dans une pièce sombre, seuls quelques rayon de lumière percent au travers de la dense végétation qui vous entoure
+L'atmosphère est pesante, des bruits inquiétant d'insecte percent au travers du silence qui vous entoure
+Après avoir marcher quelques minutes, determiné à avancer vers la Citadelle Mélodieuse, vous faites face à un étrange insecte
+Cet insecte ressemble à une énorme chenille, elle vous arrive au genoux et est couverte de poils vert formant une fourure
+"""
 
 TSentierQEvent1 = """
 Observez autour de vous ?
@@ -266,8 +235,8 @@ Vous vous cachez, pendant un très long moment. Personne ne vous remarque.
 
 Vous décidez de reprendre l'ascension."""
 
-TCaverneQEvent5_2 = f"""
-Vous brandissez votre {Inv['Arme']} et combattez les ennemis. Ceux-ci prennent peur sauf un.
+TCaverneQEvent5_2 = """
+Vous brandissez votre Baguette de métal et combattez les ennemis. Ceux-ci prennent peur sauf un.
 Vous le combattez et êtes légèrement blessé.
 
 >>> Vous perdez 1 PV"""
@@ -347,6 +316,38 @@ Est-ce la fin ? Non ...
 La Fin n'est jamais vraiment la fin mais juste un nouveau commencement.
   -  Sensei Wu
 """
+
+### Stats de base
+
+Inv = {"Arme": "Baguette de métal", 
+        "Mélodies" : [],
+        "Carapaces" : 0,
+        "Objets" : []}
+
+Sherma = {
+"PV": 5,
+"Inv" : Inv, 
+"Atk": 0,
+"Def" : 0,
+"Agi" : 0,
+"Emplacement" : "Entree"
+}
+
+Salles = {
+    "Entree" : {"NomAffichee" : "Entrée","Desc" : TEntreeDesc, "EventPast" : False, "Successeurs": ["GrotteHumide","Caverne"]},
+    "GrotteHumide" : {"NomAffichee" : "Grotte humide","Desc" : TGrotteHumideDesc, "EventPast" : False, "Successeurs": ["GrandeAllee","PetitCouloir"]},
+    "GrandeAllee" : {"NomAffichee" : "Grande Allée","Desc" : TGrandeAlleeDesc, "EventPast" : False, "Successeurs": ["GouffreDOs"]},
+    "PetitCouloir" : {"NomAffichee" : "Petit Couloir","Desc" : TPetitCouloirDesc, "EventPast" : False, "Successeurs": []},
+    "GouffreDOs" : {"NomAffichee" : "Gouffre d'Os","Desc" : TGouffreDOsDesc, "EventPast" : False, "Successeurs": ["GrandeAllee"]},
+    "Sentier": {"NomAffichee" : "Sentier","Desc" : TSentierDesc, "EventPast" : False, "Successeurs": ["Caverne"]},
+    "Caverne": {"NomAffichee" : "Caverne","Desc" : TCaverneDesc, "EventPast" : False, "Successeurs": ["Pierres", "Exterieur"]},
+    "Pierres": {"NomAffichee" : "Pierres","Desc" : TPierresDesc, "EventPast" : False, "Successeurs": ["Ascension"]},
+    "Exterieur": {"NomAffichee" : "Extérieur","Desc" : TExterieurDesc, "EventPast" : False, "Successeurs": None},
+}
+
+Fin = False
+
+
 
 ###### FONCTIONS :
 
