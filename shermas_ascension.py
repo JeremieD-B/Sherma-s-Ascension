@@ -496,12 +496,16 @@ def question(text : str,rep : tuple) -> str:
     """
     R = None
     tour = 0
-    while R not in rep and R not in ("Q","q"):
+    while R not in rep and R not in ("Q","q","Inv","Stats"):
         if tour == 0 :
             ecrire(text)
         else : 
             ecrire(text, 0.005,0.01)
         R = input()
+        if R == "Inv" :
+            afficher_inv()
+        if R == "Stats" :
+            afficher_stats()
         tour +=1
     if R in ("q","Q") :
         quit()
@@ -517,6 +521,30 @@ def ecrire(text: str, vitesse = vitesse_texte, vitesse_pause = vitesse_pause) ->
         if lettre in (",",".",">"):
             sleep(vitesse_pause)
         # end="" permet de ne pas passer de ligne ; flush= True permet d'écrire le texte progressivement
+
+def afficher_stats():
+    TInv = f"""
+----------
+Emplacement : {Salles[Sherma["Emplacement"]]["NomAffichee"]}
+PV : {Sherma["PV"]}/{PV_MAX}
+Atk : {Sherma["Atk"]}
+Def : {Sherma["Def"]}
+Agi : {Sherma["Agi"]}
+---------
+"""
+    ecrire(TInv)
+
+def afficher_inv():
+    TStats = f"""
+----------
+Vous avez {Sherma["PV"]}/{PV_MAX} PV.
+
+Vous possédez {Sherma["Inv"]["Carapaces"]} Fragments de Carapaces.
+
+Vous possédez {Sherma["Inv"]["Perles"]} Perles.
+---------
+"""
+    ecrire(TStats)
 
 def perdre_pv(pv : int, pv_perdu :int):
     ecrire(f">>> Vous perdez {pv_perdu} PV. \n")
@@ -850,3 +878,4 @@ def jouer():
 ###### JEU
 
 jouer()
+
