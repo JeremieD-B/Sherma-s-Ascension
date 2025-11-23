@@ -469,13 +469,14 @@ Sherma = {
 "Atk": 0,
 "Def" : 0,
 "Agi" : 0,
-"Emplacement" : "Entree",
+"Emplacement" : "Tutoriel",
 "lacets_faits" : True,
 "mort": 0,
 "a_finit": False
 }
 
 Salles = {
+    "Tutoriel" : {"NomAffichee" : "Entrée","Desc" : TEntreeDesc},
     "Entree" : {"NomAffichee" : "Entrée","Desc" : TEntreeDesc},
     "GrotteHumide" : {"NomAffichee" : "Grotte humide","Desc" : TGrotteHumideDesc},
     "GrandeAllee" : {"NomAffichee" : "Grande Allée","Desc" : TGrandeAlleeDesc},
@@ -496,16 +497,12 @@ def question(text : str,rep : tuple) -> str:
     """
     R = None
     tour = 0
-    while R not in rep and R not in ("Q","q","Inv","Stats"):
+    while R not in rep and R not in ("Q","q"):
         if tour == 0 :
             ecrire(text)
         else : 
             ecrire(text, 0.005,0.01)
         R = input()
-        if R == "Inv" :
-            afficher_inv()
-        if R == "Stats" :
-            afficher_stats()
         tour +=1
     if R in ("q","Q") :
         quit()
@@ -521,30 +518,6 @@ def ecrire(text: str, vitesse = vitesse_texte, vitesse_pause = vitesse_pause) ->
         if lettre in (",",".",">"):
             sleep(vitesse_pause)
         # end="" permet de ne pas passer de ligne ; flush= True permet d'écrire le texte progressivement
-
-def afficher_stats():
-    TInv = f"""
-----------
-Emplacement : {Salles[Sherma["Emplacement"]]["NomAffichee"]}
-PV : {Sherma["PV"]}/{PV_MAX}
-Atk : {Sherma["Atk"]}
-Def : {Sherma["Def"]}
-Agi : {Sherma["Agi"]}
----------
-"""
-    ecrire(TInv)
-
-def afficher_inv():
-    TStats = f"""
-----------
-Vous avez {Sherma["PV"]}/{PV_MAX} PV.
-
-Vous possédez {Sherma["Inv"]["Carapaces"]} Fragments de Carapaces.
-
-Vous possédez {Sherma["Inv"]["Perles"]} Perles.
----------
-"""
-    ecrire(TStats)
 
 def perdre_pv(pv : int, pv_perdu :int):
     ecrire(f">>> Vous perdez {pv_perdu} PV. \n")
@@ -579,6 +552,12 @@ Votre réponse : """)
         quit()
        
 ###### FONCTION DE SALLE
+
+def Tutoriel():
+    ## TUTORIEL
+    ecrire(TIntro)
+    sleep(1)
+    Sherma["Emplacement"] = "Entree"
 
 def Entree(): 
     # Arriver à la porte
@@ -850,6 +829,7 @@ def script(salle: str):
             exec(salle + "()")
     """
     match salle:
+        case "Tutoriel": Tutoriel()
         case "Entree": Entree()
         case "GrotteHumide" : GrotteHumide()
         case "GrandeAllee" : GrandeAllee()
@@ -859,14 +839,30 @@ def script(salle: str):
         case "Pierres" : Pierres()
         case "Exterieur" : Exterieur()
 
+def triche():
+
+    nbr_salle = []
+    nom_salle = []
+    i = 0
+    question_triche = "Où souhaitez-vous aller ?\n"
+    for salle in Salles:
+        nbr_salle += [str(i)]
+        nom_salle += [salle]
+        question_triche += f"\t{i}. {salle}\n"
+        i += 1
+    question_triche += "Votre réponse : "
+
+    print(nbr_salle)
+
+    R = question(question_triche, nbr_salle)
+    
+    Sherma["Emplacement"] =  nom_salle[int(R)]
+
+
 def jouer():
 
     Sherma["a_finit"] = False
-
-    ## TUTORIEL
-    ecrire(TIntro)
-    sleep(1)
-
+    #triche()
 
     while not(Sherma["a_finit"]):
         script(Sherma["Emplacement"])
@@ -878,4 +874,3 @@ def jouer():
 ###### JEU
 
 jouer()
-
