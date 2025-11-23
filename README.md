@@ -4,16 +4,16 @@ Sherma's Ascension est un jeu où le personnage principal **Sherma** doit attein
 
 To do list :
 
-Écrire les dictionnaires correspondant a chaque salle  50%
+DONE - Écrire les dictionnaires correspondant a chaque salle 100%
 
-Ecrire Les constantes de textes
+50% - Ecrire Les constantes de textes
 
-Implémenter la variable "Fin" qui permet de quitter le jeu
+DONE - Implémenter la variable "Fin" qui permet de quitter le jeu
 
-Implémenter notre fonction script qui contiendra les évènements de chaques salle en et les réalisera si le joueur est dans ladite salle 
+0% - Implémenter notre fonction script qui contiendra les évènements de chaques salle en et les réalisera si le joueur est dans ladite salle 
 
-Implémenter le déplacement d'une salle a l'autre (ré appel de la fonction script)
+0% - Implémenter le déplacement d'une salle a l'autre (ré appel de la fonction script)
 
-Implémenter les évènements de toutes nos salles déjà existantes dans la fonction script
+0% - Implémenter les évènements de toutes nos salles déjà existantes dans la fonction script
 
-ENSUITE SEULEMENT on imaginera la suite de l'histoire 
+0% - ENSUITE SEULEMENT on imaginera la suite de l'histoire 
