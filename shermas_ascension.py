@@ -72,21 +72,21 @@ Souhaitez-vous partir à gauche ou à droite ?
 Votre réponse : """
 TEntreeDeplacementRep = ("1","2")
 
-TGrotteHumideQEvent = """
+TGrotteHumideQEvent1 = """
 Pour continuer vous n'avez d'autre choix que de faire bouger cette invité indésirable,
     1. Lancer une pierre dessus en espérant la faire fuir
     2. Essayer de la pousser doucement pour passer à coté 
 Votre réponse :"""
-TGrotteHumideQEventRep = ("1","2")
+TGrotteHumideQEvent1Rep = ("1","2")
 
-TGrotteHumideTEvent1 = """
+TGrotteHumideTEvent1_1 = """
     Vous décidez de ramasser une pierre de la taille de votre main et la lancez sur l'étrange insecte qui vous bloque
 Après avoir sursauté en recevant la pierre sur son dos, l'insecte se mets à trembler
 Après quelque seconde d'étranges pics aussi longs qu'un bras sortent tout d'un coup de tout son corps
 Vous avez bien fait de ne pas vous approcher
 Vous pouvez donc continuer votre avancée en contournant cet ennemis
 """
-TGrotteHumideTEvent2 = """
+TGrotteHumideTEvent1_2 = """
     Lorsque que vous vous approchez de cet étrange insecte,
 Vous le voyez pousser un faible cri aigu avant de se mettre à trembler
 Lorsque d'un coup de nombreux pics aussi long qu'un bras et ascérées comme des couteaux sortent de son corps
@@ -146,11 +146,12 @@ Les rayons de lumières qui percent à travers la végétation toujours denses
 Donnent une atmosphère particulière à la pièce
 """
 
-TGrandeAlleeQEvent ="""
+TGrandeAlleeQEvent1 ="""
 Vous remarquez un petit couloir à votre droite 
     1. Vous allez explorer ce couloir sombre.
     2. Vous préfèrez continuer dans cette grande allée.
 Votre réponse :"""
+
 TGrandeAlleeQEvent1Rep = ("1","2")
 
 TGrandeAlleeTEvent1_1 = """
@@ -495,9 +496,7 @@ Salles = {
     "Exterieur": {"NomAffichee" : "Extérieur","Desc" : TExterieurDesc, "EventPast" : False, "Successeurs": None},
 }
 
-Fin = False
-
-###### FONCTIONS :
+###### FONCTIONS GÉNÉRALE:
 
 def question(text : str,rep : tuple) -> str:
     """
@@ -546,19 +545,69 @@ def gagner_pv(pv : int, pv_gagne :int):
 def mourir(text_mort):
     ecrire(text_mort)
     input(">>> Vous êtes mort.\nAppuyer sur Entrée pour terminer le jeu.")
+    quit()    
+
+def script(salle: str):
+    """
+    Fonctionne mais on a pas le droit, rip ...
+    for salle_iter in Salles.keys(): 
+        if salle_iter == salle: 
+            exec(salle + "()")
+    """
+    match salle:
+        case "Entree": Entree()
+        case "GrotteHumide" : GrotteHumide()
+        case "GrandeAllee" : GrandeAllee()
+        case "PetitCouloir" : PetitCouloir()
+        case "GouffreDOs" : GouffreDOs()
+        case "Sentier" : Sentier()
+        case "Caverne" : Caverne()
+        case "Pierres" : Pierres()
+        case "Exterieur" : Exterieur()
+
+def jouer():
+    Fin = False
+
+    ## TUTORIEL
+    ecrire(TIntro)
+    sleep(1)
+
+
+    while not(Fin):
+        script(Sherma["Emplacement"])
+
+    ecrire(TFIN)
+    input()
     quit()
+
+###### FONCTION DE SALLE
+
+def Entree(): 
+    # Arriver à la porte
+    ecrire(Salles["Entree"]["Desc"])
+    R = question(TEntreeDeplacement,TEntreeDeplacementRep)
+    if R == "1": 
+        Sherma["Emplacement"] = "GrotteHumide"
+    elif R == "2": 
+        Sherma["Emplacement"] = "Sentier"
+
+def GrotteHumide(): pass
+def GrandeAllee(): pass
+def PetitCouloir(): pass
+def GouffreDOs(): pass
+
+def Sentier(): pass
+def Caverne(): pass
+def Pierres(): pass
+def Exterieur(): pass
 
 ###### JEU
 
 
-## TUTORIEL :
-ecrire(TIntro)
-sleep(1)
-# Arriver à la porte
-ecrire(Salles["Entree"]["Desc"])
-R = question(TEntreeDeplacement,TEntreeDeplacementRep)
+jouer()
 
 ### Branche 1 : Jérémie
+R = 0 ############### A CHANGER
 if R == "1": 
     #Branche 1.1
     ecrire(Salles["GrotteHumide"]["Desc"])
@@ -591,7 +640,7 @@ if R == "1":
             quit()
     ##Branche 1.3 
 
-    ecrire(TGrandeAlleeDesc1)
+    ecrire(TGrandeAlleeT1)
     R = question(TGrandeAlleeQEvent1,TGrandeAlleeQEvent1Rep) 
     #Branche 1.3.1
     if R == "1" :
@@ -780,8 +829,5 @@ Vous êtes persévérant et continuez à combattre.
                 input()
                 quit()
 #Branche B.
-ecrire(TFIN)
-input()
-quit()
 
-
+jouer()
