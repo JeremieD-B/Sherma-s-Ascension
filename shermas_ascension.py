@@ -1,3 +1,4 @@
+
 ##### Imports
 
 from random import randint # Génère des nombres aléatoires (dans une portée donnée)
@@ -6,8 +7,8 @@ from time import sleep # Fait une pause du programme pendant un temps donné
 #### Constantes de jeu 
 
 PV_MAX = 5
-vitesse_texte = 0.025 # 0.025 vitesse normale
-vitesse_pause = 0.35 # 0.35 vitesse normale
+vitesse_texte = 0.005 # 0.025 vitesse normale
+vitesse_pause = 0.01 # 0.35 vitesse normale
 
 ### Constantes de description de salles
 
@@ -488,7 +489,6 @@ Salles = {
     "Entree" : {"NomAffichee" : "Entrée","Desc" : TEntreeDesc, "EventPast" : False, "Successeurs": ["GrotteHumide","Caverne"]},
     "GrotteHumide" : {"NomAffichee" : "Grotte humide","Desc" : TGrotteHumideDesc, "EventPast" : False, "Successeurs": ["GrandeAllee","PetitCouloir"]},
     "GrandeAllee" : {"NomAffichee" : "Grande Allée","Desc" : TGrandeAlleeDesc, "EventPast" : False, "Successeurs": ["GouffreDOs"]},
-    "PetitCouloir" : {"NomAffichee" : "Petit Couloir","Desc" : TPetitCouloirDesc, "EventPast" : False, "Successeurs": []},
     "GouffreDOs" : {"NomAffichee" : "Gouffre d'Os","Desc" : TGouffreDOsDesc, "EventPast" : False, "Successeurs": ["GrandeAllee"]},
     "Sentier": {"NomAffichee" : "Sentier","Desc" : TSentierDesc, "EventPast" : False, "Successeurs": ["Caverne"]},
     "Caverne": {"NomAffichee" : "Caverne","Desc" : TCaverneDesc, "EventPast" : False, "Successeurs": ["Pierres", "Exterieur"]},
@@ -542,45 +542,13 @@ def gagner_pv(pv : int, pv_gagne :int):
         ecrire(f">>> Vous gagnez {pv_gagne} PV. \n")
     return pv
 
-def mourir(text_mort):
+def mourir(text_mort = ""):
     ecrire(text_mort)
     input(">>> Vous êtes mort.\nAppuyer sur Entrée pour terminer le jeu.")
     quit()    
 
-def script(salle: str):
-    """
-    Fonctionne mais on a pas le droit, rip ...
-    for salle_iter in Salles.keys(): 
-        if salle_iter == salle: 
-            exec(salle + "()")
-    """
-    match salle:
-        case "Entree": Entree()
-        case "GrotteHumide" : GrotteHumide()
-        case "GrandeAllee" : GrandeAllee()
-        case "PetitCouloir" : PetitCouloir()
-        case "GouffreDOs" : GouffreDOs()
-        case "Sentier" : Sentier()
-        case "Caverne" : Caverne()
-        case "Pierres" : Pierres()
-        case "Exterieur" : Exterieur()
 
-def jouer():
-    Fin = False
-
-    ## TUTORIEL
-    ecrire(TIntro)
-    sleep(1)
-
-
-    while not(Fin):
-        script(Sherma["Emplacement"])
-
-    ecrire(TFIN)
-    input()
-    quit()
-
-###### FONCTION DE SALLE
+##### FONCTION DE SALLE
 
 def Entree(): 
     # Arriver à la porte
@@ -591,55 +559,38 @@ def Entree():
     elif R == "2": 
         Sherma["Emplacement"] = "Sentier"
 
-def GrotteHumide(): pass
-def GrandeAllee(): pass
-def PetitCouloir(): pass
-def GouffreDOs(): pass
-
-def Sentier(): pass
-def Caverne(): pass
-def Pierres(): pass
-def Exterieur(): pass
-
-###### JEU
-
-
-jouer()
-
-### Branche 1 : Jérémie
-R = 0 ############### A CHANGER
-if R == "1": 
-    #Branche 1.1
+def GrotteHumide():
+    GrotteHumide1()
+    GrotteHumide2()
+    Sherma["Emplacement"] = "GrandeAllee"
+def GrotteHumide1():
     ecrire(Salles["GrotteHumide"]["Desc"])
     R = question(TGrotteHumideQEvent1,TGrotteHumideQEvent1Rep)
-    #Branche 1.1.1
     if R == "1" :
           ecrire(TGrotteHumideTEvent1_1)
-    #Branche 1.1.2
     elif R == "2":
         ecrire(TGrotteHumideTEvent1_2)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
-    ##Branche 1.2
+def GrotteHumide2():
     ecrire(TGrotteHumideTEvent2)
     R = question(TGrotteHumideQEvent2,TGrotteHumideQEvent2Rep)
-    #Branche 1.2.1
     if R == "1" :
         ecrire(TGrotteHumideTEvent2_1)
-    #Branche 1.2.2
     elif R == "2" :
         ecrire(TGrotteHumideTEvent2_2)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
         R = question(TGrotteHumideQEvent2_1,TGrotteHumideQEvent2_1Rep)    
-        #Branche 1.2.2.1
         if R == "1" : 
             ecrire(TGrotteHumideTEvent2_1_1)
-        #Branche 1.2.2.2
         elif R == "2":
-            ecrire(TGrotteHumideTEvent2_1_2)
-            input(">>> Vous êtes mort.")
-            quit()
-    ##Branche 1.3 
+            mourir(TGrotteHumideTEvent2_1_2)
 
+def GrandeAllee(): 
+    GrandeAllee1()
+    GrandeAllee2()
+    GrandeAllee3()
+    Sherma["Emplacement"] = "GouffreDOs"
+def GrandeAllee1(): 
     ecrire(TGrandeAlleeT1)
     R = question(TGrandeAlleeQEvent1,TGrandeAlleeQEvent1Rep) 
     #Branche 1.3.1
@@ -659,6 +610,7 @@ if R == "1":
     elif R == "2" :
         #Branche 1.3.2
         ecrire(TGrandeAlleeTEvent1_2)
+def GrandeAllee2(): 
     #Branche 1.4
     ecrire(TGrandeAlleeT2)
     R = question(TGrandeAlleeQEvent2,("1","2"))
@@ -668,19 +620,18 @@ if R == "1":
         Inv["Carapaces"] += 1
     #Branche 1.4.2
     elif R == "2" :
-        ecrire(TGrandeAlleeTEvent2_2)
-        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
-        R = question(TGrandeAlleeQEvent2_1,TGrandeAlleeQEvent2_1Rep)
-        #Branche 1.4.2.1
-        if R == "1" :
-            ecrire(TGrandeAlleeTEvent2_1_1)
-            input(">>> Vous êtes mort.")
-            quit()
+        GrandeAllee2_1()
+def GrandeAllee2_1():
+    ecrire(TGrandeAlleeTEvent2_2)
+    Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
+    R = question(TGrandeAlleeQEvent2_1,TGrandeAlleeQEvent2_1Rep)
+    #Branche 1.4.2.1
+    if R == "1" :
+        mourir(TGrandeAlleeTEvent2_1_1)
         #Branche 1.4.2.2 
-        elif R == "2" :
-            ecrire(TGrandeAlleeTEvent2_1_2)
-            input(">>> Vous êtes mort.")
-            quit()
+    elif R == "2" :
+        mourir(TGrandeAlleeTEvent2_1_2)     
+def GrandeAllee3(): 
     ##Branche 1.5
     ecrire(TGrandeAlleeT3)
     R = question(TGrandeAlleeQEvent3,TGrandeAlleeQEvent3Rep)
@@ -691,7 +642,51 @@ if R == "1":
     elif R == "2" :
         ecrire(TGrandeAlleeTEvent3_2)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
-            
+
+def Sentier(): pass
+def Caverne(): pass
+def Pierres(): pass
+def Exterieur(): pass
+
+def GouffreDOs(): pass
+
+###### FONCTION DE JEU 
+
+def script(salle: str):
+    """
+    Fonctionne mais on a pas le droit, rip ...
+    for salle_iter in Salles.keys(): 
+        if salle_iter == salle: 
+            exec(salle + "()")
+    """
+    match salle:
+        case "Entree": Entree()
+        case "GrotteHumide" : GrotteHumide()
+        case "GrandeAllee" : GrandeAllee()
+        case "GouffreDOs" : GouffreDOs()
+        case "Sentier" : Sentier()
+        case "Caverne" : Caverne()
+        case "Pierres" : Pierres()
+        case "Exterieur" : Exterieur()
+
+def jouer():
+    Fin = False
+
+    ## TUTORIEL
+    ecrire(TIntro)
+    sleep(1)
+    while not(Fin):
+        script(Sherma["Emplacement"])
+
+    ecrire(TFIN)
+    input()
+    quit()
+    
+###### JEU
+
+jouer()
+
+
 ### Branche 2 : Sacha
 elif R == "2": 
     Sherma["Emplacement"] = "Sentier"
