@@ -343,8 +343,7 @@ TCaverneQEvent3_3 = """
 Vous ne voulez pas perdre de temps et choisissez de dégringoler cette pente.
 Cependant, vous glissez sur une pierre et tomber la tête la première par terre.
 Cette chaussure ne valait peut être pas d'être récupérée ...\n
-
->>> Vous êtes mort."""
+"""
 
 TCaverneQEvent4 = """
 Que faire maintenant ?
@@ -393,8 +392,7 @@ TPierresQEvent1Rep = ("1", "2")
 
 TPierresQEvent1_1 = """
 Vous arrivez dans une chambre magmatique, la roche glisse et tombez dans de la lave.
-                   
->>> Vous êtes mort."""
+"""
 
 TPierresQEvent1_2 = """
 Vous continuez votre chemin, vous apercevez une porte. Vous décidez donc de la franchir."""
@@ -409,8 +407,7 @@ TExterieurQEvent1Rep = ("1", "2")
 TExterieurQEvent1_1 = """
 Vous descendez des pierres et attaquez le monstre, finalement vous voyez qu'il y en a une cinquantaine autour de lui.
 Tous les monstres vous chassent.
-
->>> Vous êtes mort."""
+"""
 
 TExterieurQEvent1_2 = """
 Vous attendez longuement afin de ne pas vous faire repérer, le monstre a prévenu ses acolytes et sont à votre recherche."""
@@ -440,13 +437,11 @@ TExterieurQEvent3Rep = ("1", "2")
 
 TExterieurQEvent3_1 = """
 Les monstres sont trop nombreux, vous êtes surpassé.
-                           
->>> Vous êtes mort."""
+"""
 
 TExterieurQEvent3_2 = """
 Vous fuyez mais glissez sur une pierre, les monstres vous rattrape.
-                           
->>> Vous êtes mort."""
+"""
 
 TFIN = """
 La porte se ferme brutalement, il vous est impossible de revenir en arrière.
@@ -523,8 +518,7 @@ def perdre_pv(pv : int, pv_perdu :int):
     ecrire(f">>> Vous perdez {pv_perdu} PV. \n")
     pv -= pv_perdu
     if pv <= 0 :
-        input("\n>>> Vous n'avez plus aucun PV. Vous êtes mort.")
-        quit()
+        mourir("\n>>> Vous n'avez plus aucun PV.")
     return pv
 
 def gagner_pv(pv : int, pv_gagne :int):
@@ -536,19 +530,19 @@ def gagner_pv(pv : int, pv_gagne :int):
 def mourir(text_mort):
     ecrire(text_mort)
     ecrire("\n>>> Vous êtes mort.")
-    La_taille_de_cette_liste_est_egale_au_nombre_de_mort += ["mort"]
-    if len(La_taille_de_cette_liste_est_egale_au_nombre_de_mort) >= 10:
+    Sherma["mort"] += 1
+    if Sherma["mort"] < 2:
         R = question("""
 Voulez-vous recommencer le jeu ?
-        1. Oui
-        2. Non
-Votre réponse : """)
-        if R == 1: 
+    1. Oui
+    2. Non
+Votre réponse : """, ("1", "2"))
+        if R == "1": 
             jouer()
-        elif R == 2: 
+        elif R == "2": 
             quit() 
     else: 
-        ecrire("Vous êtes mort 10 fois, ainsi vous ne méritez plus vivre. Aurevoir.")
+        ecrire("\nVous êtes mort 10 fois, ainsi vous ne méritez plus vivre. Aurevoir.")
         quit()
        
 ###### FONCTION DE SALLE
@@ -618,10 +612,7 @@ def GrandeAllee1():
         R = question(TGrandeAlleeQEvent1_1,TGrandeAlleeQEvent1_1Rep)
         #Branche 1.3.1.1
         if R == "1" :
-            ecrire(TGrandeAlleeTEvent1_1_1)
-            ecrire(">>> Vous êtes mort.")
-            input()
-            quit()
+            mourir(TGrandeAlleeTEvent1_1_1)
         #Branche 1.3.1.2 
         elif R == "2":
             ecrire(TGrandeAlleeQEvent1_1_2)
@@ -766,9 +757,7 @@ Vous descendez prudemment jusqu'à atteindre votre chaussure.
 Vous décidez de reprendre l'ascension.""")
     elif R == "3":
         # Branche 2.1.1.2.3
-        ecrire(TCaverneQEvent3_3)
-        input()
-        quit() 
+        mourir(TCaverneQEvent3_3)
 
 def Pierres(): 
     # Branche 2.1.1
@@ -776,9 +765,7 @@ def Pierres():
     Sherma["Agi"] += 1
     R = question(TPierresQEvent1, TPierresQEvent1Rep)
     if R == "1":
-        ecrire(TPierresQEvent1_1) 
-        input()
-        quit()
+        mourir(TPierresQEvent1_1)
     elif R == 2: 
         ecrire(TPierresQEvent1_2)
     Sherma["Emplacement"] = "GouffreDOs"
@@ -788,9 +775,7 @@ def Exterieur():
     R = question(TExterieurQEvent1, TExterieurQEvent1Rep)
     if R == "1": 
         # Branche 2.2.1
-        ecrire(TExterieurQEvent1_1)
-        input()
-        quit()
+        mourir(TExterieurQEvent1_1)
     elif R == "2": 
         Exterieur1()
 def Exterieur1():
@@ -813,11 +798,9 @@ Vous êtes persévérant et continuez à combattre.
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
         R = question(TExterieurQEvent3, TExterieurQEvent3Rep)
         if R == "1": 
-            ecrire(TExterieurQEvent3_1)
+            mourir(TExterieurQEvent3_1)
         elif R == "2": 
-            ecrire(TExterieurQEvent3_2)
-        input()
-        quit()
+            mourir(TExterieurQEvent3_2)
 
 ##### FONCTIONS DE JEU
 
@@ -864,6 +847,7 @@ def jouer():
     Sherma["a_finit"] = False
     #triche()
 
+    Sherma["Emplacement"] = "Tutoriel"
     while not(Sherma["a_finit"]):
         script(Sherma["Emplacement"])
 
