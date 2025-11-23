@@ -395,6 +395,11 @@ def gagner_pv(pv : int, pv_gagne :int):
         ecrire(f">>> Vous gagnez {pv_gagne} PV. \n")
     return pv
 
+def mourir(text_mort):
+    ecrire(text_mort)
+    input(">>> Vous êtes mort.\nAppuyer sur Entrée pour terminer le jeu.")
+    quit()
+
 ###### JEU
 
 
@@ -727,3 +732,4 @@ Vous êtes persévérant et continuez à combattre.
 ecrire(TFIN)
 input()
 quit()
+
