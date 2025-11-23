@@ -6,8 +6,8 @@ from time import sleep # Fait une pause du programme pendant un temps donné
 #### Constantes de jeu 
 
 PV_MAX = 5
-vitesse_texte = 0.025 # 0.025 vitesse normale
-vitesse_pause = 0.35 # 0.35 vitesse normale
+vitesse_texte = 0 # 0.025 vitesse normale
+vitesse_pause = 0 # 0.35 vitesse normale
 
 ### Constantes de description de salles
 
@@ -149,7 +149,6 @@ Vous remarquez un petit couloir à votre droite
     1. Vous allez explorer ce couloir sombre.
     2. Vous préfèrez continuer dans cette grande allée.
 Votre réponse :"""
-
 TGrandeAlleeQEvent1Rep = ("1","2")
 
 TGrandeAlleeTEvent1_1 = """
@@ -255,7 +254,6 @@ Observez autour de vous ?
     1. Oui
     2. Non
 Votre réponse : """
-
 TSentierQEvent1Rep = ("1", "2")
 
 TSentierQEvent1_1 = """
@@ -294,23 +292,22 @@ Souhaitez-vous le refaire (Cela prendra un cours instant) ?
     1. Continuer sur le chemin
     2. Refaire les lacets avec difficulté
 Votre Réponse : """
-
 TSentierQEvent3Rep = ("1", "2")
 
 TSentierQEvent3_1 = """
-Vous refaites vos lacets"""
+Vous refaites vos lacets
+"""
 
 TCaverneQEvent1 = """
 Qu'allez-vous faire ?
     1. Monter sur les pierres
     2. Se diriger vers la lumière
 Votre réponse : """
-
 TCaverneQEvent1Rep = ("1", "2")
 
 TCaverneQEvent1_1 = """
     Vous commencez à grimper. Les pierres sont glissantes, couvertes d’un lichen argenté.
-Sous vos doigts, certaines vibrent faiblement, comme si elles gardaient en elles la trace d’un ancien chant.\n
+Sous vos doigts, certaines vibrent faiblement, comme si elles gardaient en elles la trace d’un ancien chant.
 
 >>> Vous gagnez 1 d'Agilité.
 
@@ -331,7 +328,6 @@ Aller chercher votre chaussure ?
     2. Descendre
     3. Descendre rapidement
 Votre réponse : """
-
 TCaverneQEvent3Rep = ("1", "2", "3")
 
 TCaverneQEvent3_1 = """
@@ -355,7 +351,6 @@ Que faire maintenant ?
     1. Reprendre l'ascension
     2. Aller vers le sentier
 Votre réponse : """
-
 TCaverneQEvent4Rep = ("1", "2")
 
 TCaverneQEvent4_1 = """
@@ -375,7 +370,6 @@ Vous paniquez, que choisissez-vous de faire ?
     2. Aller combattre
     3. Reprendre l'ascension
 Votre réponse : """
-
 TCaverneQEvent5Rep = ("1", "2", "3")
 
 TCaverneQEvent5_1 = """
@@ -386,7 +380,7 @@ Vous décidez de reprendre l'ascension."""
 
 TCaverneQEvent5_2 = """
 Vous brandissez votre Baguette de métal et combattez les ennemis. Ceux-ci prennent peur sauf un.
-Vous le combattez et êtes légèrement blessé.
+Vous le combattez et êtes légèrement blessé. Vous repreennez voter ascension finalement.
 
 >>> Vous perdez 1 PV"""
 
@@ -395,7 +389,6 @@ Devant vous, deux passages se dessinent dans la paroi :
     1. À gauche, une fissure étroite d’où s’échappe une lueur rougeâtre et un grondement profond.
     2. À droite, un passage peu éclairé d'un ton blanc pâle.
 Votre réponse : """
-
 TPierresQEvent1Rep = ("1", "2")
 
 TPierresQEvent1_1 = """
@@ -411,7 +404,6 @@ Enfin dehors, un monstre vous aperçoit et souhaite prévenir les autres de votr
     1. Le combattre pour ne pas qu'il informe les autres
     2. Se cacher
 Votre réponse : """
-
 TExterieurQEvent1Rep = ("1", "2")
 
 TExterieurQEvent1_1 = """
@@ -428,7 +420,6 @@ Vous décidez d'agir :
     1. Combattre tous les monstres
     2. Rester cacher
 Votre réponse : """
-
 TExterieurQEvent2Rep = ("1", "2")
 
 TExterieurQEvent2_1 = """"
@@ -445,7 +436,6 @@ Vous vous faites remarquer et les monstres vous attaque tous ensemble.
     1. Combattre
     2. Fuir
 Votre réponse : """
-
 TExterieurQEvent3Rep = ("1", "2")
 
 TExterieurQEvent3_1 = """
@@ -480,7 +470,9 @@ Sherma = {
 "Def" : 0,
 "Agi" : 0,
 "Emplacement" : "Entree",
-"lacets_faits" : True
+"lacets_faits" : True,
+"mort": 0,
+"a_finit": False
 }
 
 Salles = {
@@ -542,9 +534,22 @@ def gagner_pv(pv : int, pv_gagne :int):
 
 def mourir(text_mort):
     ecrire(text_mort)
-    input(">>> Vous êtes mort.\nAppuyer sur Entrée pour terminer le jeu.")
-    quit()    
-
+    ecrire("\n>>> Vous êtes mort.")
+    La_taille_de_cette_liste_est_egale_au_nombre_de_mort += ["mort"]
+    if len(La_taille_de_cette_liste_est_egale_au_nombre_de_mort) >= 10:
+        R = question("""
+Voulez-vous recommencer le jeu ?
+        1. Oui
+        2. Non
+Votre réponse : """)
+        if R == 1: 
+            jouer()
+        elif R == 2: 
+            quit() 
+    else: 
+        ecrire("Vous êtes mort 10 fois, ainsi vous ne méritez plus vivre. Aurevoir.")
+        quit()
+       
 ###### FONCTION DE SALLE
 
 def Entree(): 
@@ -651,9 +656,10 @@ def GrandeAllee3():
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
 
 def GouffreDOs(): 
-    Fin = True
+    Sherma["a_finit"] = True
 
 def Sentier(): 
+    # Branche 2
     ecrire(TSentierDesc)
     R = question(TSentierQEvent1, TSentierQEvent1Rep)
     if R == "1": 
@@ -669,20 +675,23 @@ def Sentier():
     if R == "1": 
         Sherma["lacets_faits"] = False
     elif R == "2":
-        ecrire(TSentierQEvent3_1)
-        i = 0
-        while i < 100:
-            sleep(1)
-            i += randint(10, 30)
-            if i >= 100:
-                print("..... 100%")
-                Sherma["lacets_faits"] = True
-                break
-            else: 
-                print(f"..... {i}%")
+        Sentier1()
     Sherma["Emplacement"] = "Caverne"
+def Sentier1():
+    ecrire(TSentierQEvent3_1)
+    i = 0
+    while i < 100:
+        sleep(1)
+        i += randint(10, 30)
+        if i >= 100:
+            print("..... 100%")
+            Sherma["lacets_faits"] = True
+            break
+        else: 
+            print(f"..... {i}%")
 
 def Caverne(): 
+    # Branche 2
     ecrire(TCaverneDesc)
     R = question(TCaverneQEvent1, TCaverneQEvent1Rep)
     if R == "1": 
@@ -690,63 +699,72 @@ def Caverne():
         Sherma["Agi"] += 1
         ecrire(TCaverneQEvent1_1)
         if Sherma["lacets_faits"]:
+            ## Branche 2.1.1
+            Sherma["Emplacement"] = "Pierres"
+        else: 
             # Branche 2.1.2
             ecrire(TCaverneEvent2_1)
-        else: 
-            # Branche 2.1.1
-            ecrire(TCaverneEvent2_2)
-            R = question(TCaverneQEvent3, TCaverneQEvent3Rep) 
-            if R == "1":
-                # Branche 2.1.1.1 
-                ecrire(TCaverneQEvent3_1)
-                Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
-                
-            elif R == "2":
-                # Branche 2.1.1.2
-                ecrire("""
-Vous descendez prudemment jusqu'à atteindre votre chaussure.
-""")
-                i = 0
-                while i < 100:
-                    sleep(1)
-                    i += randint(10, 30)
-                    if i >= 100:
-                        print(f"..... 100%")
-                        break
-                    else: 
-                        print(f"..... {i}%")
-                ecrire(TCaverneQEvent3_2)
-                R = question(TCaverneQEvent4, TCaverneQEvent4Rep)
-                if R == "1": 
-                    ecrire(TCaverneQEvent4_1)
-                    Inv["Objets"] += ["Parchemin : Entre pierres et cordes"]
-                    chaussure_gauche = True
-                elif R == "2":
-                    # Branche 2.1.1.2.2
-                    ecrire(TCaverneQEvent4_2)
-                    R = question(TCaverneQEvent5)
-                    if R == 1:
-                        ecrire(TCaverneQEvent5_1)
-                        Sherma["Agi"] -= 1
-                    elif R == 2:
-                        ecrire(TCaverneQEvent5_2)
-                        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
-                    elif R == 3: 
-                        pass # Reprend directement l'ascension
-                    ecrire("""
-Vous décidez de reprendre l'ascension.""")
-            elif R == "3":
-               # Branche 2.1.1.3
-               ecrire(TCaverneQEvent3_3)
-               input()
-               quit() 
-        ## Branche 2.1
-        Sherma["Emplacement"] = "Pierre"
+            Caverne1()
     elif R == "2":
         # Branche 2.2
         Sherma["Emplacement"] = "Exterieur"
+def Caverne1():
+    # Branche 2.1.1
+    ecrire(TCaverneEvent2_2)
+    R = question(TCaverneQEvent3, TCaverneQEvent3Rep) 
+    if R == "1":
+        # Branche 2.1.1.1 
+        ecrire(TCaverneQEvent3_1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
+        Sherma["Emplacement"] = "Pierres"
+        
+    elif R == "2":
+        # Branche 2.1.1.2
+        Caverne1_2()
+def Caverne1_2():
+    # Branche 2.1.1.2
+    ecrire("""
+Vous descendez prudemment jusqu'à atteindre votre chaussure.
+""")
+    i = 0
+    while i < 100:
+        sleep(1)
+        i += randint(10, 30)
+        if i >= 100:
+            print(f"..... 100%")
+            break
+        else: 
+            print(f"..... {i}%")
+    ecrire(TCaverneQEvent3_2)
+    R = question(TCaverneQEvent4, TCaverneQEvent4Rep)
+    if R == "1": 
+        ## Branche 2.1.1.2.1 = Branche 2.1.1
+        ecrire(TCaverneQEvent4_1)
+        Inv["Objets"] += ["Parchemin : Entre pierres et cordes"]
+    elif R == "2":
+        # Branche 2.1.1.2.2
+        ecrire(TCaverneQEvent4_2)
+        R = question(TCaverneQEvent5)
+        if R == 1:
+            ecrire(TCaverneQEvent5_1)
+            Sherma["Agi"] -= 1
+            Sherma["Emplacement"] = "Pierres"
+        elif R == 2:
+            ecrire(TCaverneQEvent5_2)
+            Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
+            Sherma["Emplacement"] = "Pierres"
+        elif R == 3: 
+            Sherma["Emplacement"] = "Pierres"
+        ecrire("""
+Vous décidez de reprendre l'ascension.""")
+    elif R == "3":
+        # Branche 2.1.1.2.3
+        ecrire(TCaverneQEvent3_3)
+        input()
+        quit() 
 
 def Pierres(): 
+    # Branche 2.1.1
     ecrire(TPierresDesc)
     Sherma["Agi"] += 1
     R = question(TPierresQEvent1, TPierresQEvent1Rep)
@@ -767,31 +785,32 @@ def Exterieur():
         input()
         quit()
     elif R == "2": 
-        # Branche 2.2.2
-        ecrire(TExterieurQEvent1_2)
-        R = question(TExterieurQEvent2, TExterieurQEvent2Rep)
-        if R == "1": 
-            #Branche 2.2.2.1
-            ecrire(TExterieurQEvent2_1)
-            Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
-            sleep(1)
-            while Sherma["PV"] > 0: 
-                ecrire("""
+        Exterieur1()
+def Exterieur1():
+    ecrire(TExterieurQEvent1_2)
+    R = question(TExterieurQEvent2, TExterieurQEvent2Rep)
+    if R == "1": 
+        #Branche 2.2.2.1
+        ecrire(TExterieurQEvent2_1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
+        sleep(1)
+        while Sherma["PV"] > 0: 
+            ecrire("""
 Vous êtes persévérant et continuez à combattre.
 >>> Vous perdez 1 point de vie.""")
-                Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
-                sleep(2)
-        elif R == "2": 
-            # Branche 2.2.2.2
-            ecrire(TExterieurQEvent2_2)
             Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
-            R = question(TExterieurQEvent3, TExterieurQEvent3Rep)
-            if R == "1": 
-                ecrire(TExterieurQEvent3_1)
-            elif R == "2": 
-                ecrire(TExterieurQEvent3_2)
-            input()
-            quit()
+            sleep(2)
+    elif R == "2": 
+        # Branche 2.2.2.2
+        ecrire(TExterieurQEvent2_2)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
+        R = question(TExterieurQEvent3, TExterieurQEvent3Rep)
+        if R == "1": 
+            ecrire(TExterieurQEvent3_1)
+        elif R == "2": 
+            ecrire(TExterieurQEvent3_2)
+        input()
+        quit()
 
 ##### FONCTIONS DE JEU
 
@@ -814,14 +833,14 @@ def script(salle: str):
 
 def jouer():
 
-    Fin = False
+    Sherma["a_finit"] = False
 
     ## TUTORIEL
     ecrire(TIntro)
     sleep(1)
 
 
-    while not(Fin):
+    while not(Sherma["a_finit"]):
         script(Sherma["Emplacement"])
 
     ecrire(TFIN)
@@ -831,4 +850,3 @@ def jouer():
 ###### JEU
 
 jouer()
-
