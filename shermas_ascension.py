@@ -5,7 +5,6 @@ from time import sleep # Fait une pause du programme pendant un temps donné
 
 #### Constantes de jeu 
 
-PV_MAX = 5
 vitesse_texte = 0 # 0.025 vitesse normale
 vitesse_pause = 0 # 0.35 vitesse normale
 
@@ -106,7 +105,10 @@ TGrotteHumideTEvent2_1 = """
     Vous vous mettez à courir le plus rapidement possible
 Sous chacun de vos pas, la prise que vous utilisez se brise,
 Sans votre élan vous n'arriveriez jamais à grimper.
-Il est certain qu'avoir couru était l'unique solution"""
+Il est certain qu'avoir couru était l'unique solution.
+
+>>> Vous gagnez 1 d'Agilité.
+"""
 TGrotteHumideTEvent2_2 = """
     Vous escaladez tout doucement, sauf qu'en posant le pied sur la première prises, 
 Vous vous rendez compte qu'elle n'est pas stable, 
@@ -122,6 +124,8 @@ TGrotteHumideTEvent2_1_1 = """
     Vous vous mettez à courir le plus rapidement possible
 Dans votre élan vous réussissez à atteindre la haut de la peinte
 Fière de vos efforts vous avancez désormais vers une nouvelle pièce
+
+>>> Vous gagnez 1 d'Agilité.
 """
 TGrotteHumideTEvent2_1_2 = """
     Malgré toutes les précautions que vous avez su prendre, 
@@ -158,8 +162,6 @@ Vous voyez des gouttes perler du plafonds, la pièce est très humide
 Alors que vous continuiez votre avancée, vouss entendez l'entrée de ce couloir s'effondrer 
 Il va être difficile de ressortir.
 Au moins vous avez trouver un chapelet contenant 30 perles.)
-
->>> Vous gagnez 30 perles.
 """ 
 
 TGrandeAlleeQEvent1_1 = """
@@ -205,8 +207,6 @@ TGrandeAlleeQEvent2Rep = ("1","2")
 
 TGrandeAlleeTEvent2_1 = """
     Vous lancez une pierre vers l'insecte, il perd l'équilibre de son vol et s'écrase au sol
-
->>> Vous gagnez 1 Fragment de carapace
 """
 
 TGrandeAlleeTEvent2_2 = """
@@ -275,9 +275,6 @@ TSentierQEvent2Rep = ("1", "2")
 
 TSentierQEvent2_1 = """
 Vous décidez de combattre l'ennemi
-
->>> Vous perdez 1 PV
->>> Vous gagnez 1 fragment de carapace
 """
 
 TSentierQEvent2_2 = """
@@ -456,14 +453,19 @@ La Fin n'est jamais vraiment la fin mais juste un nouveau commencement.
 Inv = {"Arme": "Baguette de métal", 
         "Mélodies" : [],
         "Carapaces" : 0,
-        "Objets" : []}
+        "Objets" : [],
+        "Perles" : 0}
+
+Stats = {
+"Pv_Max" : 5,
+"Atk": 0,
+"Agi" : 0,
+}
 
 Sherma = {
 "PV": 5,
 "Inv" : Inv, 
-"Atk": 0,
-"Def" : 0,
-"Agi" : 0,
+"Stats" : Stats,
 "Emplacement" : "Tutoriel",
 "lacets_faits" : True,
 "mort": 0,
@@ -493,6 +495,12 @@ def question(text : str,rep : tuple) -> str:
     R = None
     tour = 0
     while R not in rep and R not in ("Q","q"):
+        if R == "Inv" :
+            afficher_inv()
+            R = None
+        if R == "Stats" :
+            afficher_stats()
+            R = None
         if tour == 0 :
             ecrire(text)
         else : 
@@ -514,30 +522,91 @@ def ecrire(text: str, vitesse = vitesse_texte, vitesse_pause = vitesse_pause) ->
             sleep(vitesse_pause)
         # end="" permet de ne pas passer de ligne ; flush= True permet d'écrire le texte progressivement
 
+def afficher_stats():
+    TInv = f"""
+----------
+Emplacement : {Salles[Sherma["Emplacement"]]["NomAffichee"]}
+PV : {Sherma["PV"]}/{Sherma["Stats"]["Pv_Max"]}
+Atk : {Sherma["Stats"]["Atk"]}
+Agi : {Sherma["Stats"]["Agi"]}
+---------
+"""
+    ecrire(TInv)
+
+def afficher_inv():
+    TStats = f"""
+----------
+Vous avez {Sherma["PV"]}/{Sherma["Stats"]["Pv_Max"]} PV.
+
+Vous possédez {Sherma["Inv"]["Carapaces"]} Fragments de Carapaces.
+
+Vous possédez {Sherma["Inv"]["Perles"]} Perles.
+---------
+"""
+    ecrire(TStats)
+
+def modif_agi(modif : int):
+    if Sherma["Stats"]["Agi"] + modif > 0 :
+        Sherma["Stats"]["Agi"] += modif
+
+def modif_perles(modif: int):
+    Sherma["Inv"]["Perles"] += modif
+    ecrire(f"\n>>> Vous gagnez {modif} perles.\n")
+
+def gagner_carapaces():
+    Sherma["Inv"]["Carapaces"] += 1
+    ecrire("\n>>> Vous récupérez un fragment de Carapaces\n")
+    if Sherma["Inv"]["Carapaces"] == 4 :
+        ecrire("\n>>> Vous avez 4 fragments de Carapaces\n")
+        sleep(0.3)
+        ecrire("\n>>> Vous réunnissez vos fragments de Carapaces")
+        ecrire("\n>>> Avec cette nouvelle carapace vous arrivez a améliorer votre endurance !\n")
+        Sherma["Stats"]["Pv_Max"] +=1 
+        remplir_pv()
+
 def perdre_pv(pv : int, pv_perdu :int):
-    ecrire(f">>> Vous perdez {pv_perdu} PV. \n")
+    ecrire(f"\n>>> Vous perdez {pv_perdu} PV. \n")
     pv -= pv_perdu
     if pv <= 0 :
         mourir("\n>>> Vous n'avez plus aucun PV.")
     return pv
 
 def gagner_pv(pv : int, pv_gagne :int):
-    if pv <= PV_MAX :
+    if pv <= Pv_Max :
         pv += pv_gagne
-        ecrire(f">>> Vous gagnez {pv_gagne} PV. \n")
+        ecrire(f"\n>>> Vous gagnez {pv_gagne} PV. \n")
     return pv
+
+def remplir_pv():
+    Sherma["PV"] = Sherma["Stats"]["Pv_Max"]
+    ecrire(f"\n>>> Vos PV se remplissent ! Vous avez désormais {Sherma["Stats"]["Pv_Max"]}/{Sherma["Stats"]["Pv_Max"]} PV\n")
+
 
 def mourir(text_mort):
     ecrire(text_mort)
     ecrire("\n>>> Vous êtes mort.")
     Sherma["mort"] += 1
-    if Sherma["mort"] < 2:
+    if Sherma["mort"] < 10:
         R = question("""
 Voulez-vous recommencer le jeu ?
     1. Oui
     2. Non
 Votre réponse : """, ("1", "2"))
         if R == "1": 
+            Sherma["PV"] = 5
+            Inv = {"Arme": "Baguette de métal", 
+            "Mélodies" : [],
+            "Carapaces" : 0,
+            "Objets" : [],
+            "Perles" : 0}
+
+            Stats = {
+            "Pv_Max" : 5,
+            "Atk": 0,
+            "Agi" : 0,
+            }
+            Sherma["Stats"] = Stats
+            Sherma["Inv"] = Inv
             jouer()
         elif R == "2": 
             quit() 
@@ -585,6 +654,7 @@ def GrotteHumide2():
     if R == "1" :
         #Branche 1.2.1
         ecrire(TGrotteHumideTEvent2_1)
+        modif_agi(1)
     elif R == "2" :
         #Branche 1.2.2
         ecrire(TGrotteHumideTEvent2_2)
@@ -593,6 +663,7 @@ def GrotteHumide2():
         if R == "1" :
             #Branche 1.2.2.1 
             ecrire(TGrotteHumideTEvent2_1_1)
+            modif_agi(1)
         elif R == "2":
             #Branche 1.2.2.2
             mourir(TGrotteHumideTEvent2_1_2)
@@ -609,6 +680,7 @@ def GrandeAllee1():
     #Branche 1.3.1
     if R == "1" :
         ecrire(TGrandeAlleeTEvent1_1)
+        modif_perles(30)
         R = question(TGrandeAlleeQEvent1_1,TGrandeAlleeQEvent1_1Rep)
         #Branche 1.3.1.1
         if R == "1" :
@@ -627,7 +699,7 @@ def GrandeAllee2():
     #Branche 1.4.1 
     if R == "1" :
         ecrire(TGrandeAlleeTEvent2_1)
-        Inv["Carapaces"] += 1
+        gagner_carapaces()
     #Branche 1.4.2
     elif R == "2" :
         GrandeAllee2_1()
@@ -666,7 +738,7 @@ def Sentier():
     if R == "1":
         ecrire(TSentierQEvent2_1)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
-        Inv["Carapaces"] += 1
+        gagner_carapaces()
     elif R == "2":
         ecrire(TSentierQEvent2_2)
     R = question(TSentierQEvent3, TSentierQEvent3Rep)
@@ -694,7 +766,7 @@ def Caverne():
     R = question(TCaverneQEvent1, TCaverneQEvent1Rep)
     if R == "1": 
         # Branche 2.1 
-        Sherma["Agi"] += 1
+        modif_agi(1) 
         ecrire(TCaverneQEvent1_1)
         if Sherma["lacets_faits"]:
             ## Branche 2.1.1
@@ -745,7 +817,7 @@ Vous descendez prudemment jusqu'à atteindre votre chaussure.
         R = question(TCaverneQEvent5)
         if R == 1:
             ecrire(TCaverneQEvent5_1)
-            Sherma["Agi"] -= 1
+            modif_agi(-1)
             Sherma["Emplacement"] = "Pierres"
         elif R == 2:
             ecrire(TCaverneQEvent5_2)
@@ -762,7 +834,7 @@ Vous décidez de reprendre l'ascension.""")
 def Pierres(): 
     # Branche 2.1.1
     ecrire(TPierresDesc)
-    Sherma["Agi"] += 1
+    modif_agi(1)
     R = question(TPierresQEvent1, TPierresQEvent1Rep)
     if R == "1":
         mourir(TPierresQEvent1_1)
@@ -789,7 +861,7 @@ def Exterieur1():
         while Sherma["PV"] > 0: 
             ecrire("""
 Vous êtes persévérant et continuez à combattre.
->>> Vous perdez 1 point de vie.""")
+""")
             Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
             sleep(2)
     elif R == "2": 
@@ -843,7 +915,6 @@ def triche():
 
 
 def jouer():
-
     Sherma["a_finit"] = False
     #triche()
 
