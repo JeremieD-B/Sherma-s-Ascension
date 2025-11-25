@@ -32,8 +32,6 @@ Derrière vous, les profondeurs. Devant, la Citadelle Mélodieuse, si haute que 
 """
 TGrandeAlleeDesc = """
 """
-TGouffreDOsDesc = """
-"""
 
 TSentierDesc = """
 -----
@@ -440,6 +438,15 @@ TExterieurQEvent3_2 = """
 Vous fuyez mais glissez sur une pierre, les monstres vous rattrape.
 """
 
+## Textes Partie B (A partir du Gouffre d'Os)
+
+
+TGouffreDOsDesc = """
+"""
+
+TCaverneClochesDesc = """
+"""
+
 TFIN = """
 La porte se ferme brutalement, il vous est impossible de revenir en arrière.
 Vous pensez être sur le bon chemin, une 1ère étape vient d'être franchi et venez de comprendre les bases. 
@@ -482,6 +489,7 @@ Salles = {
     "Caverne": {"NomAffichee" : "Caverne","Desc" : TCaverneDesc},
     "Pierres": {"NomAffichee" : "Pierres","Desc" : TPierresDesc},
     "Exterieur": {"NomAffichee" : "Extérieur","Desc" : TExterieurDesc},
+    "CaverneCloches": {"NomAffichee" : "Caverne des Cloches","Desc" : TCaverneClochesDesc, "Past" : False},
 }
 
 ###### FONCTIONS GÉNÉRALE:
@@ -874,6 +882,15 @@ Vous êtes persévérant et continuez à combattre.
         elif R == "2": 
             mourir(TExterieurQEvent3_2)
 
+
+def CaverneCloches():
+    BeteDesCloches = {
+    "PV" : 15,
+    "Rage" : False
+    }
+    input("Fonctionne")
+    quit()
+
 ##### FONCTIONS DE JEU
 
 def script(salle: str):
@@ -893,6 +910,7 @@ def script(salle: str):
         case "Caverne" : Caverne()
         case "Pierres" : Pierres()
         case "Exterieur" : Exterieur()
+        case "CaverneCloches" : CaverneCloches()
 
 def triche():
 
@@ -916,9 +934,9 @@ def triche():
 
 def jouer():
     Sherma["a_finit"] = False
-    #triche()
-
     Sherma["Emplacement"] = "Tutoriel"
+    triche()
+
     while not(Sherma["a_finit"]):
         script(Sherma["Emplacement"])
 
