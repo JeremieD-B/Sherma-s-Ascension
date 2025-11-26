@@ -601,20 +601,26 @@ Voulez-vous recommencer le jeu ?
     2. Non
 Votre réponse : """, ("1", "2"))
         if R == "1": 
-            Sherma["PV"] = 5
-            Inv = {"Arme": "Baguette de métal", 
+            
+            if Sherma["Checkpoint"] == "Tutoriel":
+                Sherma["PV"] = 5
+                Inv = {"Arme": "Baguette de métal", 
             "Mélodies" : [],
             "Carapaces" : 0,
             "Objets" : [],
-            "Perles" : 0}
+            "Perles" : 0
+                }
 
-            Stats = {
+                Stats = {
             "Pv_Max" : 5,
             "Atk": 0,
             "Agi" : 0,
-            }
-            Sherma["Stats"] = Stats
-            Sherma["Inv"] = Inv
+                }
+                Sherma["Stats"] = Stats
+                Sherma["Inv"] = Inv
+                Sherma["Emplacement"] = "Tutoriel"
+            else :
+                remplir_pv()
             jouer()
         elif R == "2": 
             quit() 
@@ -933,8 +939,7 @@ def triche():
 
 
 def jouer():
-    Sherma["a_finit"] = False
-    Sherma["Emplacement"] = "Tutoriel"
+    Sherma["a_finit"] = False
     triche()
 
     while not(Sherma["a_finit"]):
