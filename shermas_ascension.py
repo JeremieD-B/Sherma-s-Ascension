@@ -375,8 +375,7 @@ Vous décidez de reprendre l'ascension."""
 TCaverneQEvent5_2 = """
 Vous brandissez votre Baguette de métal et combattez les ennemis. Ceux-ci prennent peur sauf un.
 Vous le combattez et êtes légèrement blessé. Vous repreennez voter ascension finalement.
-
->>> Vous perdez 1 PV"""
+"""
 
 TPierresQEvent1 = """
 Devant vous, deux passages se dessinent dans la paroi :
@@ -476,7 +475,8 @@ Sherma = {
 "Emplacement" : "Tutoriel",
 "lacets_faits" : True,
 "mort": 0,
-"a_finit": False
+"a_finit": False,
+"Checkpoint" : "Tutoriel"
 }
 
 Salles = {
@@ -621,6 +621,7 @@ Votre réponse : """, ("1", "2"))
                 Sherma["Emplacement"] = "Tutoriel"
             else :
                 remplir_pv()
+                Sherma["Emplacement"] = Sherma["Checkpoint"]
             jouer()
         elif R == "2": 
             quit() 
