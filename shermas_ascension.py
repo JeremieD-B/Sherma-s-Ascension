@@ -580,7 +580,7 @@ def perdre_pv(pv : int, pv_perdu :int):
     return pv
 
 def gagner_pv(pv : int, pv_gagne :int):
-    if pv <= Pv_Max :
+    if pv <= Sherma["Stats"]["Pv_Max"] :
         pv += pv_gagne
         ecrire(f"\n>>> Vous gagnez {pv_gagne} PV. \n")
     return pv
@@ -940,7 +940,8 @@ def triche():
 
 
 def jouer():
-    Sherma["a_finit"] = False
+    Sherma["a_finit"] = False
+
     triche()
 
     while not(Sherma["a_finit"]):
@@ -953,3 +954,4 @@ def jouer():
 ###### JEU
 
 jouer()
+
