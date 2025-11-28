@@ -457,8 +457,10 @@ Son corps massif déforme les cloches, créant un chemin destructeur.
 La lumière faiblissante révèle une silhouette imposante, prête à bondir, les cloches brisées résonnant à chaque pas.
 """
 TCavernesClocheAtk1 = """
+Atk1
 """
 TCavernesClocheQAtk1 = """
+QAtk1
 """
 TCavernesClocheAtk2 = """
 """
@@ -478,6 +480,9 @@ TCavernesClocheQAtk5 = """
 """
 TCavernesClocheAtkRep = ("1","2","3")
 
+TCaverneClochesLent ="""
+lent
+"""
 TFIN = """
 La porte se ferme brutalement, il vous est impossible de revenir en arrière.
 Vous pensez être sur le bon chemin, une 1ère étape vient d'être franchi et venez de comprendre les bases. 
@@ -620,7 +625,7 @@ def gagner_pv(pv : int, pv_gagne :int):
 
 def remplir_pv():
     Sherma["PV"] = Sherma["Stats"]["Pv_Max"]
-    ecrire(f"\n>>> Vos PV se remplissent ! Vous avez désormais {Sherma["Stats"]["Pv_Max"]}/{Sherma["Stats"]["Pv_Max"]} PV\n")
+    ecrire(f"\n>>> Vos PV se remplissent ! Vous avez désormais {Sherma['Stats']['Pv_Max']}/{Sherma['Stats']['Pv_Max']} PV\n")
 
 
 def mourir(text_mort):
@@ -773,8 +778,6 @@ def GrandeAllee3():
         ecrire(TGrandeAlleeTEvent3_2)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
 
-def GouffreDOs(): 
-    Sherma["a_finit"] = True
 
 def Sentier(): 
     # Branche 2
@@ -922,23 +925,47 @@ Vous êtes persévérant et continuez à combattre.
         elif R == "2": 
             mourir(TExterieurQEvent3_2)
 
+def GouffreDOs(): 
+    Sherma["a_finit"] = True
 
 def CaverneCloches():
     BeteDesCloches = {
     "PV" : 15,
-    "Rage" : False
+    "TpsAtk" : 10
     }
     ecrire(TCaverneDesc)
     ecrire(TCavernesClochesApparition)
-    BeteDesClochesAtk1()
+    while BeteDesCloches["PV"] > 5 :
+        Atk = randint(1,1)
+        if Atk == 1 :
+            print(BeteDesCloches["PV"])
+            BeteDesCloches["PV"] += BeteDesClochesAtk1(BeteDesCloches["TpsAtk"])
+    BeteDesCloches["TpsAtk"] = 5
+    while BeteDesCloches["PV"] > 0: 
+        Atk = randint(1,1)
+        if Atk == 1 :
+            print(BeteDesCloches["PV"])
+            BeteDesCloches["PV"] += BeteDesClochesAtk1(BeteDesCloches["TpsAtk"])
+    input("Bête Morte")
     quit()
-def BeteDesClochesAtk1():
-    ecrire("TCavernesClocheAtk1")
+def BeteDesClochesAtk1(TpsAtk):
+    ecrire(TCavernesClocheAtk1)
     TempsAvantRep = time()
-    R = question("Que faites-vous ? 1, 2, 3",("1","2","3"))
-    TempDeReponse = time() - TempsAvantRep
-    ecrire(f"TempDeReponse : {TempDeReponse}")
-
+    R = question(TCavernesClocheQAtk1,TCavernesClocheAtkRep)
+    TempsDeReponse = time() - TempsAvantRep
+    ecrire(f"TempsDeReponse : {TempsDeReponse}")
+    if TempsDeReponse > TpsAtk :
+        ecrire(TCaverneClochesLent)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
+    elif R == "1" :
+        print("Esquive")
+    elif R == "2" :
+        print("Degat")
+        return -1
+    elif R == "3" : 
+        print("Raté")
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
+    return 0
 ##### FONCTIONS DE JEU
 
 def script(salle: str):
@@ -981,6 +1008,7 @@ def triche():
 
 
 def jouer():
+    print("\n"*1000)
     Sherma["a_finit"] = False
 
     triche()
