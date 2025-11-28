@@ -1,7 +1,7 @@
 ##### Imports
 
 from random import randint # Génère des nombres aléatoires (dans une portée donnée)
-from time import sleep # Fait une pause du programme pendant un temps donné
+from time import sleep, time # Fait une pause du programme pendant un temps donné
 
 #### Constantes de jeu 
 
@@ -444,7 +444,39 @@ TGouffreDOsDesc = """
 """
 
 TCaverneClochesDesc = """
+Vous entrez dans une caverne qui pourrait être une symphonie silencieuse de métal. 
+Des cloches de toutes formes et tailles ornent les murs, créant un labyrinthe obscur. 
+La lumière filtre à travers les fissures, révélant des ombres dansantes et une atmosphère mystérieuse.
 """
+
+TCavernesClochesApparition = """
+Soudain, l'air vibre d'un silence pesant, interrompu par un léger tintement. 
+Puis, les cloches s'animent, leur son s'amplifiant en un fracas assourdissant. 
+Des profondeurs de la caverne de cloches entassées, la Bête émerge. 
+Son corps massif déforme les cloches, créant un chemin destructeur. 
+La lumière faiblissante révèle une silhouette imposante, prête à bondir, les cloches brisées résonnant à chaque pas.
+"""
+TCavernesClocheAtk1 = """
+"""
+TCavernesClocheQAtk1 = """
+"""
+TCavernesClocheAtk2 = """
+"""
+TCavernesClocheQAtk2 = """
+"""
+TCavernesClocheAtk3 = """
+"""
+TCavernesClocheQAtk3 = """
+"""
+TCavernesClocheAtk4 = """
+"""
+TCavernesClocheQAtk4 = """
+"""
+TCavernesClocheAtk5 = """
+"""
+TCavernesClocheQAtk5 = """
+"""
+TCavernesClocheAtkRep = ("1","2","3")
 
 TFIN = """
 La porte se ferme brutalement, il vous est impossible de revenir en arrière.
@@ -453,6 +485,7 @@ Est-ce la fin ? Non ...
 La Fin n'est jamais vraiment la fin mais juste un nouveau commencement.
   -  Sensei Wu
 """
+
 
 ### Stats de base
 
@@ -895,8 +928,16 @@ def CaverneCloches():
     "PV" : 15,
     "Rage" : False
     }
-    input("Fonctionne")
+    ecrire(TCaverneDesc)
+    ecrire(TCavernesClochesApparition)
+    BeteDesClochesAtk1()
     quit()
+def BeteDesClochesAtk1():
+    ecrire("TCavernesClocheAtk1")
+    TempsAvantRep = time()
+    R = question("Que faites-vous ? 1, 2, 3",("1","2","3"))
+    TempDeReponse = time() - TempsAvantRep
+    ecrire(f"TempDeReponse : {TempDeReponse}")
 
 ##### FONCTIONS DE JEU
 
@@ -954,4 +995,3 @@ def jouer():
 ###### JEU
 
 jouer()
-
