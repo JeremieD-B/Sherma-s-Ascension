@@ -441,6 +441,8 @@ Vous fuyez mais glissez sur une pierre, les monstres vous rattrape.
 
 
 TGouffreDOsDesc = """
+Vous arrivez devant un gouffre où vous observez un petit village caché et oublié.
+Vous décidez d'atteindre ce village. 
 """
 
 TCaverneClochesDesc = """
@@ -496,11 +498,7 @@ TCaverneClocheVictoire = """
 
 TFIN = """
 La porte se ferme brutalement, il vous est impossible de revenir en arrière.
-Vous pensez être sur le bon chemin, une 1ère étape vient d'être franchi et venez de comprendre les bases. 
-Est-ce la fin ? Non ...
-La Fin n'est jamais vraiment la fin mais juste un nouveau commencement.
-  -  Sensei Wu
-"""
+Vous pensez être sur le bon chemin, une 1ère étape vient d'être franchi et venez de comprendre les bases."""
 
 
 ### Stats de base
@@ -533,11 +531,14 @@ Salles = {
     "Entree" : {"NomAffichee" : "Entrée","Desc" : TEntreeDesc},
     "GrotteHumide" : {"NomAffichee" : "Grotte humide","Desc" : TGrotteHumideDesc},
     "GrandeAllee" : {"NomAffichee" : "Grande Allée","Desc" : TGrandeAlleeDesc},
-    "GouffreDOs" : {"NomAffichee" : "Gouffre d'Os","Desc" : TGouffreDOsDesc},
     "Sentier": {"NomAffichee" : "Sentier","Desc" : TSentierDesc},
     "Caverne": {"NomAffichee" : "Caverne","Desc" : TCaverneDesc},
     "Pierres": {"NomAffichee" : "Pierres","Desc" : TPierresDesc},
     "Exterieur": {"NomAffichee" : "Extérieur","Desc" : TExterieurDesc},
+    "GouffreDOs" : {"NomAffichee" : "Gouffre d'Os","Desc" : TGouffreDOsDesc},
+    "Enigme1": {"NomAffichee" : "Salle d'Énigme 1","Desc" : None, "Past" : False},
+    "Enigme2": {"NomAffichee" : "Salle d'Énigme 2","Desc" : None, "Past" : False},
+    "Enigme3": {"NomAffichee" : "Salle d'Énigme 3","Desc" : None, "Past" : False},
     "CaverneCloches": {"NomAffichee" : "Caverne des Cloches","Desc" : TCaverneClochesDesc, "Past" : False},
 }
 
@@ -586,6 +587,7 @@ Emplacement : {Salles[Sherma["Emplacement"]]["NomAffichee"]}
 PV : {Sherma["PV"]}/{Sherma["Stats"]["Pv_Max"]}
 Atk : {Sherma["Stats"]["Atk"]}
 Agi : {Sherma["Stats"]["Agi"]}
+Objet : {Sherma["Inv"]["Objets"]}
 ---------
 """
     ecrire(TInv)
@@ -612,12 +614,15 @@ def modif_perles(modif: int):
 
 def gagner_carapaces():
     Sherma["Inv"]["Carapaces"] += 1
-    ecrire("\n>>> Vous récupérez un fragment de Carapaces\n")
+    ecrire("\n>>> Vous récupérez un fragment de Carapaces")
     if Sherma["Inv"]["Carapaces"] == 4 :
-        ecrire("\n>>> Vous avez 4 fragments de Carapaces\n")
-        sleep(0.3)
-        ecrire("\n>>> Vous réunnissez vos fragments de Carapaces")
-        ecrire("\n>>> Avec cette nouvelle carapace vous arrivez a améliorer votre endurance !\n")
+        Sherma["Inv"]["Carapaces"] = 0
+        ecrire("""
+
+>>> Vous avez 4 fragments de Carapaces
+Vous réunnissez vos fragments de carapaces et formez une caparaces !
+Avec cette nouvelle carapace vous améliorez la vôtre et gagner en Point de vie maximum !
+>>> Vos PV Max ont augmenté d'une unité""")
         Sherma["Stats"]["Pv_Max"] +=1 
         remplir_pv()
 
@@ -789,6 +794,27 @@ def GrandeAllee3():
         ecrire(TGrandeAlleeTEvent3_2)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
 
+def GouffreDOs(): 
+    R = question("""
+Vous arrivez dans le village, que voulez-vous faire ?
+    1. Vous reposer sur le banc
+    2. Aller voir le marchand
+    3. Continuer votre chemin
+Votre réponse : """, ("1", "2", "3"))
+    if R == "1":
+        ecrire("Les bancs vous permette de regagner entièrement votre vie et de sauvegarder votre progression.")
+        Sherma["Checkpoint"] = Sherma["Emplacement"]
+        remplir_pv()
+    if R == "2": 
+        ecrire("""
+Vous vous dirigez vers le marchand et commencez à converser avec lui. Vous avez du mal à le comprendre de part son dialecte.""")
+        question("""Bnoujor j'ai pilen d'atlicres puor vous (vous décidez de lire les étiquettes): 
+    1. Fragment de carapaces [30 perles]
+    2. Nouvelle arme [140 perles]
+    3. Clé de déchiffrement [70 perles]
+    4. Parfum [20 perles]
+    5. """, ("", "", "", ""))
+
 
 def Sentier(): 
     # Branche 2
@@ -936,9 +962,6 @@ Vous êtes persévérant et continuez à combattre.
         elif R == "2": 
             mourir(TExterieurQEvent3_2)
 
-def GouffreDOs(): 
-    Sherma["a_finit"] = True
-
 def CaverneCloches():
     BeteDesCloches = {
     "PV" : 15,
@@ -947,12 +970,21 @@ def CaverneCloches():
     ecrire(TCaverneDesc)
     ecrire(TCavernesClochesApparition)
     while BeteDesCloches["PV"] > 5 :
+        Atk = randint(1,1)
+        if Atk == 1 :
+            print(BeteDesCloches["PV"])
+            BeteDesCloches["PV"] += BeteDesClochesAtk1(BeteDesCloches["TpsAtk"])
         print(BeteDesCloches["PV"])
         BeteDesCloches["PV"] += BeteDesClochesAtkNormale(BeteDesCloches["TpsAtk"])
     BeteDesCloches["TpsAtk"] = 5
     while BeteDesCloches["PV"] > 0: 
-        print(BeteDesCloches["PV"])
-        BeteDesCloches["PV"] += BeteDesClochesAtkEnrage(BeteDesCloches["TpsAtk"])
+        Atk = randint(1,1)
+        if Atk == 1 :
+            print(BeteDesCloches["PV"])
+            BeteDesCloches["PV"] += BeteDesClochesAtk1(BeteDesCloches["TpsAtk"])
+    input("Bête Morte")
+    print(BeteDesCloches["PV"])
+    BeteDesCloches["PV"] += BeteDesClochesAtkEnrage(BeteDesCloches["TpsAtk"])
     ecrire(TCaverneClocheVictoire)
     quit()
 def BeteDesClochesAtkNormale(TpsAtk):
@@ -978,20 +1010,8 @@ def BeteDesClochesAtkEnrage(TpsAtk):
 def BeteDesClochesAtk1(TpsAtk):
     ecrire(TCavernesClocheAtk1)
     TempsAvantRep = time()
-    R = question(TCavernesClocheQAtk1,TCavernesClocheAtkRep)
-    TempsDeReponse = time() - TempsAvantRep
-    ecrire(f"TempsDeReponse : {TempsDeReponse}")
-    if TempsDeReponse > TpsAtk :
-        ecrire(TCaverneClochesLent)
-        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
-    elif R == "1" :
-        print("Esquive")
-    elif R == "2" :
-        print("Degat")
-        return -1
-    elif R == "3" : 
-        print("Raté")
-        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
+    print("Raté")
+    Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     return 0
 def BeteDesClochesAtk2(TpsAtk):
     ecrire(TCavernesClocheAtk2)
@@ -1065,6 +1085,7 @@ def BeteDesClochesAtk5(TpsAtk):
         print("Raté")
         Sherma["PV"] = perdre_pv(Sherma["PV"], 2)
     return 0
+
 ##### FONCTIONS DE JEU
 
 def script(salle: str):
@@ -1079,11 +1100,15 @@ def script(salle: str):
         case "Entree": Entree()
         case "GrotteHumide" : GrotteHumide()
         case "GrandeAllee" : GrandeAllee()
-        case "GouffreDOs" : GouffreDOs()
         case "Sentier" : Sentier()
         case "Caverne" : Caverne()
         case "Pierres" : Pierres()
         case "Exterieur" : Exterieur()
+        case "GouffreDOs" : GouffreDOs()
+        case "Enigme1": pass
+        case "Enigme2": pass
+        case "Enigme3": pass
+        # case "EnigmeTuringMachine: pass"
         case "CaverneCloches" : CaverneCloches()
 
 def triche():
@@ -1095,19 +1120,16 @@ def triche():
     for salle in Salles:
         nbr_salle += [str(i)]
         nom_salle += [salle]
-        question_triche += f"\t{i}. {salle}\n"
+        question_triche += f"\t{i}. {Salles[salle]['NomAffichee']}\n"
         i += 1
     question_triche += "Votre réponse : "
-
-    print(nbr_salle)
-
+    
     R = question(question_triche, nbr_salle)
     
     Sherma["Emplacement"] =  nom_salle[int(R)]
 
 
 def jouer():
-    print("\n"*1000)
     Sherma["a_finit"] = False
 
     triche()
@@ -1122,3 +1144,4 @@ def jouer():
 ###### JEU
 
 jouer()
+
