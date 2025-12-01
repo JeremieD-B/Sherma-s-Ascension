@@ -551,7 +551,7 @@ Salles = {
     "Enigme1": {"NomAffichee" : "Salle d'Énigme 1","Desc" : None, "Past" : False},
     "Enigme2": {"NomAffichee" : "Salle d'Énigme 2","Desc" : None, "Past" : False},
     "Enigme3": {"NomAffichee" : "Salle d'Énigme 3","Desc" : None, "Past" : False},
-    "CaverneCloches": {"NomAffichee" : "Caverne des Cloches","Desc" : TCaverneClochesDesc, "Past" : False},
+    "CaverneCloches": {"NomAffichee" : "Caverne des Cloches","Desc" : TCaverneClocheDesc, "Past" : False},
 }
 
 ###### FONCTIONS GÉNÉRALE:
@@ -1158,5 +1158,4 @@ def jouer():
 ###### JEU
 
 jouer()
-
 
