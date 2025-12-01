@@ -445,7 +445,7 @@ Vous arrivez devant un gouffre où vous observez un petit village caché et oubl
 Vous décidez d'atteindre ce village. 
 """
 
-TCaverneClochesDesc = """
+TCaverneClocheDesc = """
 Vous entrez dans une caverne qui pourrait être une symphonie silencieuse de métal. 
 Des cloches de toutes formes et tailles ornent les murs, créant un labyrinthe obscur. 
 La lumière filtre à travers les fissures, révélant des ombres dansantes et une atmosphère mystérieuse.
@@ -490,7 +490,19 @@ ATK5
 """
 TCavernesClocheAtkRep = ("1","2","3")
 
-TCaverneClochesLent ="""
+TCaverneClocheRate = """
+Vous essayez d'éviter l'attaque de la Bête des Cloches mais malheureusement elle avait prévue ce mouvement.
+"""
+TCaverneClocheEsquive = """ 
+Vous réagissez rapidement et évitez l'attaque de la Bête des Cloches
+Malheureusement voous ne trouvez pas le temps de lui infliger des dégâts
+"""
+TCaverneClocheDegat = """
+Vous réussissez à devancer la vitesse de la Bête des Cloches
+Vous la frappez de toutes vos forces ! 
+"""
+
+TCaverneClocheLent ="""
 lent
 """
 TCaverneClocheVictoire = """
@@ -970,21 +982,12 @@ def CaverneCloches():
     ecrire(TCaverneDesc)
     ecrire(TCavernesClochesApparition)
     while BeteDesCloches["PV"] > 5 :
-        Atk = randint(1,1)
-        if Atk == 1 :
-            print(BeteDesCloches["PV"])
-            BeteDesCloches["PV"] += BeteDesClochesAtk1(BeteDesCloches["TpsAtk"])
         print(BeteDesCloches["PV"])
         BeteDesCloches["PV"] += BeteDesClochesAtkNormale(BeteDesCloches["TpsAtk"])
     BeteDesCloches["TpsAtk"] = 5
     while BeteDesCloches["PV"] > 0: 
-        Atk = randint(1,1)
-        if Atk == 1 :
-            print(BeteDesCloches["PV"])
-            BeteDesCloches["PV"] += BeteDesClochesAtk1(BeteDesCloches["TpsAtk"])
-    input("Bête Morte")
-    print(BeteDesCloches["PV"])
-    BeteDesCloches["PV"] += BeteDesClochesAtkEnrage(BeteDesCloches["TpsAtk"])
+        print(BeteDesCloches["PV"])
+        BeteDesCloches["PV"] += BeteDesClochesAtkEnrage(BeteDesCloches["TpsAtk"])
     ecrire(TCaverneClocheVictoire)
     quit()
 def BeteDesClochesAtkNormale(TpsAtk):
@@ -1010,8 +1013,20 @@ def BeteDesClochesAtkEnrage(TpsAtk):
 def BeteDesClochesAtk1(TpsAtk):
     ecrire(TCavernesClocheAtk1)
     TempsAvantRep = time()
-    print("Raté")
-    Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
+    R = question(TCavernesClocheQAtk1,TCavernesClocheAtkRep)
+    TempsDeReponse = time() - TempsAvantRep
+    ecrire(f"TempsDeReponse : {TempsDeReponse}")
+    if TempsDeReponse > TpsAtk :
+        ecrire(TCaverneClocheLent)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
+    elif R == "1" :
+        print(TCaverneClocheEsquive)
+    elif R == "2" :
+        print("Degat")
+        return -1
+    elif R == "3" : 
+        print("Raté")
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     return 0
 def BeteDesClochesAtk2(TpsAtk):
     ecrire(TCavernesClocheAtk2)
@@ -1020,13 +1035,13 @@ def BeteDesClochesAtk2(TpsAtk):
     TempsDeReponse = time() - TempsAvantRep
     ecrire(f"TempsDeReponse : {TempsDeReponse}")
     if TempsDeReponse > TpsAtk :
-        ecrire(TCaverneClochesLent)
+        ecrire(TCaverneClocheLent)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     elif R == "1" :
         print("Degat")
         return -1
     elif R == "2" :
-        print("Esquive")
+        print(TCaverneClocheEsquive)
     elif R == "3" : 
         print("Raté")
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
@@ -1038,7 +1053,7 @@ def BeteDesClochesAtk3(TpsAtk):
     TempsDeReponse = time() - TempsAvantRep
     ecrire(f"TempsDeReponse : {TempsDeReponse}")
     if TempsDeReponse > TpsAtk :
-        ecrire(TCaverneClochesLent)
+        ecrire(TCaverneClocheLent)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     elif R == "1" :
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
@@ -1047,7 +1062,7 @@ def BeteDesClochesAtk3(TpsAtk):
         print("Degat")
         return -1
     elif R == "3" : 
-        print("Esquive")
+        print(TCaverneClocheEsquive)
     return 0
 def BeteDesClochesAtk4(TpsAtk):
     ecrire(TCavernesClocheAtk4)
@@ -1056,10 +1071,10 @@ def BeteDesClochesAtk4(TpsAtk):
     TempsDeReponse = time() - TempsAvantRep
     ecrire(f"TempsDeReponse : {TempsDeReponse}")
     if TempsDeReponse > TpsAtk :
-        ecrire(TCaverneClochesLent)
+        ecrire(TCaverneClocheLent)
         Sherma["P2V"] = perdre_pv(Sherma["PV"], 2)
     elif R == "1" :
-        print("Esquive")
+        print(TCaverneClocheEsquive)
     elif R == "2" :
         Sherma["PV"] = perdre_pv(Sherma["PV"], 2)
         print("Raté")
@@ -1074,18 +1089,17 @@ def BeteDesClochesAtk5(TpsAtk):
     TempsDeReponse = time() - TempsAvantRep
     ecrire(f"TempsDeReponse : {TempsDeReponse}")
     if TempsDeReponse > TpsAtk :
-        ecrire(TCaverneClochesLent)
+        ecrire(TCaverneClocheLent)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 2)
     elif R == "1" :
         print("Degat")
         return -1
     elif R == "2" :
-        print("Esquive")
+        print(TCaverneClocheEsquive)
     elif R == "3" : 
         print("Raté")
         Sherma["PV"] = perdre_pv(Sherma["PV"], 2)
     return 0
-
 ##### FONCTIONS DE JEU
 
 def script(salle: str):
@@ -1144,4 +1158,5 @@ def jouer():
 ###### JEU
 
 jouer()
+
 
