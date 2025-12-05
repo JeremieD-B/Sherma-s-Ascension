@@ -459,34 +459,56 @@ Son corps massif déforme les cloches, créant un chemin destructeur.
 La lumière faiblissante révèle une silhouette imposante, prête à bondir, les cloches brisées résonnant à chaque pas.
 """
 TCavernesClocheAtk1 = """
-Atk1
+La bête se cabre, puis fonce droit sur vous en faisant résonner toutes les cloches de la grotte. 
+L'impact projette et assourdit, rester face à la bête est très dangeureux.
 """
 TCavernesClocheQAtk1 = """
-QAtk1
+Que faites-vous ? :
+    1. Vous essayez de plonger sur le côté pour éviter l'attaque.
+    2. Vous tentez de sauter par dessus la bête pour lui frapper le dos.
+    3. Vous sautez en arrière pour l'attendre, prêt à contre-attaquer.
 """
 TCavernesClocheAtk2 = """
-Atk 2
+La bête piètine le sol violemment et prend appui de toute ses forces.
+Elle bondit en l'air et se dirige droit vers vous dans un fracas tonitruant.
 """
 TCavernesClocheQAtk2 = """
-QATK2
+Que faites-vous ? :
+    1. Plonger sous la bête pour lui attaquer les pattes.
+    2. Sauter en arrière pour prendre de la distance et ne pas se faire toucher.
+    3. Essayer de grimper sur son dos pendant qu'elle est en l'air.
 """
 TCavernesClocheAtk3 = """
-ATK3
+La bête frappe le sol de ses pattes et commence a creuser entre les cloches.
+Elle semble essayer de se cacher sous les cloches.
 """
 TCavernesClocheQAtk3 = """
-QATK3
+Que faites-vous ? :
+    1. Attendre la bête en gardant ses distances pour l'attaquer quand elle ressortira.
+    2. Se précipiter pour l'attaquer avant qu'elle ne puisse se cacher.
+    3. Prendre de la hauteur pour observer d'où elle va ressortir.
 """
 TCavernesClocheAtk4 = """
-ATK4
+Enragée la bête des cloches frappe violemment le sol faisant trembler toute la caverne.
+Les cloches qui recouvre le plafond vibrent et menace de tomber sur vous
+Soudain la bête bondit en l'air, vous voyez les cloches autour d'elle tomber dans toutes les directions.
 """
 TCavernesClocheQAtk4 = """
-QATK4
+Que faites-vous ? :
+    1. Plonger sur le coté pour éviter la bête de essayer d'éviter les cloches
+    2. Sauter en arrière pour laisser la bête atterir devant vous
+    3. Plonger sous la bête et lui attaquer les pattes pendant qu'elle est en l'air
 """
 TCavernesClocheAtk5 = """
-QATK5
+La bête des cloches est furieuse elle garde ses distances et frappe le sol pour déloger les cloches qui le constituent.
+Elle se mets a frapper les cloches pour les envoyer en votre direction, certaines tombent du plafond.
+Les cloches s'approchant dangeureusement de vous rebondissent de manière complétement imprévisible.
 """
 TCavernesClocheQAtk5 = """
-ATK5
+Que faites-vous ? :
+    1. Frapper les cloches qui vous arrivent dessus pour les renvoyer à la bête
+    2. Foncer vers la bête en évitant les cloches pour l'attaquer directement
+    3. Maintenir ses distance et se concentrer pour éviter les cloches
 """
 TCavernesClocheAtkRep = ("1","2","3")
 
@@ -501,11 +523,17 @@ TCaverneClocheDegat = """
 Vous réussissez à devancer la vitesse de la Bête des Cloches
 Vous la frappez de toutes vos forces ! 
 """
-
+TCaverneClocheEnrage = """
+La Bête des Cloches est blessée, elle devient folle de rage et attaque avec encore plus de férocité.
+Ses attaques sont plus rapides et plus puissantes, il va falloir redoubler de réactivité.
+"""
 TCaverneClocheLent ="""
-lent
+Vous ne réagissez pas assez vite, la Bête des Cloches vous percute de plein fouet.
 """
 TCaverneClocheVictoire = """
+Avec un dernier coup puissant, vous terrassez la Bête des Cloches.
+Les cloches cessent de résonner, et un silence apaisant envahit la caverne.
+Vous avez vaincu un ennemi redoutable et pouvez continuer votre ascension vers la Citadelle Mélodieuse.
 """
 
 TFIN = """
@@ -525,6 +553,7 @@ Stats = {
 "Pv_Max" : 5,
 "Atk": 0,
 "Agi" : 0,
+"Dgt" : 10
 }
 
 Sherma = {
@@ -580,6 +609,12 @@ def question(text : str,rep : tuple) -> str:
     if R in ("q","Q") :
         quit()
     return R
+
+def question_temp(text : str,rep : tuple) -> tuple:
+    TempsAvantRep = time()
+    R = question(text,rep)
+    TempsDeReponse = time() - TempsAvantRep
+    return R, TempsDeReponse
 
 def ecrire(text: str, vitesse = vitesse_texte, vitesse_pause = vitesse_pause) -> None:
     """
@@ -677,10 +712,11 @@ Votre réponse : """, ("1", "2"))
             "Perles" : 0
                 }
 
-                Stats = {
-            "Pv_Max" : 5,
-            "Atk": 0,
-            "Agi" : 0,
+                Stats = Stats = {
+                "Pv_Max" : 5,
+                "Atk": 0,
+                "Agi" : 0,
+                "Dgt" : 10
                 }
                 Sherma["Stats"] = Stats
                 Sherma["Inv"] = Inv
@@ -976,20 +1012,19 @@ Vous êtes persévérant et continuez à combattre.
 
 def CaverneCloches():
     BeteDesCloches = {
-    "PV" : 15,
-    "TpsAtk" : 10
+    "PV" : 120,
+    "TpsAtk" : 13
     }
     ecrire(TCaverneDesc)
     ecrire(TCavernesClochesApparition)
-    while BeteDesCloches["PV"] > 5 :
-        print(BeteDesCloches["PV"])
+    while BeteDesCloches["PV"] > 40 :
         BeteDesCloches["PV"] += BeteDesClochesAtkNormale(BeteDesCloches["TpsAtk"])
-    BeteDesCloches["TpsAtk"] = 5
-    while BeteDesCloches["PV"] > 0: 
-        print(BeteDesCloches["PV"])
+    BeteDesCloches["TpsAtk"] = 7
+    ecrire(TCaverneClocheEnrage)
+    while BeteDesCloches["PV"] > 0:
         BeteDesCloches["PV"] += BeteDesClochesAtkEnrage(BeteDesCloches["TpsAtk"])
     ecrire(TCaverneClocheVictoire)
-    quit()
+    Sherma["a_finit"] = True
 def BeteDesClochesAtkNormale(TpsAtk):
     Atk = randint(1,3)
     if Atk == 1 :
@@ -1012,93 +1047,78 @@ def BeteDesClochesAtkEnrage(TpsAtk):
         return BeteDesClochesAtk5(TpsAtk)
 def BeteDesClochesAtk1(TpsAtk):
     ecrire(TCavernesClocheAtk1)
-    TempsAvantRep = time()
-    R = question(TCavernesClocheQAtk1,TCavernesClocheAtkRep)
-    TempsDeReponse = time() - TempsAvantRep
-    ecrire(f"TempsDeReponse : {TempsDeReponse}")
+    R, TempsDeReponse = question_temp(TCavernesClocheQAtk1,TCavernesClocheAtkRep)
     if TempsDeReponse > TpsAtk :
         ecrire(TCaverneClocheLent)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     elif R == "1" :
-        print(TCaverneClocheEsquive)
+        ecrire(TCaverneClocheEsquive)
     elif R == "2" :
-        print("Degat")
-        return -1
+        ecrire(TCaverneClocheDegat)
+        return -1*Sherma["Stats"]["Dgt"]
     elif R == "3" : 
-        print("Raté")
+        ecrire(TCaverneClocheRate)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     return 0
 def BeteDesClochesAtk2(TpsAtk):
     ecrire(TCavernesClocheAtk2)
-    TempsAvantRep = time()
-    R = question(TCavernesClocheQAtk2,TCavernesClocheAtkRep)
-    TempsDeReponse = time() - TempsAvantRep
-    ecrire(f"TempsDeReponse : {TempsDeReponse}")
+    R, TempsDeReponse = question_temp(TCavernesClocheQAtk2,TCavernesClocheAtkRep)
     if TempsDeReponse > TpsAtk :
         ecrire(TCaverneClocheLent)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     elif R == "1" :
-        print("Degat")
-        return -1
+        ecrire(TCaverneClocheDegat)
+        return -1*Sherma["Stats"]["Dgt"]
     elif R == "2" :
-        print(TCaverneClocheEsquive)
+        ecrire(TCaverneClocheEsquive)
     elif R == "3" : 
-        print("Raté")
+        ecrire(TCaverneClocheRate)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     return 0
 def BeteDesClochesAtk3(TpsAtk):
     ecrire(TCavernesClocheAtk3)
-    TempsAvantRep = time()
-    R = question(TCavernesClocheQAtk3,TCavernesClocheAtkRep)
-    TempsDeReponse = time() - TempsAvantRep
-    ecrire(f"TempsDeReponse : {TempsDeReponse}")
+    R, TempsDeReponse = question_temp(TCavernesClocheQAtk3,TCavernesClocheAtkRep)
     if TempsDeReponse > TpsAtk :
         ecrire(TCaverneClocheLent)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     elif R == "1" :
+        ecrire(TCaverneClocheRate)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
-        print("Raté")
     elif R == "2" :
-        print("Degat")
-        return -1
+        ecrire(TCaverneClocheDegat)
+        return -1*Sherma["Stats"]["Dgt"]
     elif R == "3" : 
-        print(TCaverneClocheEsquive)
+        ecrire(TCaverneClocheEsquive)
     return 0
 def BeteDesClochesAtk4(TpsAtk):
     ecrire(TCavernesClocheAtk4)
-    TempsAvantRep = time()
-    R = question(TCavernesClocheQAtk4,TCavernesClocheAtkRep)
-    TempsDeReponse = time() - TempsAvantRep
-    ecrire(f"TempsDeReponse : {TempsDeReponse}")
+    R, TempsDeReponse = question_temp(TCavernesClocheQAtk4,TCavernesClocheAtkRep)
     if TempsDeReponse > TpsAtk :
         ecrire(TCaverneClocheLent)
         Sherma["P2V"] = perdre_pv(Sherma["PV"], 2)
     elif R == "1" :
-        print(TCaverneClocheEsquive)
+        ecrire(TCaverneClocheEsquive)
     elif R == "2" :
         Sherma["PV"] = perdre_pv(Sherma["PV"], 2)
-        print("Raté")
+        ecrire(TCaverneClocheRate)
     elif R == "3" : 
-        print("Degat")
-        return -1
+        ecrire(TCaverneClocheDegat)
+        return -1*Sherma["Stats"]["Dgt"]
     return 0
 def BeteDesClochesAtk5(TpsAtk):
     ecrire(TCavernesClocheAtk5)
-    TempsAvantRep = time()
-    R = question(TCavernesClocheQAtk5,TCavernesClocheAtkRep)
-    TempsDeReponse = time() - TempsAvantRep
-    ecrire(f"TempsDeReponse : {TempsDeReponse}")
+    R, TempsDeReponse = question_temp(TCavernesClocheQAtk5,TCavernesClocheAtkRep)
     if TempsDeReponse > TpsAtk :
         ecrire(TCaverneClocheLent)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 2)
     elif R == "1" :
-        print("Degat")
-        return -1
+        ecrire(TCaverneClocheDegat)
+        return -1*Sherma["Stats"]["Dgt"]
     elif R == "2" :
-        print(TCaverneClocheEsquive)
-    elif R == "3" : 
-        print("Raté")
+        ecrire(TCaverneClocheRate)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 2)
+    elif R == "3" : 
+        ecrire(TCaverneClocheEsquive) 
     return 0
 ##### FONCTIONS DE JEU
 
