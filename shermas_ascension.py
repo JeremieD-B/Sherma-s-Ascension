@@ -5,8 +5,8 @@ from time import sleep, time # Fait une pause du programme pendant un temps donn
 
 #### Constantes de jeu 
 
-vitesse_texte = 0 # 0.025 vitesse normale
-vitesse_pause = 0 # 0.35 vitesse normale
+vitesse_texte = 0.015 # 0.025 vitesse normale
+vitesse_pause = 0.25 # 0.35 vitesse normale
 
 ### Constantes de description de salles
 
@@ -451,66 +451,66 @@ Des cloches de toutes formes et tailles ornent les murs, créant un labyrinthe o
 La lumière filtre à travers les fissures, révélant des ombres dansantes et une atmosphère mystérieuse.
 """
 
-TCavernesClochesApparition = """
+TCaverneClocheApparition = """
 Soudain, l'air vibre d'un silence pesant, interrompu par un léger tintement. 
 Puis, les cloches s'animent, leur son s'amplifiant en un fracas assourdissant. 
 Des profondeurs de la caverne de cloches entassées, la Bête émerge. 
 Son corps massif déforme les cloches, créant un chemin destructeur. 
 La lumière faiblissante révèle une silhouette imposante, prête à bondir, les cloches brisées résonnant à chaque pas.
 """
-TCavernesClocheAtk1 = """
+TCaverneClocheAtk1 = """
 La bête se cabre, puis fonce droit sur vous en faisant résonner toutes les cloches de la grotte. 
 L'impact projette et assourdit, rester face à la bête est très dangeureux.
 """
-TCavernesClocheQAtk1 = """
+TCaverneClocheQAtk1 = """
 Que faites-vous ? :
     1. Vous essayez de plonger sur le côté pour éviter l'attaque.
     2. Vous tentez de sauter par dessus la bête pour lui frapper le dos.
     3. Vous sautez en arrière pour l'attendre, prêt à contre-attaquer.
 """
-TCavernesClocheAtk2 = """
+TCaverneClocheAtk2 = """
 La bête piètine le sol violemment et prend appui de toute ses forces.
 Elle bondit en l'air et se dirige droit vers vous dans un fracas tonitruant.
 """
-TCavernesClocheQAtk2 = """
+TCaverneClocheQAtk2 = """
 Que faites-vous ? :
     1. Plonger sous la bête pour lui attaquer les pattes.
     2. Sauter en arrière pour prendre de la distance et ne pas se faire toucher.
     3. Essayer de grimper sur son dos pendant qu'elle est en l'air.
 """
-TCavernesClocheAtk3 = """
+TCaverneClocheAtk3 = """
 La bête frappe le sol de ses pattes et commence a creuser entre les cloches.
 Elle semble essayer de se cacher sous les cloches.
 """
-TCavernesClocheQAtk3 = """
+TCaverneClocheQAtk3 = """
 Que faites-vous ? :
     1. Attendre la bête en gardant ses distances pour l'attaquer quand elle ressortira.
     2. Se précipiter pour l'attaquer avant qu'elle ne puisse se cacher.
     3. Prendre de la hauteur pour observer d'où elle va ressortir.
 """
-TCavernesClocheAtk4 = """
+TCaverneClocheAtk4 = """
 Enragée la bête des cloches frappe violemment le sol faisant trembler toute la caverne.
 Les cloches qui recouvre le plafond vibrent et menace de tomber sur vous
 Soudain la bête bondit en l'air, vous voyez les cloches autour d'elle tomber dans toutes les directions.
 """
-TCavernesClocheQAtk4 = """
+TCaverneClocheQAtk4 = """
 Que faites-vous ? :
     1. Plonger sur le coté pour éviter la bête de essayer d'éviter les cloches
     2. Sauter en arrière pour laisser la bête atterir devant vous
     3. Plonger sous la bête et lui attaquer les pattes pendant qu'elle est en l'air
 """
-TCavernesClocheAtk5 = """
+TCaverneClocheAtk5 = """
 La bête des cloches est furieuse elle garde ses distances et frappe le sol pour déloger les cloches qui le constituent.
 Elle se mets a frapper les cloches pour les envoyer en votre direction, certaines tombent du plafond.
 Les cloches s'approchant dangeureusement de vous rebondissent de manière complétement imprévisible.
 """
-TCavernesClocheQAtk5 = """
+TCaverneClocheQAtk5 = """
 Que faites-vous ? :
     1. Frapper les cloches qui vous arrivent dessus pour les renvoyer à la bête
     2. Foncer vers la bête en évitant les cloches pour l'attaquer directement
     3. Maintenir ses distance et se concentrer pour éviter les cloches
 """
-TCavernesClocheAtkRep = ("1","2","3")
+TCaverneClocheAtkRep = ("1","2","3")
 
 TCaverneClocheRate = """
 Vous essayez d'éviter l'attaque de la Bête des Cloches mais malheureusement elle avait prévue ce mouvement.
@@ -614,6 +614,7 @@ def question_temp(text : str,rep : tuple) -> tuple:
     TempsAvantRep = time()
     R = question(text,rep)
     TempsDeReponse = time() - TempsAvantRep
+    print(TempsDeReponse)
     return R, TempsDeReponse
 
 def ecrire(text: str, vitesse = vitesse_texte, vitesse_pause = vitesse_pause) -> None:
@@ -1013,13 +1014,13 @@ Vous êtes persévérant et continuez à combattre.
 def CaverneCloches():
     BeteDesCloches = {
     "PV" : 120,
-    "TpsAtk" : 13
+    "TpsAtk" : 16
     }
-    ecrire(TCaverneDesc)
-    ecrire(TCavernesClochesApparition)
+    ecrire(TCaverneClocheDesc)
+    ecrire(TCaverneClocheApparition)
     while BeteDesCloches["PV"] > 40 :
         BeteDesCloches["PV"] += BeteDesClochesAtkNormale(BeteDesCloches["TpsAtk"])
-    BeteDesCloches["TpsAtk"] = 7
+    BeteDesCloches["TpsAtk"] = 8.5
     ecrire(TCaverneClocheEnrage)
     while BeteDesCloches["PV"] > 0:
         BeteDesCloches["PV"] += BeteDesClochesAtkEnrage(BeteDesCloches["TpsAtk"])
@@ -1046,8 +1047,8 @@ def BeteDesClochesAtkEnrage(TpsAtk):
     else : 
         return BeteDesClochesAtk5(TpsAtk)
 def BeteDesClochesAtk1(TpsAtk):
-    ecrire(TCavernesClocheAtk1)
-    R, TempsDeReponse = question_temp(TCavernesClocheQAtk1,TCavernesClocheAtkRep)
+    ecrire(TCaverneClocheAtk1)
+    R, TempsDeReponse = question_temp(TCaverneClocheQAtk1,TCaverneClocheAtkRep)
     if TempsDeReponse > TpsAtk :
         ecrire(TCaverneClocheLent)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
@@ -1061,8 +1062,8 @@ def BeteDesClochesAtk1(TpsAtk):
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     return 0
 def BeteDesClochesAtk2(TpsAtk):
-    ecrire(TCavernesClocheAtk2)
-    R, TempsDeReponse = question_temp(TCavernesClocheQAtk2,TCavernesClocheAtkRep)
+    ecrire(TCaverneClocheAtk2)
+    R, TempsDeReponse = question_temp(TCaverneClocheQAtk2,TCaverneClocheAtkRep)
     if TempsDeReponse > TpsAtk :
         ecrire(TCaverneClocheLent)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
@@ -1076,8 +1077,8 @@ def BeteDesClochesAtk2(TpsAtk):
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     return 0
 def BeteDesClochesAtk3(TpsAtk):
-    ecrire(TCavernesClocheAtk3)
-    R, TempsDeReponse = question_temp(TCavernesClocheQAtk3,TCavernesClocheAtkRep)
+    ecrire(TCaverneClocheAtk3)
+    R, TempsDeReponse = question_temp(TCaverneClocheQAtk3,TCaverneClocheAtkRep)
     if TempsDeReponse > TpsAtk :
         ecrire(TCaverneClocheLent)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
@@ -1091,8 +1092,8 @@ def BeteDesClochesAtk3(TpsAtk):
         ecrire(TCaverneClocheEsquive)
     return 0
 def BeteDesClochesAtk4(TpsAtk):
-    ecrire(TCavernesClocheAtk4)
-    R, TempsDeReponse = question_temp(TCavernesClocheQAtk4,TCavernesClocheAtkRep)
+    ecrire(TCaverneClocheAtk4)
+    R, TempsDeReponse = question_temp(TCaverneClocheQAtk4,TCaverneClocheAtkRep)
     if TempsDeReponse > TpsAtk :
         ecrire(TCaverneClocheLent)
         Sherma["P2V"] = perdre_pv(Sherma["PV"], 2)
@@ -1106,8 +1107,8 @@ def BeteDesClochesAtk4(TpsAtk):
         return -1*Sherma["Stats"]["Dgt"]
     return 0
 def BeteDesClochesAtk5(TpsAtk):
-    ecrire(TCavernesClocheAtk5)
-    R, TempsDeReponse = question_temp(TCavernesClocheQAtk5,TCavernesClocheAtkRep)
+    ecrire(TCaverneClocheAtk5)
+    R, TempsDeReponse = question_temp(TCaverneClocheQAtk5,TCaverneClocheAtkRep)
     if TempsDeReponse > TpsAtk :
         ecrire(TCaverneClocheLent)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 2)
