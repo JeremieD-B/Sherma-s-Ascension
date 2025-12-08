@@ -667,7 +667,7 @@ Vous utilisez une Orbe de vie, celle-ci à 3 chance sur 4 de vous soignez et 1 c
 def question_temp(text : str,rep : tuple) -> tuple:
     TempsAvantRep = time()
     R = question(text,rep)
-    TempsDeReponse = time() - TempsAvantRep
+    TempsDeReponse = time() - TempsAvantRep
     return R, TempsDeReponse
 
 def ecrire(text: str, vitesse = vitesse_texte, vitesse_pause = vitesse_pause) -> None:
@@ -762,18 +762,20 @@ Votre réponse : """, ("1", "2"))
         if R == "1": 
             
             if Sherma["Checkpoint"] == "Tutoriel":
-                Sherma["Stats"]["PV"] = 5
                 Inv = {"Arme": "Baguette de métal", 
-            "Mélodies" : [],
-            "Carapaces" : 0,
-            "Objets" : [],
-            "Perles" : 0
-                }
+                "Mélodies" : [],
+                "Carapaces" : 0,
+                "Objets" : [],
+                "Perles" : 0}
 
                 Stats = {
+                "TailleInv": 5,
+                "PV": 5,
+                "Cle_consultee" : 0,
                 "Pv_Max" : 5,
-                "Atk": 10,
+                "Atk": 1,
                 "Agi" : 0,
+                "mort": 0
                 }
                 Sherma["Stats"] = Stats
                 Sherma["Inv"] = Inv
@@ -1182,7 +1184,6 @@ def CaverneCloches():
     ecrire(TCaverneClocheApparition)
     while BeteDesCloches["PV"] > 40 :
         BeteDesCloches["PV"] -= BeteDesClochesAtkNormale(BeteDesCloches["TpsAtk"])
-        print(BeteDesCloches["PV"])
     BeteDesCloches["TpsAtk"] = 8.5
     ecrire(TCaverneClocheEnrage)
     while BeteDesCloches["PV"] > 0:
@@ -1342,4 +1343,4 @@ def jouer():
 
 ###### JEU
 
-jouer()
+jouer()     
