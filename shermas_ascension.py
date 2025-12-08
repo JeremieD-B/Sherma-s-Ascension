@@ -468,7 +468,7 @@ Que faites-vous ? :
     1. Vous essayez de plonger sur le côté pour éviter l'attaque.
     2. Vous tentez de sauter par dessus la bête pour lui frapper le dos.
     3. Vous sautez en arrière pour l'attendre, prêt à contre-attaquer.
-"""
+Votre réponse : """
 TCaverneClocheAtk2 = """
 La bête piètine le sol violemment et prend appui de toute ses forces.
 Elle bondit en l'air et se dirige droit vers vous dans un fracas tonitruant.
@@ -478,7 +478,7 @@ Que faites-vous ? :
     1. Plonger sous la bête pour lui attaquer les pattes.
     2. Sauter en arrière pour prendre de la distance et ne pas se faire toucher.
     3. Essayer de grimper sur son dos pendant qu'elle est en l'air.
-"""
+Votre réponse : """
 TCaverneClocheAtk3 = """
 La bête frappe le sol de ses pattes et commence a creuser entre les cloches.
 Elle semble essayer de se cacher sous les cloches.
@@ -488,7 +488,7 @@ Que faites-vous ? :
     1. Attendre la bête en gardant ses distances pour l'attaquer quand elle ressortira.
     2. Se précipiter pour l'attaquer avant qu'elle ne puisse se cacher.
     3. Prendre de la hauteur pour observer d'où elle va ressortir.
-"""
+Votre réponse : """
 TCaverneClocheAtk4 = """
 Enragée la bête des cloches frappe violemment le sol faisant trembler toute la caverne.
 Les cloches qui recouvre le plafond vibrent et menace de tomber sur vous
@@ -499,7 +499,7 @@ Que faites-vous ? :
     1. Plonger sur le coté pour éviter la bête de essayer d'éviter les cloches
     2. Sauter en arrière pour laisser la bête atterir devant vous
     3. Plonger sous la bête et lui attaquer les pattes pendant qu'elle est en l'air
-"""
+Votre réponse : """
 TCaverneClocheAtk5 = """
 La bête des cloches est furieuse elle garde ses distances et frappe le sol pour déloger les cloches qui le constituent.
 Elle se mets a frapper les cloches pour les envoyer en votre direction, certaines tombent du plafond.
@@ -510,7 +510,7 @@ Que faites-vous ? :
     1. Frapper les cloches qui vous arrivent dessus pour les renvoyer à la bête
     2. Foncer vers la bête en évitant les cloches pour l'attaquer directement
     3. Maintenir ses distance et se concentrer pour éviter les cloches
-"""
+Votre réponse : """
 TCaverneClocheAtkRep = ("1","2","3")
 
 TCaverneClocheRate = """
@@ -545,7 +545,7 @@ Vous pensez être sur le bon chemin, une 1ère étape vient d'être franchi et v
 ### Stats de base
 Armes = {
     "Baguette de métal" : 4,
-    "Épée d'argent cristallisée" : 10
+    "Épée d'argent cristallisée" : 8
 
 }
 
@@ -725,6 +725,12 @@ Avec cette nouvelle carapace vous améliorez la vôtre et gagner en Point de vie
 >>> Vos PV Max ont augmenté d'une unité""")
         Sherma["Stats"]["Pv_Max"] +=1 
         remplir_pv()
+
+def calcul_degat():
+    dgt = Armes[Sherma["Inv"]["Arme"]]
+    dgt += Sherma["Stats"]["Atk"]*3
+    return dgt
+
 
 def perdre_pv(pv : int, pv_perdu :int):
     ecrire(f"\n>>> Vous perdez {pv_perdu} PV. \n")
@@ -1175,11 +1181,12 @@ def CaverneCloches():
     ecrire(TCaverneClocheDesc)
     ecrire(TCaverneClocheApparition)
     while BeteDesCloches["PV"] > 40 :
-        BeteDesCloches["PV"] += BeteDesClochesAtkNormale(BeteDesCloches["TpsAtk"])
+        BeteDesCloches["PV"] -= BeteDesClochesAtkNormale(BeteDesCloches["TpsAtk"])
+        print(BeteDesCloches["PV"])
     BeteDesCloches["TpsAtk"] = 8.5
     ecrire(TCaverneClocheEnrage)
     while BeteDesCloches["PV"] > 0:
-        BeteDesCloches["PV"] += BeteDesClochesAtkEnrage(BeteDesCloches["TpsAtk"])
+        BeteDesCloches["PV"] -= BeteDesClochesAtkEnrage(BeteDesCloches["TpsAtk"])
     ecrire(TCaverneClocheVictoire)
     Sherma["a_finit"] = True
 def BeteDesClochesAtkNormale(TpsAtk):
@@ -1212,7 +1219,7 @@ def BeteDesClochesAtk1(TpsAtk):
         ecrire(TCaverneClocheEsquive)
     elif R == "2" :
         ecrire(TCaverneClocheDegat)
-        return -1*Sherma["Stats"]["Atk"]
+        return calcul_degat()
     elif R == "3" : 
         ecrire(TCaverneClocheRate)
         Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
@@ -1225,7 +1232,7 @@ def BeteDesClochesAtk2(TpsAtk):
         Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
     elif R == "1" :
         ecrire(TCaverneClocheDegat)
-        return -1*Sherma["Stats"]["Atk"]
+        return calcul_degat()
     elif R == "2" :
         ecrire(TCaverneClocheEsquive)
     elif R == "3" : 
@@ -1243,7 +1250,7 @@ def BeteDesClochesAtk3(TpsAtk):
         Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
     elif R == "2" :
         ecrire(TCaverneClocheDegat)
-        return -1*Sherma["Stats"]["Atk"]
+        return calcul_degat()
     elif R == "3" : 
         ecrire(TCaverneClocheEsquive)
     return 0
@@ -1260,7 +1267,7 @@ def BeteDesClochesAtk4(TpsAtk):
         ecrire(TCaverneClocheRate)
     elif R == "3" : 
         ecrire(TCaverneClocheDegat)
-        return -1*Sherma["Stats"]["Atk"]
+        return calcul_degat()
     return 0
 def BeteDesClochesAtk5(TpsAtk):
     ecrire(TCaverneClocheAtk5)
@@ -1270,7 +1277,7 @@ def BeteDesClochesAtk5(TpsAtk):
         Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 2)
     elif R == "1" :
         ecrire(TCaverneClocheDegat)
-        return -1*Sherma["Stats"]["Atk"]
+        return calcul_degat()
     elif R == "2" :
         ecrire(TCaverneClocheRate)
         Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 2)
