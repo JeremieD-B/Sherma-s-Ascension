@@ -667,8 +667,7 @@ Vous utilisez une Orbe de vie, celle-ci à 3 chance sur 4 de vous soignez et 1 c
 def question_temp(text : str,rep : tuple) -> tuple:
     TempsAvantRep = time()
     R = question(text,rep)
-    TempsDeReponse = time() - TempsAvantRep
-    print(TempsDeReponse)
+    TempsDeReponse = time() - TempsAvantRep
     return R, TempsDeReponse
 
 def ecrire(text: str, vitesse = vitesse_texte, vitesse_pause = vitesse_pause) -> None:
