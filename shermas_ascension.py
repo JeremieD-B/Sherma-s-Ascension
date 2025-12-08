@@ -1330,7 +1330,7 @@ def triche():
 
 def jouer():
     Sherma["a_finit"] = False
-
+    print("\n"*1000)
     triche()
 
     while not(Sherma["a_finit"]):
