@@ -18,12 +18,12 @@ DONE- Implémenter les évènements de toutes nos salles déjà existantes dans 
 
 ------------------
 
-0% - Salle village gouffre d'os
+75% - Salle village gouffre d'os
 
-0% - Salle Énigme 1 => Salle Énigme 2 (si toutes enigmes faites => Salle Carvene des cloches)
+DONE - Salle Énigme 1 => Salle Énigme 2 (si toutes enigmes faites => Salle Carvene des cloches)
 
 0% - Salle Énigme 2 => Salle Énigme 1 ou Salle Énigme 3
 
 0% - Salle Énigme 3 => Salle Énigme 1 ou Gouffre d'Os
 
-0% - Caverne des cloches (boss)
+DONE - Caverne des cloches (boss)
