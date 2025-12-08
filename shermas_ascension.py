@@ -543,6 +543,11 @@ Vous pensez être sur le bon chemin, une 1ère étape vient d'être franchi et v
 
 
 ### Stats de base
+Armes = {
+    "Baguette de métal" : 4,
+    "Épée d'argent cristallisée" : 10
+
+}
 
 Inv = {"Arme": "Baguette de métal", 
         "Mélodies" : [],
@@ -555,7 +560,7 @@ Stats = {
 "PV": 5,
 "Cle_consultee" : 0,
 "Pv_Max" : 5,
-"Atk": 10,
+"Atk": 1,
 "Agi" : 0,
 "mort": 0
 }
@@ -571,7 +576,7 @@ Sherma = {
 }
 
 Salles = {
-    "Tutoriel" : {"NomAffichee" : "Entrée","Desc" : TEntreeDesc},
+    "Tutoriel" : {"NomAffichee" : "Tutoriel","Desc" : TEntreeDesc},
     "Entree" : {"NomAffichee" : "Entrée","Desc" : TEntreeDesc},
     "GrotteHumide" : {"NomAffichee" : "Grotte humide","Desc" : TGrotteHumideDesc},
     "GrandeAllee" : {"NomAffichee" : "Grande Allée","Desc" : TGrandeAlleeDesc},
