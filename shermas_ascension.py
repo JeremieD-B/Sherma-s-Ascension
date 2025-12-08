@@ -21,6 +21,7 @@ Avant tout, une petite explication sur vos capacités :
 - Vous êtes capable faire des choix au fur et à mesure de votre avancée et de prendre les meilleurs décisions tout au long de votre aventure.
 - Vous pouvez quitter à tout moment l'aventure en appuyant sur 'q' ou 'Q'.
 - Pour utiliser un objet de votre inventaire au moment d'une question, indiquez le nom de l'objet à utiliser
+- Vous pouvez a tout moment afficher votre inventaire en écrivant Inv et voir vos stats en écrivant Stats
 Bon jeu !
 """
 
