@@ -452,6 +452,61 @@ Vous arrivez devant un gouffre où vous observez un petit village caché et oubl
 Vous décidez d'atteindre ce village. 
 """
 
+TGouffreDOsQEvent1 = """
+Vous arrivez dans le village, que voulez-vous faire ?
+    1. Vous reposer sur le banc
+    2. Aller voir le marchand
+    3. Continuer votre chemin
+Votre réponse : """
+
+TGouffreDOsQEvent1Rep = ("1", "2", "3")
+
+TGouffreDOsQEvent1_1 = """
+Vous régénérez entièrement votre vie, vous sauvegardez votre progression."""
+
+TGouffreDOsQEvent1_2 = """
+Vous vous dirigez vers le marchand et commencez à converser avec lui. Vous avez du mal à le comprendre de part son dialecte.
+Bnoujor et Benuienve j'ia pilen d'atlicres puor vous ! """
+
+TGouffreDOsQEvent1_3 = """
+Vous continuez vers une salle sombre"""
+
+TGouffreDOsShopQEvent1 = """
+Vous décidez de lire les étiquettes: 
+    1. Fragment de carapaces [30 perles]
+    2. Épée d'argent cristallisée [140 perles]
+    3. Clé de déchiffrement [70 perles]
+    4. Parfum [20 perles]
+    5. Orbe de vie [30 perles]
+    6. Partir 
+Votre réponse : """
+
+TGouffreDOsShopQEvent1Rep = ("1", "2", "3", "4", "5", "6")
+
+TGouffreDOsShopQEvent1_PasAssezPerles = """
+>>> Vous n'avez pas assez de perles."""
+
+TGouffreDOsShopQEvent1_ADejaNouvelleArme = """
+>>> Vous avez déjà cette arme !"""
+
+TGouffreDOsShopQEvent1_NouvelleArme = """
+>>> Vous obtenez l'Épée d'argent cristallisée."""
+
+TGouffreDOsShopQEvent1_CleDechiffrement = """
+>>> Vous obtenez une clé de déchiffrement."""
+
+TGouffreDOsShopQEvent1_Parfum = """
+>>> Vous obtenez un parfum, celui-ci à une très bonne odeur."""
+
+TGouffreDOsShopQEvent1_OrbeDeVie = """
+>>> Vous obtenez une orbe de vie, celle-ci vous confère la possibilité de vous régénérer quand vous le souhaitez."""
+
+TGouffreDOsShopQEvent1_Exit = """
+Vous sortez de la boutique..."""
+
+TGouffreDOsShopQEvent1_InventoryFull = """
+>>> Votre inventaire est plein."""
+
 TCaverneClocheDesc = """
 Vous entrez dans une caverne qui pourrait être une symphonie silencieuse de métal. 
 Des cloches de toutes formes et tailles ornent les murs, créant un labyrinthe obscur. 
@@ -1031,6 +1086,104 @@ Vous êtes persévérant et continuez à combattre.
             mourir(TExterieurQEvent3_1)
         elif R == "2": 
             mourir(TExterieurQEvent3_2)
+
+def GouffreDOs(): 
+    ecrire(TGouffreDOsDesc)
+    if "GouffreDOs" not in Sherma["salle_visitee"]:
+        Sherma["salle_visitee"].append(Sherma["Emplacement"])
+        ecrire(TGouffreDOsQEvent1_1)
+        Sherma["Checkpoint"] = Sherma["Emplacement"]
+        remplir_pv()
+    R = question(TGouffreDOsQEvent1, TGouffreDOsQEvent1Rep)
+    if R == "1":
+        ecrire(TGouffreDOsQEvent1_1)
+        Sherma["Checkpoint"] = Sherma["Emplacement"]
+        remplir_pv()
+    if R == "2": 
+        ecrire(TGouffreDOsQEvent1_2)
+        isQuittingShop = False
+        while not(isQuittingShop):
+            isQuittingShop = GouffreDOsShop()
+    if R == "3":
+        ecrire(TGouffreDOsQEvent1_3)
+        Sherma["Emplacement"] = "Enigme1"
+def GouffreDOsShop() -> bool:
+    R = question(TGouffreDOsShopQEvent1, TGouffreDOsShopQEvent1Rep)
+    if R == "1": 
+        if Sherma["Inv"]["Perles"] >= 30:
+            Sherma["Inv"]["Perles"] -= 30
+            gagner_carapaces()
+        else: 
+            ecrire(TGouffreDOsShopQEvent1_PasAssezPerles)
+    if R == "2":
+        if Sherma["Inv"]["Arme"] == "Épée d'argent cristallisée": 
+            ecrire(TGouffreDOsShopQEvent1_ADejaNouvelleArme)
+        elif Sherma["Inv"]["Perles"] >= 140:
+            Sherma["Inv"]["Perles"] -= 140
+            Sherma["Inv"]["Arme"] = "Épée d'argent cristallisée"
+            Sherma["Stats"]["Atk"] = 15
+            ecrire(TGouffreDOsShopQEvent1_NouvelleArme)
+        else: 
+            ecrire(TGouffreDOsShopQEvent1_PasAssezPerles)
+    if R == "3":
+        if PerlesEtInventaireOK(70):
+            Sherma["Inv"]["Perles"] -= 70
+            Sherma["Inv"]["Objets"] += ["Clé de déchiffrement"]
+            ecrire(TGouffreDOsShopQEvent1_CleDechiffrement)
+    if R == "4":
+        if PerlesEtInventaireOK(20):
+            Sherma["Inv"]["Perles"] -= 20
+            Sherma["Inv"]["Objets"] += ["Parfum"]
+            ecrire(TGouffreDOsShopQEvent1_Parfum)
+    if R == "5":
+        if PerlesEtInventaireOK(30):
+            Sherma["Inv"]["Perles"] -= 30
+            Sherma["Inv"]["Objets"] += ["Orbe de vie"]
+            ecrire(TGouffreDOsShopQEvent1_OrbeDeVie)
+    if R == "6":
+        ecrire(TGouffreDOsShopQEvent1_Exit)
+        return True
+    return False
+def PerlesEtInventaireOK(perles: int) -> bool:
+    EspaceOK = len(Sherma["Inv"]["Objets"]) < Sherma["Stats"]["TailleInv"]
+    if not(EspaceOK):
+        ecrire(TGouffreDOsShopQEvent1_InventoryFull)
+    PerlesOK = Sherma["Inv"]["Perles"] >= perles
+    if not(PerlesOK):
+        ecrire(TGouffreDOsShopQEvent1_PasAssezPerles)
+
+    return EspaceOK and PerlesOK
+
+def Enigme1():
+    given_code =  "0165 - 6423 - 6564 - 3f56 - ./§ù"
+    code =        "=0156 - 3246 - 6654 - 365f - ./§ù="
+    ecrire(f"""
+Vous arrivez face à une stèle sur laquelle est présente le code suivant {given_code}
+Vous trouvez un parchemin au pied de cette stèle. Vous observez un encadré et supposé qu'il faut résoudre une énigme à partir de se fameux code. 
+Ce code doit être uniquement connu des résidents du coin ou des personnes les plus braves.""")
+    R = question("""
+Souhaitez-vous répondre à l'énigme ?
+    1. Non, revenir sur vos pas
+    2. Oui
+Votre réponse : """, ("1", "2"))
+    if R == "1":
+        ecrire("Vous décidez de revenir sur vos pas")
+        Sherma["Emplacement"] = "GouffreDOs"
+    elif R == "2":
+        ecrire(
+"""Vous posez une pointe sur la feuille et instantanément un message apparait juste au dessus : 
+Donnez le code ou partez d'ici !""")
+        R = question("""
+Vos choix 
+    1. Partir
+    Ou Donner le code
+Votre réponse : """, ("1", code))
+        if R == "1":
+            ecrire("Vous abandonnez pour le moment et revenez au Gouffre d'Os.")
+            Sherma["Emplacement"] = "GouffreDOs"
+        if R == code:
+            ecrire("Une porte s'ouvre ! Vous n'avez pas beaucoup de temps pour la franchir ainsi, vous y aller directement.")
+            Sherma["Emplacement"] = "Enigme2"
 
 def CaverneCloches():
     BeteDesCloches = {
