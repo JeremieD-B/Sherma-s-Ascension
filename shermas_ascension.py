@@ -919,6 +919,8 @@ def GrandeAllee3():
         ecrire(TGrandeAlleeTEvent3_2)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
 
+#-------
+
 def Sentier(): 
     # Branche 2
     ecrire(TSentierDesc)
@@ -1162,6 +1164,15 @@ Votre réponse : """, ("1", code))
         if R == code:
             ecrire("Une porte s'ouvre ! Vous n'avez pas beaucoup de temps pour la franchir ainsi, vous y aller directement.")
             Sherma["Emplacement"] = "Enigme2"
+
+def Enigme2():
+    # Niveau 1
+    To_solve = []
+    for i in range(10):
+        To_solve += [randint(1, 100)]
+    ecrire("""
+Vous arrivez dans une nouvelle salle, vous """)
+
 
 def CaverneCloches():
     BeteDesCloches = {
