@@ -1033,13 +1033,13 @@ Vous êtes persévérant et continuez à combattre.
 def CaverneCloches():
     BeteDesCloches = {
     "PV" : 120,
-    "TpsAtk" : 16
+    "TpsAtk" : 12 + Sherma["Stats"]["Agi"]
     }
     ecrire(TCaverneClocheDesc)
     ecrire(TCaverneClocheApparition)
     while BeteDesCloches["PV"] > 40 :
         BeteDesCloches["PV"] += BeteDesClochesAtkNormale(BeteDesCloches["TpsAtk"])
-    BeteDesCloches["TpsAtk"] = 8.5
+    BeteDesCloches["TpsAtk"] = 6 + + Sherma["Stats"]["Agi"]
     ecrire(TCaverneClocheEnrage)
     while BeteDesCloches["PV"] > 0:
         BeteDesCloches["PV"] += BeteDesClochesAtkEnrage(BeteDesCloches["TpsAtk"])
