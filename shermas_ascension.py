@@ -9,7 +9,7 @@ vitesse_texte = 0.001 # 0.025 vitesse normale
 vitesse_pause = 0.005 # 0.35 vitesse normale
 
 ### Constantes de description de salles
-caca = input("le jeu se lance")
+
 # QEvent = Question event
 # QEventRep = Réponse autorisé du Question event 
 # TEvent = Texte event
