@@ -23,6 +23,13 @@ Avant tout, une petite explication sur vos capacités :
 Bon jeu !
 """
 
+TReunirCarapaces = """
+
+>>> Vous avez 4 fragments de Carapaces
+Vous réunnissez vos fragments de carapaces et formez une caparaces !
+Avec cette nouvelle carapace vous améliorez la vôtre et gagner en Point de vie maximum !
+>>> Vos PV Max ont augmenté d'une unité"""
+
 TEntreeDesc = """
     Le silence est dense. Une brume dorée se dissipe lentement autour de vous. Devant, se dresse une porte scellée, haute et fine, faite d’un métal chantant.
 Chaque souffle de vent fait vibrer sa surface, produisant un écho lointain — comme un souvenir d’hymne oublié.
@@ -684,12 +691,7 @@ def gagner_carapaces():
     ecrire("\n>>> Vous récupérez un fragment de Carapaces")
     if Sherma["Inv"]["Carapaces"] == 4 :
         Sherma["Inv"]["Carapaces"] = 0
-        ecrire("""
-
->>> Vous avez 4 fragments de Carapaces
-Vous réunnissez vos fragments de carapaces et formez une caparaces !
-Avec cette nouvelle carapace vous améliorez la vôtre et gagner en Point de vie maximum !
->>> Vos PV Max ont augmenté d'une unité""")
+        ecrire(TReunirCarapaces)
         Sherma["Stats"]["Pv_Max"] +=1 
         remplir_pv()
 
