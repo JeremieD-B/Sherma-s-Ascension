@@ -5,8 +5,8 @@ from time import sleep, time # Fait une pause du programme pendant un temps donn
 
 #### Constantes de jeu 
 
-vitesse_texte = 0 # 0.025 vitesse normale
-vitesse_pause = 0.1 # 0.35 vitesse normale
+vitesse_texte = 0.001 # 0.025 vitesse normale
+vitesse_pause = 0.05 # 0.35 vitesse normale
 
 ### Constantes de description de salles
 
@@ -20,8 +20,6 @@ Bienvenue.
 Avant tout, une petite explication sur vos capacités : 
 - Vous êtes capable faire des choix au fur et à mesure de votre avancée et de prendre les meilleurs décisions tout au long de votre aventure.
 - Vous pouvez quitter à tout moment l'aventure en appuyant sur 'q' ou 'Q'.
-- Pour utiliser un objet de votre inventaire au moment d'une question, indiquez le nom de l'objet à utiliser
-- Vous pouvez a tout moment afficher votre inventaire en écrivant Inv et voir vos stats en écrivant Stats
 Bon jeu !
 """
 
@@ -29,8 +27,8 @@ TEntreeDesc = """
     Le silence est dense. Une brume dorée se dissipe lentement autour de vous. Devant, se dresse une porte scellée, haute et fine, faite d’un métal chantant.
 Chaque souffle de vent fait vibrer sa surface, produisant un écho lointain — comme un souvenir d’hymne oublié.
 Derrière vous, les profondeurs. Devant, la Citadelle Mélodieuse, si haute que ses sommets se perdent dans les nuées. Vous savez qu’il faut atteindre son sommet — mais la voie reste voilée.
-À votre droite, un sentier s’enfonce dans les forêts sombres où se cache derrière un mont juxtaposé à la Citadelle.
-À votre gauche, un escalier de pierre descend vers des cavernes où l’eau résonne comme une harpe. Une lumière turquoise y palpite, irrégulière.
+À votre gauche, un sentier s’enfonce dans les forêts sombres où se cache derrière un mont juxtaposé à la Citadelle.
+À votre droite, un escalier de pierre descend vers des cavernes où l’eau résonne comme une harpe. Une lumière turquoise y palpite, irrégulière.
 """
 TGrandeAlleeDesc = """
 """
@@ -469,7 +467,7 @@ Que faites-vous ? :
     1. Vous essayez de plonger sur le côté pour éviter l'attaque.
     2. Vous tentez de sauter par dessus la bête pour lui frapper le dos.
     3. Vous sautez en arrière pour l'attendre, prêt à contre-attaquer.
-Votre réponse : """
+"""
 TCaverneClocheAtk2 = """
 La bête piètine le sol violemment et prend appui de toute ses forces.
 Elle bondit en l'air et se dirige droit vers vous dans un fracas tonitruant.
@@ -479,7 +477,7 @@ Que faites-vous ? :
     1. Plonger sous la bête pour lui attaquer les pattes.
     2. Sauter en arrière pour prendre de la distance et ne pas se faire toucher.
     3. Essayer de grimper sur son dos pendant qu'elle est en l'air.
-Votre réponse : """
+"""
 TCaverneClocheAtk3 = """
 La bête frappe le sol de ses pattes et commence a creuser entre les cloches.
 Elle semble essayer de se cacher sous les cloches.
@@ -489,7 +487,7 @@ Que faites-vous ? :
     1. Attendre la bête en gardant ses distances pour l'attaquer quand elle ressortira.
     2. Se précipiter pour l'attaquer avant qu'elle ne puisse se cacher.
     3. Prendre de la hauteur pour observer d'où elle va ressortir.
-Votre réponse : """
+"""
 TCaverneClocheAtk4 = """
 Enragée la bête des cloches frappe violemment le sol faisant trembler toute la caverne.
 Les cloches qui recouvre le plafond vibrent et menace de tomber sur vous
@@ -500,7 +498,7 @@ Que faites-vous ? :
     1. Plonger sur le coté pour éviter la bête de essayer d'éviter les cloches
     2. Sauter en arrière pour laisser la bête atterir devant vous
     3. Plonger sous la bête et lui attaquer les pattes pendant qu'elle est en l'air
-Votre réponse : """
+"""
 TCaverneClocheAtk5 = """
 La bête des cloches est furieuse elle garde ses distances et frappe le sol pour déloger les cloches qui le constituent.
 Elle se mets a frapper les cloches pour les envoyer en votre direction, certaines tombent du plafond.
@@ -511,7 +509,7 @@ Que faites-vous ? :
     1. Frapper les cloches qui vous arrivent dessus pour les renvoyer à la bête
     2. Foncer vers la bête en évitant les cloches pour l'attaquer directement
     3. Maintenir ses distance et se concentrer pour éviter les cloches
-Votre réponse : """
+"""
 TCaverneClocheAtkRep = ("1","2","3")
 
 TCaverneClocheRate = """
@@ -544,40 +542,33 @@ Vous pensez être sur le bon chemin, une 1ère étape vient d'être franchi et v
 
 
 ### Stats de base
-Armes = {
-    "Baguette de métal" : 4,
-    "Épée d'argent cristallisée" : 8
-
-}
 
 Inv = {"Arme": "Baguette de métal", 
         "Mélodies" : [],
         "Carapaces" : 0,
         "Objets" : [],
-        "Perles" : 2000}
+        "Perles" : 0}
 
 Stats = {
-"TailleInv": 5,
-"PV": 5,
-"Cle_consultee" : 0,
 "Pv_Max" : 5,
-"Atk": 1,
+"Atk": 0,
 "Agi" : 0,
-"mort": 0
+"Dgt" : 10
 }
 
 Sherma = {
+"PV": 5,
 "Inv" : Inv, 
 "Stats" : Stats,
 "Emplacement" : "Tutoriel",
 "lacets_faits" : True,
+"mort": 0,
 "a_finit": False,
-"Checkpoint" : "Tutoriel",
-"salle_visitee" : []
+"Checkpoint" : "Tutoriel"
 }
 
 Salles = {
-    "Tutoriel" : {"NomAffichee" : "Tutoriel","Desc" : TEntreeDesc},
+    "Tutoriel" : {"NomAffichee" : "Entrée","Desc" : TEntreeDesc},
     "Entree" : {"NomAffichee" : "Entrée","Desc" : TEntreeDesc},
     "GrotteHumide" : {"NomAffichee" : "Grotte humide","Desc" : TGrotteHumideDesc},
     "GrandeAllee" : {"NomAffichee" : "Grande Allée","Desc" : TGrandeAlleeDesc},
@@ -594,80 +585,55 @@ Salles = {
 
 ###### FONCTIONS GÉNÉRALE:
 
-def question(text : str,rep : tuple) -> str:
+def input_time(timer : bool):
+    TempsRep = None
+    if timer :
+        TempDepart = time()
+        R = input()
+        TempsRep = time() -TempDepart
+    else :
+        R = input()
+    return (R,TempsRep)
+
+
+def question(text : str,rep : tuple, timer = False) -> str:
     """
     Pose la question "text"
     Si les réponse est q ou Q : quitte le programme
     R est la Réponse que l'on attend
     """
-    R = None
+    Renvoi = (None,None)
     tour = 0
-    while R not in rep and R not in ("Q","q"):
-        if R == "Suicide":
-            perdre_pv(Sherma["Stats"]["PV"], Sherma["Stats"]["PV"])
-        elif R == "Inv" :
+    while Renvoi[0] not in rep and Renvoi[0] not in ("Q","q"):
+        if Renvoi[0] == "Inv" :
             afficher_inv()
-            R = None
-        elif R == "Stats" :
+            Renvoi = (None,None)
+        if Renvoi[0] == "Stats" :
             afficher_stats()
-            R = None
-        elif R in Sherma["Inv"]["Objets"]:
-            utiliser_objet(R)
+            Renvoi = (None,None)
         if tour == 0 :
             ecrire(text)
         else : 
             ecrire(text, 0.005,0.01)
-        R = input()
+        Renvoi = input_time(timer)
+        """if timer == True :
+            Tempsdepart = time()
+            R = input()
+            TempsReponse = time() - Tempsdepart
+        else : 
+            R = input()"""
         tour +=1
-    if R in ("q","Q") :
+    if Renvoi[0] in ("q","Q") :
         quit()
-    return R
+    if timer == True :
+        return Renvoi
+    return Renvoi[0]
 
-def utiliser_objet(objet):
-    if objet == "Parfum":
-        rand = randint(1, 10)
-        if rand == 1: ecrire(
-"""Vous vous mettez du parfum ... Celui-ci arrive dans votre nez et vous pique le nez. Il Faudra faire attention la prochaine fois.""")
-        else: ecrire(
-"""Vous vous mettez du parfum sur vous ... Il sent bon ... Vous prennez le temps de respirer un bon coup ...""")
-        return
-    if objet == "Parchemin : Entre pierres et cordes":
-        ecrire(
-"""Vous lisez le parchemin, il vous indique comme un message, une inscription mystère ... Après moulte analyse, vous trouver : #§!lmp^¨$au5
-S'agirait-il d'un mot de passe secret ? ... Cependant, vous vous rappelez d'un cours à l'Université des Reliques Lyriques (ou URL).
-Dans celui-ci vous aviez joué pour la première fois avec votre instrument favori et compris la signification des symboles derrière ...
-En vous rappelant de toutes ses informations, vous vous souvenez d'un endroit caché, vous vous rappelez alors du chemin pour y parvenir
-
->>> Chemin : https://creations.mtdv.me/articles/parchemin-entre-pierre-et-cordes""")
-    if objet == "Clé de déchiffrement":
-        ecrire(
-"""1. La croissance et n'est que l'unique fruit inéluctable de l'évolution.
-2. La vie n'est que retournement de situation.
-3. Vous n'avez que décroissance de votre âge à travers les âges.
-4. Les [êtres dont on ne doit pas prononcer le nom] écrivaient le mot 'jour' avec 'f' mais il n'y en avait tout autant que les grégoriens dans une année.
-5. « Plus ça change, plus c’est la même chose. » — Jean-Baptiste Alphonse Karr
-
-6. L'égalité doit encadrer l'infomation, quelle soit vraie ou fausse.
-""")
-    if objet == "Orbe de vie":
-        ecrire("""
-Vous utilisez une Orbe de vie, celle-ci à 3 chance sur 4 de vous soignez et 1 chance sur 100 de vous faire perdre 2 PV""")
-        rand = randint(1, 100)
-        if rand == 1: 
-            perdre_pv(Sherma["Stats"]["PV"], 2)
-        elif 1 < rand <= 25:
-            ecrire("""
->>> L'orbe n'a pas eu d'effet sur vous;""")
-        else:
-            gagner_pv(Sherma["Stats"]["PV"], 1)
-    ecrire(f"""
->>> Vous venez de consommer {objet}.""")
-    Sherma["Inv"]["Objets"].remove(objet)
-        
 def question_temp(text : str,rep : tuple) -> tuple:
     TempsAvantRep = time()
     R = question(text,rep)
     TempsDeReponse = time() - TempsAvantRep
+    print(TempsDeReponse)
     return R, TempsDeReponse
 
 def ecrire(text: str, vitesse = vitesse_texte, vitesse_pause = vitesse_pause) -> None:
@@ -685,9 +651,10 @@ def afficher_stats():
     TInv = f"""
 ----------
 Emplacement : {Salles[Sherma["Emplacement"]]["NomAffichee"]}
-PV : {Sherma["Stats"]["PV"]}/{Sherma["Stats"]["Pv_Max"]}
+PV : {Sherma["PV"]}/{Sherma["Stats"]["Pv_Max"]}
 Atk : {Sherma["Stats"]["Atk"]}
 Agi : {Sherma["Stats"]["Agi"]}
+Objet : {Sherma["Inv"]["Objets"]}
 ---------
 """
     ecrire(TInv)
@@ -695,11 +662,11 @@ Agi : {Sherma["Stats"]["Agi"]}
 def afficher_inv():
     TStats = f"""
 ----------
-Votre arme est {Sherma["Inv"]["Arme"]}
-Vous avez {Sherma["Stats"]["PV"]}/{Sherma["Stats"]["Pv_Max"]} PV.
+Vous avez {Sherma["PV"]}/{Sherma["Stats"]["Pv_Max"]} PV.
+
 Vous possédez {Sherma["Inv"]["Carapaces"]} Fragments de Carapaces.
+
 Vous possédez {Sherma["Inv"]["Perles"]} Perles.
-Objets : {Sherma["Inv"]["Objets"]}
 ---------
 """
     ecrire(TStats)
@@ -726,12 +693,6 @@ Avec cette nouvelle carapace vous améliorez la vôtre et gagner en Point de vie
         Sherma["Stats"]["Pv_Max"] +=1 
         remplir_pv()
 
-def calcul_degat():
-    dgt = Armes[Sherma["Inv"]["Arme"]]
-    dgt += Sherma["Stats"]["Atk"]*3
-    return dgt
-
-
 def perdre_pv(pv : int, pv_perdu :int):
     ecrire(f"\n>>> Vous perdez {pv_perdu} PV. \n")
     pv -= pv_perdu
@@ -746,14 +707,15 @@ def gagner_pv(pv : int, pv_gagne :int):
     return pv
 
 def remplir_pv():
-    Sherma["Stats"]["PV"] = Sherma["Stats"]["Pv_Max"]
+    Sherma["PV"] = Sherma["Stats"]["Pv_Max"]
     ecrire(f"\n>>> Vos PV se remplissent ! Vous avez désormais {Sherma['Stats']['Pv_Max']}/{Sherma['Stats']['Pv_Max']} PV\n")
+
 
 def mourir(text_mort):
     ecrire(text_mort)
     ecrire("\n>>> Vous êtes mort.")
-    Sherma["Stats"]["mort"] += 1
-    if Sherma["Stats"]["mort"] < 10:
+    Sherma["mort"] += 1
+    if Sherma["mort"] < 10:
         R = question("""
 Voulez-vous recommencer le jeu ?
     1. Oui
@@ -762,27 +724,25 @@ Votre réponse : """, ("1", "2"))
         if R == "1": 
             
             if Sherma["Checkpoint"] == "Tutoriel":
+                Sherma["PV"] = 5
                 Inv = {"Arme": "Baguette de métal", 
-                "Mélodies" : [],
-                "Carapaces" : 0,
-                "Objets" : [],
-                "Perles" : 0}
+            "Mélodies" : [],
+            "Carapaces" : 0,
+            "Objets" : [],
+            "Perles" : 0
+                }
 
-                Stats = {
-                "TailleInv": 5,
-                "PV": 5,
-                "Cle_consultee" : 0,
+                Stats = Stats = {
                 "Pv_Max" : 5,
-                "Atk": 1,
+                "Atk": 0,
                 "Agi" : 0,
-                "mort": 0
+                "Dgt" : 10
                 }
                 Sherma["Stats"] = Stats
                 Sherma["Inv"] = Inv
                 Sherma["Emplacement"] = "Tutoriel"
             else :
                 remplir_pv()
-                Sherma["Inv"]["Objets"] = [valeur for valeur in Sherma["Inv"]["Objets"] if valeur != "Parfum"]
                 Sherma["Emplacement"] = Sherma["Checkpoint"]
             jouer()
         elif R == "2": 
@@ -823,7 +783,7 @@ def GrotteHumide1():
     elif R == "2":
         #Branche 1.1.2
         ecrire(TGrotteHumideTEvent1_2)
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
 def GrotteHumide2():
     #Branche 1.2
     ecrire(TGrotteHumideTEvent2)
@@ -835,7 +795,7 @@ def GrotteHumide2():
     elif R == "2" :
         #Branche 1.2.2
         ecrire(TGrotteHumideTEvent2_2)
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
         R = question(TGrotteHumideQEvent2_1,TGrotteHumideQEvent2_1Rep)    
         if R == "1" :
             #Branche 1.2.2.1 
@@ -865,7 +825,7 @@ def GrandeAllee1():
         #Branche 1.3.1.2 
         elif R == "2":
             ecrire(TGrandeAlleeQEvent1_1_2)
-            Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+            Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     elif R == "2" :
         #Branche 1.3.2
         ecrire(TGrandeAlleeTEvent1_2)
@@ -882,7 +842,7 @@ def GrandeAllee2():
         GrandeAllee2_1()
 def GrandeAllee2_1():
     ecrire(TGrandeAlleeTEvent2_2)
-    Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+    Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     R = question(TGrandeAlleeQEvent2_1,TGrandeAlleeQEvent2_1Rep)
     #Branche 1.4.2.1
     if R == "1" :
@@ -900,9 +860,29 @@ def GrandeAllee3():
     #Branche 1.5.2
     elif R == "2" :
         ecrire(TGrandeAlleeTEvent3_2)
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
 
-#-------
+def GouffreDOs(): 
+    R = question("""
+Vous arrivez dans le village, que voulez-vous faire ?
+    1. Vous reposer sur le banc
+    2. Aller voir le marchand
+    3. Continuer votre chemin
+Votre réponse : """, ("1", "2", "3"))
+    if R == "1":
+        ecrire("Les bancs vous permette de regagner entièrement votre vie et de sauvegarder votre progression.")
+        Sherma["Checkpoint"] = Sherma["Emplacement"]
+        remplir_pv()
+    if R == "2": 
+        ecrire("""
+Vous vous dirigez vers le marchand et commencez à converser avec lui. Vous avez du mal à le comprendre de part son dialecte.""")
+        question("""Bnoujor j'ai pilen d'atlicres puor vous (vous décidez de lire les étiquettes): 
+    1. Fragment de carapaces [30 perles]
+    2. Nouvelle arme [140 perles]
+    3. Clé de déchiffrement [70 perles]
+    4. Parfum [20 perles]
+    5. """, ("", "", "", ""))
+
 
 def Sentier(): 
     # Branche 2
@@ -913,7 +893,7 @@ def Sentier():
     R = question(TSentierQEvent2, TSentierQEvent2Rep)
     if R == "1":
         ecrire(TSentierQEvent2_1)
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
         gagner_carapaces()
     elif R == "2":
         ecrire(TSentierQEvent2_2)
@@ -961,7 +941,7 @@ def Caverne1():
     if R == "1":
         # Branche 2.1.1.1 
         ecrire(TCaverneQEvent3_1)
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
         Sherma["Emplacement"] = "Pierres"
         
     elif R == "2":
@@ -986,7 +966,7 @@ Vous descendez prudemment jusqu'à atteindre votre chaussure.
     if R == "1": 
         ## Branche 2.1.1.2.1 = Branche 2.1.1
         ecrire(TCaverneQEvent4_1)
-        Sherma["Inv"]["Objets"] += ["Parchemin : Entre pierres et cordes"]
+        Inv["Objets"] += ["Parchemin : Entre pierres et cordes"]
     elif R == "2":
         # Branche 2.1.1.2.2
         ecrire(TCaverneQEvent4_2)
@@ -997,7 +977,7 @@ Vous descendez prudemment jusqu'à atteindre votre chaussure.
             Sherma["Emplacement"] = "Pierres"
         elif R == 2:
             ecrire(TCaverneQEvent5_2)
-            Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+            Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
             Sherma["Emplacement"] = "Pierres"
         elif R == 3: 
             Sherma["Emplacement"] = "Pierres"
@@ -1032,148 +1012,23 @@ def Exterieur1():
     if R == "1": 
         #Branche 2.2.2.1
         ecrire(TExterieurQEvent2_1)
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
         sleep(1)
-        while Sherma["Stats"]["PV"] > 0: 
+        while Sherma["PV"] > 0: 
             ecrire("""
 Vous êtes persévérant et continuez à combattre.
 """)
-            Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+            Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
             sleep(2)
     elif R == "2": 
         # Branche 2.2.2.2
         ecrire(TExterieurQEvent2_2)
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
         R = question(TExterieurQEvent3, TExterieurQEvent3Rep)
         if R == "1": 
             mourir(TExterieurQEvent3_1)
         elif R == "2": 
             mourir(TExterieurQEvent3_2)
-
-def GouffreDOs(): 
-    if "GouffreDOs" not in Sherma["salle_visitee"]:
-        Sherma["salle_visitee"].append(Sherma["Emplacement"])
-        ecrire("""
-Les bancs vous permette de regagner entièrement votre vie et de sauvegarder votre progression.""")
-        Sherma["Checkpoint"] = Sherma["Emplacement"]
-        remplir_pv()
-    R = question("""
-Vous arrivez dans le village, que voulez-vous faire ?
-    1. Vous reposer sur le banc
-    2. Aller voir le marchand
-    3. Continuer votre chemin
-Votre réponse : """, ("1", "2", "3"))
-    if R == "1":
-        ecrire("""
-Vous régénérez entièrement votre vie, vous sauvegardez votre progression.""")
-        Sherma["Checkpoint"] = Sherma["Emplacement"]
-        remplir_pv()
-    if R == "2": 
-        ecrire("""
-Vous vous dirigez vers le marchand et commencez à converser avec lui. Vous avez du mal à le comprendre de part son dialecte.
-Bnoujor et Benuienve j'ia pilen d'atlicres puor vous ! """)
-        isQuittingShop = False
-        while not(isQuittingShop):
-            isQuittingShop = GouffreDOsShop()
-    if R == "3":
-        ecrire("""
-Vous continuez vers une salle sombre""")
-        Sherma["Emplacement"] = "Enigme1"
-def GouffreDOsShop() -> bool:
-    R = question("""
-Vous décidez de lire les étiquettes: 
-    1. Fragment de carapaces [30 perles]
-    2. Épée d'argent cristallisée [140 perles]
-    3. Clé de déchiffrement [70 perles]
-    4. Parfum [20 perles]
-    5. Orbe de vie [30 perles]
-    6. Partir 
-Votre réponse : """, ("1", "2", "3", "4", "5", "6"))
-    if R == "1": 
-        if Sherma["Inv"]["Perles"] >= 30:
-            Sherma["Inv"]["Perles"] -= 30
-            gagner_carapaces()
-        else: 
-            ecrire("""
->>> Vous n'avez pas assez de perles.""")
-    if R == "2":
-        if Sherma["Inv"]["Arme"] == "Épée d'argent cristallisée": 
-            ecrire("""
->>> Vous avez déjà cette arme !""")
-        elif Sherma["Inv"]["Perles"] >= 140:
-            Sherma["Inv"]["Perles"] -= 140
-            Sherma["Inv"]["Arme"] = "Épée d'argent cristallisée"
-            Sherma["Stats"]["Atk"] = 15
-            ecrire("""
->>> Vous obtenez l'Épée d'argent cristallisée.""")
-        else: 
-            ecrire("""
->>> Vous n'avez pas assez de perles.""")
-    if R == "3":
-        if PerlesEtInventaireOK(70):
-            Sherma["Inv"]["Perles"] -= 70
-            Sherma["Inv"]["Objets"] += ["Clé de déchiffrement"]
-            ecrire("""
->>> Vous obtenez une clé de déchiffrement.""")
-    if R == "4":
-        if PerlesEtInventaireOK(20):
-            Sherma["Inv"]["Perles"] -= 20
-            Sherma["Inv"]["Objets"] += ["Parfum"]
-            ecrire("""
->>> Vous obtenez un parfum, celui-ci à une très bonne odeur.""")
-    if R == "5":
-        if PerlesEtInventaireOK(30):
-            Sherma["Inv"]["Perles"] -= 30
-            Sherma["Inv"]["Objets"] += ["Orbe de vie"]
-            ecrire("""
->>> Vous obtenez une orbe de vie, celle-ci vous confère la possibilité de vous régénérer quand vous le souhaitez.""")
-    if R == "6":
-        ecrire("""
-Vous sortez de la boutique...""")
-        return True
-    return False
-def PerlesEtInventaireOK(perles: int) -> bool:
-    EspaceOK = len(Sherma["Inv"]["Objets"]) < Sherma["Stats"]["TailleInv"]
-    if not(EspaceOK):
-        ecrire("""
->>> Votre inventaire est plein.""")
-    PerlesOK = Sherma["Inv"]["Perles"] >= perles
-    if not(PerlesOK):
-        ecrire("""
->>> Vous n'avez pas assez de perles.""")
-
-    return EspaceOK and PerlesOK
-
-def Enigme1():
-    given_code =  "0165 - 6423 - 6564 - 3f56 - ./§ù"
-    code =        "=0156 - 3246 - 6654 - 365f - ./§ù="
-    ecrire(f"""
-Vous arrivez face à une stèle sur laquelle est présente le code suivant {given_code}
-Vous trouvez un parchemin au pied de cette stèle. Vous observez un encadré et supposé qu'il faut résoudre une énigme à partir de se fameux code. 
-Ce code doit être uniquement connu des résidents du coin ou des personnes les plus braves.""")
-    R = question("""
-Souhaitez-vous répondre à l'énigme ?
-    1. Non, revenir sur vos pas
-    2. Oui
-Votre réponse : """, ("1", "2"))
-    if R == "1":
-        ecrire("Vous décidez de revenir sur vos pas")
-        Sherma["Emplacement"] = "GouffreDOs"
-    elif R == "2":
-        ecrire(
-"""Vous posez une pointe sur la feuille et instantanément un message apparait juste au dessus : 
-Donnez le code ou partez d'ici !""")
-        R = question("""
-Vos choix 
-    1. Partir
-    Ou Donner le code
-Votre réponse : """, ("1", code))
-        if R == "1":
-            ecrire("Vous abandonnez pour le moment et revenez au Gouffre d'Os.")
-            Sherma["Emplacement"] = "GouffreDOs"
-        if R == code:
-            ecrire("Une porte s'ouvre ! Vous n'avez pas beaucoup de temps pour la franchir ainsi, vous y aller directement.")
-            Sherma["Emplacement"] = "Enigme2"
 
 def CaverneCloches():
     BeteDesCloches = {
@@ -1183,11 +1038,11 @@ def CaverneCloches():
     ecrire(TCaverneClocheDesc)
     ecrire(TCaverneClocheApparition)
     while BeteDesCloches["PV"] > 40 :
-        BeteDesCloches["PV"] -= BeteDesClochesAtkNormale(BeteDesCloches["TpsAtk"])
+        BeteDesCloches["PV"] += BeteDesClochesAtkNormale(BeteDesCloches["TpsAtk"])
     BeteDesCloches["TpsAtk"] = 8.5
     ecrire(TCaverneClocheEnrage)
     while BeteDesCloches["PV"] > 0:
-        BeteDesCloches["PV"] -= BeteDesClochesAtkEnrage(BeteDesCloches["TpsAtk"])
+        BeteDesCloches["PV"] += BeteDesClochesAtkEnrage(BeteDesCloches["TpsAtk"])
     ecrire(TCaverneClocheVictoire)
     Sherma["a_finit"] = True
 def BeteDesClochesAtkNormale(TpsAtk):
@@ -1212,76 +1067,76 @@ def BeteDesClochesAtkEnrage(TpsAtk):
         return BeteDesClochesAtk5(TpsAtk)
 def BeteDesClochesAtk1(TpsAtk):
     ecrire(TCaverneClocheAtk1)
-    R, TempsDeReponse = question_temp(TCaverneClocheQAtk1,TCaverneClocheAtkRep)
+    R, TempsDeReponse = question(TCaverneClocheQAtk1,TCaverneClocheAtkRep,timer=True)
     if TempsDeReponse > TpsAtk :
         ecrire(TCaverneClocheLent)
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     elif R == "1" :
         ecrire(TCaverneClocheEsquive)
     elif R == "2" :
         ecrire(TCaverneClocheDegat)
-        return calcul_degat()
+        return -1*Sherma["Stats"]["Dgt"]
     elif R == "3" : 
         ecrire(TCaverneClocheRate)
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     return 0
 def BeteDesClochesAtk2(TpsAtk):
     ecrire(TCaverneClocheAtk2)
-    R, TempsDeReponse = question_temp(TCaverneClocheQAtk2,TCaverneClocheAtkRep)
+    R, TempsDeReponse = question(TCaverneClocheQAtk2,TCaverneClocheAtkRep,timer=True)
     if TempsDeReponse > TpsAtk :
         ecrire(TCaverneClocheLent)
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     elif R == "1" :
         ecrire(TCaverneClocheDegat)
-        return calcul_degat()
+        return -1*Sherma["Stats"]["Dgt"]
     elif R == "2" :
         ecrire(TCaverneClocheEsquive)
     elif R == "3" : 
         ecrire(TCaverneClocheRate)
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     return 0
 def BeteDesClochesAtk3(TpsAtk):
     ecrire(TCaverneClocheAtk3)
-    R, TempsDeReponse = question_temp(TCaverneClocheQAtk3,TCaverneClocheAtkRep)
+    R, TempsDeReponse = question(TCaverneClocheQAtk3,TCaverneClocheAtkRep,timer=True)
     if TempsDeReponse > TpsAtk :
         ecrire(TCaverneClocheLent)
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     elif R == "1" :
         ecrire(TCaverneClocheRate)
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 1)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
     elif R == "2" :
         ecrire(TCaverneClocheDegat)
-        return calcul_degat()
+        return -1*Sherma["Stats"]["Dgt"]
     elif R == "3" : 
         ecrire(TCaverneClocheEsquive)
     return 0
 def BeteDesClochesAtk4(TpsAtk):
     ecrire(TCaverneClocheAtk4)
-    R, TempsDeReponse = question_temp(TCaverneClocheQAtk4,TCaverneClocheAtkRep)
+    R, TempsDeReponse = question(TCaverneClocheQAtk4,TCaverneClocheAtkRep,timer=True)
     if TempsDeReponse > TpsAtk :
         ecrire(TCaverneClocheLent)
-        Sherma["P2V"] = perdre_pv(Sherma["Stats"]["PV"], 2)
+        Sherma["P2V"] = perdre_pv(Sherma["PV"], 2)
     elif R == "1" :
         ecrire(TCaverneClocheEsquive)
     elif R == "2" :
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 2)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 2)
         ecrire(TCaverneClocheRate)
     elif R == "3" : 
         ecrire(TCaverneClocheDegat)
-        return calcul_degat()
+        return -1*Sherma["Stats"]["Dgt"]
     return 0
 def BeteDesClochesAtk5(TpsAtk):
     ecrire(TCaverneClocheAtk5)
-    R, TempsDeReponse = question_temp(TCaverneClocheQAtk5,TCaverneClocheAtkRep)
+    R, TempsDeReponse = question(TCaverneClocheQAtk5,TCaverneClocheAtkRep,timer=True)
     if TempsDeReponse > TpsAtk :
         ecrire(TCaverneClocheLent)
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 2)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 2)
     elif R == "1" :
         ecrire(TCaverneClocheDegat)
-        return calcul_degat()
+        return -1*Sherma["Stats"]["Dgt"]
     elif R == "2" :
         ecrire(TCaverneClocheRate)
-        Sherma["Stats"]["PV"] = perdre_pv(Sherma["Stats"]["PV"], 2)
+        Sherma["PV"] = perdre_pv(Sherma["PV"], 2)
     elif R == "3" : 
         ecrire(TCaverneClocheEsquive) 
     return 0
@@ -1304,13 +1159,11 @@ def script(salle: str):
         case "Pierres" : Pierres()
         case "Exterieur" : Exterieur()
         case "GouffreDOs" : GouffreDOs()
-        case "Enigme1": Enigme1()
-        case "Enigme2": CaverneCloches() # TO DO
-        case "Enigme3": CaverneCloches() # TO DO
+        case "Enigme1": pass
+        case "Enigme2": pass
+        case "Enigme3": pass
         # case "EnigmeTuringMachine: pass"
         case "CaverneCloches" : CaverneCloches()
-    
-    if salle not in Sherma["salle_visitee"]: Sherma["salle_visitee"].append(Sherma["Emplacement"])
 
 def triche():
 
@@ -1329,9 +1182,10 @@ def triche():
     
     Sherma["Emplacement"] =  nom_salle[int(R)]
 
+
 def jouer():
     Sherma["a_finit"] = False
-    print("\n"*1000)
+
     triche()
 
     while not(Sherma["a_finit"]):
@@ -1343,4 +1197,5 @@ def jouer():
 
 ###### JEU
 
-jouer()     
+jouer()
+
