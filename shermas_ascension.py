@@ -5,8 +5,8 @@ from time import sleep, time # Fait une pause du programme pendant un temps donn
 
 #### Constantes de jeu 
 
-vitesse_texte = 0.001 # 0.025 vitesse normale
-vitesse_pause = 0.005 # 0.35 vitesse normale
+vitesse_texte = 0.020 # 0.025 vitesse normale
+vitesse_pause = 0.30 # 0.35 vitesse normale
 
 ### Constantes de description de salles
 
