@@ -919,28 +919,6 @@ def GrandeAllee3():
         ecrire(TGrandeAlleeTEvent3_2)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
 
-def GouffreDOs(): 
-    R = question("""
-Vous arrivez dans le village, que voulez-vous faire ?
-    1. Vous reposer sur le banc
-    2. Aller voir le marchand
-    3. Continuer votre chemin
-Votre réponse : """, ("1", "2", "3"))
-    if R == "1":
-        ecrire("Les bancs vous permette de regagner entièrement votre vie et de sauvegarder votre progression.")
-        Sherma["Checkpoint"] = Sherma["Emplacement"]
-        remplir_pv()
-    if R == "2": 
-        ecrire("""
-Vous vous dirigez vers le marchand et commencez à converser avec lui. Vous avez du mal à le comprendre de part son dialecte.""")
-        question("""Bnoujor j'ai pilen d'atlicres puor vous (vous décidez de lire les étiquettes): 
-    1. Fragment de carapaces [30 perles]
-    2. Nouvelle arme [140 perles]
-    3. Clé de déchiffrement [70 perles]
-    4. Parfum [20 perles]
-    5. """, ("", "", "", ""))
-
-
 def Sentier(): 
     # Branche 2
     ecrire(TSentierDesc)
