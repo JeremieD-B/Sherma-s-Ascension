@@ -529,7 +529,7 @@ Que faites-vous ? :
     1. Vous essayez de plonger sur le côté pour éviter l'attaque.
     2. Vous tentez de sauter par dessus la bête pour lui frapper le dos.
     3. Vous sautez en arrière pour l'attendre, prêt à contre-attaquer.
-"""
+Votre réponse : """
 TCaverneClocheAtk2 = """
 La bête piètine le sol violemment et prend appui de toute ses forces.
 Elle bondit en l'air et se dirige droit vers vous dans un fracas tonitruant.
@@ -539,7 +539,7 @@ Que faites-vous ? :
     1. Plonger sous la bête pour lui attaquer les pattes.
     2. Sauter en arrière pour prendre de la distance et ne pas se faire toucher.
     3. Essayer de grimper sur son dos pendant qu'elle est en l'air.
-"""
+Votre réponse : """
 TCaverneClocheAtk3 = """
 La bête frappe le sol de ses pattes et commence a creuser entre les cloches.
 Elle semble essayer de se cacher sous les cloches.
@@ -549,7 +549,7 @@ Que faites-vous ? :
     1. Attendre la bête en gardant ses distances pour l'attaquer quand elle ressortira.
     2. Se précipiter pour l'attaquer avant qu'elle ne puisse se cacher.
     3. Prendre de la hauteur pour observer d'où elle va ressortir.
-"""
+Votre réponse : """
 TCaverneClocheAtk4 = """
 Enragée la bête des cloches frappe violemment le sol faisant trembler toute la caverne.
 Les cloches qui recouvre le plafond vibrent et menace de tomber sur vous
@@ -560,7 +560,7 @@ Que faites-vous ? :
     1. Plonger sur le coté pour éviter la bête de essayer d'éviter les cloches
     2. Sauter en arrière pour laisser la bête atterir devant vous
     3. Plonger sous la bête et lui attaquer les pattes pendant qu'elle est en l'air
-"""
+Votre réponse : """
 TCaverneClocheAtk5 = """
 La bête des cloches est furieuse elle garde ses distances et frappe le sol pour déloger les cloches qui le constituent.
 Elle se mets a frapper les cloches pour les envoyer en votre direction, certaines tombent du plafond.
@@ -571,7 +571,7 @@ Que faites-vous ? :
     1. Frapper les cloches qui vous arrivent dessus pour les renvoyer à la bête
     2. Foncer vers la bête en évitant les cloches pour l'attaquer directement
     3. Maintenir ses distance et se concentrer pour éviter les cloches
-"""
+Votre réponse : """
 TCaverneClocheAtkRep = ("1","2","3")
 
 TCaverneClocheRate = """
@@ -597,11 +597,49 @@ Avec un dernier coup puissant, vous terrassez la Bête des Cloches.
 Les cloches cessent de résonner, et un silence apaisant envahit la caverne.
 Vous avez vaincu un ennemi redoutable et pouvez continuer votre ascension vers la Citadelle Mélodieuse.
 """
-
-TFIN = """
+ 
+TFINPartieA = """
 La porte se ferme brutalement, il vous est impossible de revenir en arrière.
 Vous pensez être sur le bon chemin, une 1ère étape vient d'être franchi et venez de comprendre les bases."""
 
+TFin = """
+    Après être sortie de cette caverne au son discordant, vous avancez doucement, écoutant le son des cloches qui tintent sous vos pieds.
+Les cloches qui constituaient le sol derrière vous laisse progressivement place aux pavées bien alignés.
+Vous regardez autour de vous, vous êtes désormais sur un gigantesque pont, vous observez au loin bien en dessous de vous l'endroit d'où vous avez commencez votre ascension.
+Autour de vous, sur le pont vous remarquez les jolis lampadaires qui vous éclaire d'une douce lumière blanche, à l'aspect pure.
+Bien que ce pont paraisse très luxueux, digne de la grande Citadelle Mélodieuse que vous cherchez a atteindre, vous remarquez des défauts.
+Le temps n'éparge rien ni personne, vous remarquez alors la rouilles sur les rembardes, la mousse entre les pavés et les fissures qui parsément les joints.
+C'est alors seulement que vous levez les yeux.
+
+La Citadelle Mélodieuse.
+Gigantesque, Gracieuse, Impressionnante.
+Elle dépasse tout ce que vous avez pus imaginer.
+Elle est d'une auteur telle que vous n'arrivez même pas à en distinguer le sommet. 
+Elle semble composée de long tubes métalique brillant d'un aspect cuivrée, semblant former un seul gigantesque instrument.
+D'autre part vou remarquez de long fils tendues entres différents étages qui semblent former des harpes monumentales.
+Vous trépignez d'impatience à l'idée de rentrer dans la Citadelle et de participer enfin à la chorale qui réunis tout les pélérins tel que vous.
+Vous continuez votre avancée sur ce pont jusqu'à une porte qui serait capable de laisser passer un géant.
+
+Alors que vous vous faufilez dans l'entrebaillement de la porte, vous admirez l'architecture de la Citadelle, rafinée, orginale, sans nuls comparaisons.
+C'est seulement à ce moment que vous vous rendez compte du problème.
+Depuis le début de votre ascencion. Vous n'avez rien vu provenant de la Citadelle. 
+Pas un son, 
+Pas un bruit,
+Pas une seule mélodie.
+
+Cette Citadelle est vide. 
+Plus personne ne fait chanter tous ces instruments merveilleux.
+Il ne vous reste plus rien à faire, votre but est atteint, mais il n'est en rien similaire à ce que vous cherchiez.
+
+Vous n'avez qu'un seul choix, découvrir la source de la déchéance de cette si grande Citadalle.
+
+Pour ce faire je n'ai qu'un seul conseil à te donner. 
+La réponse à ces questions se trouve dans Hollow Knight Silksong.
+
+>>> Merci d'avoir jouer.
+
+Alesterm & Colddestructor
+"""
 
 ### Stats de base
 
@@ -643,6 +681,7 @@ Salles = {
     "Enigme2": {"NomAffichee" : "Salle d'Énigme 2","Desc" : None, "Past" : False},
     "Enigme3": {"NomAffichee" : "Salle d'Énigme 3","Desc" : None, "Past" : False},
     "CaverneCloches": {"NomAffichee" : "Caverne des Cloches","Desc" : TCaverneClocheDesc, "Past" : False},
+    "Fin" : {"NomAffichee" : "Citadelle Mélodieuse", "Desc": TFin}
 }
 
 ###### FONCTIONS GÉNÉRALE:
@@ -1284,6 +1323,8 @@ def BeteDesClochesAtk5(TpsAtk):
     elif R == "3" : 
         ecrire(TCaverneClocheEsquive) 
     return 0
+
+def Fin():
 ##### FONCTIONS DE JEU
 
 def script(salle: str):
@@ -1308,7 +1349,8 @@ def script(salle: str):
         case "Enigme3": pass
         # case "EnigmeTuringMachine: pass"
         case "CaverneCloches" : CaverneCloches()
-
+        case "Fin" : Fin()
+ 
 def triche():
 
     nbr_salle = []
@@ -1335,11 +1377,10 @@ def jouer():
     while not(Sherma["a_finit"]):
         script(Sherma["Emplacement"])
 
-    ecrire(TFIN)
+    ecrire(TFINPartieA)
     input()
     quit()
 
 ###### JEU
 
 jouer()
-
