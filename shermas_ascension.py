@@ -1828,8 +1828,6 @@ def script(salle: str):
         case "GouffreDOs" : GouffreDOs()
         case "Enigme1": Enigme1()
         case "Enigme2": Enigme2()
-        case "Enigme3": pass
-        # case "EnigmeTuringMachine: pass"
         case "CaverneCloches" : CaverneCloches()
         case "Fin" : Fin()
  
