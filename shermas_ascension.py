@@ -5,8 +5,8 @@ from time import sleep, time # Fait une pause du programme pendant un temps donn
 
 #### Constantes de jeu 
 
-vitesse_texte = 0.020 # 0.025 vitesse normale
-vitesse_pause = 0.30 # 0.35 vitesse normale
+vitesse_texte = 0.01 # 0.025 vitesse normale
+vitesse_pause = 0.05 # 0.35 vitesse normale
 
 ### Constantes de description de salles
 
@@ -506,6 +506,38 @@ Vous sortez de la boutique..."""
 
 TGouffreDOsShopQEvent1_InventoryFull = """
 >>> Votre inventaire est plein."""
+
+# Block à utiliser dans l'énigme 2
+
+PISTON_HAUT = "🠕"
+PISTON_GAUCHE = "🠔"
+PISTON_BAS = "🠗"        
+PISTON_DROITE = "🠖"
+
+PISTON_COLLANT_HAUT = "⇡"
+PISTON_COLLANT_GAUCHE = "⇠"
+PISTON_COLLANT_BAS = "⇣"
+PISTON_COLLANT_DROITE = "⇢"
+
+VIDE = "·"
+ENERGIE = "🗲"
+BLOCK = "◼"
+POINT_ARRIVEE = "◎"
+
+# Pistons étirés
+
+PISTON_HAUT_ETIREE        = "ᐱ"
+PISTON_GAUCHE_ETIREE      = "ᐸ"
+PISTON_BAS_ETIREE         = "ᐯ"
+PISTON_DROITE_ETIREE      = "ᐳ"
+
+PISTON_COLLANT_HAUT_ETIREE = "▲"
+PISTON_COLLANT_GAUCHE_ETIREE = "◀"
+PISTON_COLLANT_BAS_ETIREE = "▼"
+PISTON_COLLANT_DROITE_ETIREE = "▶"
+
+PISTON_BLOCK_HORIZONTAL = "═"
+PISTON_BLOCK_VERTICAL = "║"
 
 TCaverneClocheDesc = """
 Vous entrez dans une caverne qui pourrait être une symphonie silencieuse de métal. 
@@ -1204,14 +1236,461 @@ Votre réponse : """, ("1", code))
             ecrire("Une porte s'ouvre ! Vous n'avez pas beaucoup de temps pour la franchir ainsi, vous y aller directement.")
             Sherma["Emplacement"] = "Enigme2"
 
-def Enigme2():
-    # Niveau 1
-    To_solve = []
-    for i in range(10):
-        To_solve += [randint(1, 100)]
-    ecrire("""
-Vous arrivez dans une nouvelle salle, vous """)
+def get_Niveau_points_arrivee(Niveau):
+    Niveau_points_arrivee = []
+    for x in range(len(Niveau)):
+        for y in range(len(Niveau[x])):
+            if Niveau[x][y] == POINT_ARRIVEE:
+                Niveau_points_arrivee += [(x, y)]
+    return Niveau_points_arrivee
 
+def update_niveau(Niveau, Niveau_points_arrivee):
+    Pistons = {PISTON_HAUT,
+        PISTON_GAUCHE,
+        PISTON_BAS, 
+        PISTON_DROITE,
+
+        PISTON_COLLANT_HAUT,
+        PISTON_COLLANT_GAUCHE,
+        PISTON_COLLANT_BAS,
+        PISTON_COLLANT_DROITE,
+
+        PISTON_BLOCK_HORIZONTAL,
+        PISTON_BLOCK_VERTICAL,
+        }
+    for x in range(len(Niveau)):
+        ligne = Niveau[x]
+        for y in range(len(ligne)):
+            if (x, y) in Niveau_points_arrivee and Niveau[x][y] == VIDE:
+                Niveau[x][y] = POINT_ARRIVEE
+            if Niveau[x][y] == POINT_ARRIVEE and (x, y) not in Niveau_points_arrivee:
+                Niveau[x][y] = VIDE
+            Case = Niveau[x][y]
+            if Case not in Pistons:
+                continue
+            isPowered = isPistonPowered(x, y, Niveau)
+            if isPowered: 
+                piston_expansion(Niveau, x, y)
+            else: 
+                piston_retraction(Niveau, x, y)
+
+def getIsLevelEnded(Niveau, Niveau_points_arrivee):
+    # Le niveau est terminé si toutes les cases autour du point d'arrivée sont des blocs
+    for coords in Niveau_points_arrivee:
+        if Niveau[coords[0]][coords[1]] != BLOCK:
+            return False
+    return True  
+
+def piston_retraction(Niveau, x, y):
+    Case = Niveau[x][y]
+    if Case == PISTON_BLOCK_HORIZONTAL:
+        if y >= 1 and Niveau[x][y - 1] in {PISTON_GAUCHE_ETIREE, PISTON_COLLANT_GAUCHE_ETIREE}:
+            PISTON_GAUCHE_retraction(Niveau, x, y)
+        if y <= len(Niveau) - 2 and Niveau[x][y + 1] in {PISTON_DROITE_ETIREE, PISTON_COLLANT_DROITE_ETIREE}:
+            PISTON_DROITE_retraction(Niveau, x, y)
+    elif Case == PISTON_BLOCK_VERTICAL:
+        if x >= 1 and Niveau[x - 1][y] in {PISTON_HAUT_ETIREE, PISTON_COLLANT_HAUT_ETIREE}:
+            PISTON_HAUT_retraction(Niveau, x, y)
+        if x <= len(Niveau) - 2 and Niveau[x + 1][y] in {PISTON_BAS_ETIREE, PISTON_COLLANT_BAS_ETIREE}:
+            PISTON_BAS_retraction(Niveau, x, y)
+
+def PISTON_HAUT_retraction(Niveau, x, y):
+    before = None
+    before2 = None
+    if Niveau[x - 1][y] == PISTON_COLLANT_HAUT_ETIREE:
+        piston = PISTON_COLLANT_HAUT
+        before2 = VIDE
+        if x >= 2:
+            if Niveau[x - 2][y] != POINT_ARRIVEE:
+                before = Niveau[x - 2][y]
+    else:
+        piston = PISTON_HAUT
+        before = VIDE
+        if x >= 2:
+            before2 = Niveau[x - 2][y]
+    Niveau[x][y] = piston
+    Niveau[x - 1][y] = before
+    if x >= 2:
+        Niveau[x - 2][y] = before2
+def PISTON_BAS_retraction(Niveau, x, y):
+    before = None
+    before2 = None
+    if Niveau[x + 1][y] == PISTON_COLLANT_BAS_ETIREE:
+        piston = PISTON_COLLANT_BAS
+        before2 = VIDE
+        if x <= len(Niveau) - 3:
+            if Niveau[x - 2][y] != POINT_ARRIVEE:
+                before = Niveau[x + 2][y]
+    else:
+        piston = PISTON_BAS
+        before = VIDE
+        if x <= len(Niveau) - 3:
+            before2 = Niveau[x + 2][y]
+    Niveau[x][y] = piston
+    Niveau[x + 1][y] = before
+    if x <= len(Niveau) - 3:
+        Niveau[x + 2][y] = before2
+def PISTON_GAUCHE_retraction(Niveau, x, y):
+    before = VIDE
+    before2 = VIDE
+    if Niveau[x][y - 1] == PISTON_COLLANT_GAUCHE_ETIREE:
+        piston = PISTON_COLLANT_GAUCHE
+        before2 = VIDE
+        if y >= 2:
+            if Niveau[x - 2][y] != POINT_ARRIVEE:
+                before = Niveau[x][y - 2]
+    else:
+        piston = PISTON_GAUCHE
+        before = VIDE
+        if y >= 2:
+            before2 = Niveau[x][y - 2]
+    Niveau[x][y] = piston
+    Niveau[x][y - 1] = before
+    if y >= 2:
+        Niveau[x][y - 2] = before2
+def PISTON_DROITE_retraction(Niveau, x, y):
+    before = VIDE
+    before2 = VIDE
+    if Niveau[x][y + 1] == PISTON_COLLANT_DROITE_ETIREE:
+        piston = PISTON_COLLANT_DROITE
+        before2 = VIDE
+        print(y, len(Niveau) - 3)
+        if y <= len(Niveau) - 3:
+            print( Niveau[x][y + 2] )
+            if Niveau[x][y + 2] != POINT_ARRIVEE:
+                before = Niveau[x][y + 2]
+    else:
+        piston = PISTON_DROITE
+        before = VIDE
+        if y <= len(Niveau) - 3:
+            before2 = Niveau[x][y + 2]
+    Niveau[x][y] = piston
+    Niveau[x][y + 1] = before
+    if y <= len(Niveau) - 3:
+        Niveau[x][y + 2] = before2
+
+def piston_expansion(Niveau, x, y):
+    Case = Niveau[x][y]
+    if (Case == PISTON_HAUT or Case == PISTON_COLLANT_HAUT) and x >= 1:
+        PISTON_HAUT_expansion(Niveau, x, y)
+    elif (Case == PISTON_GAUCHE or Case == PISTON_COLLANT_GAUCHE) and y >= 1:
+        PISTON_GAUCHE_expansion(Niveau, x, y)
+    elif (Case == PISTON_BAS or Case == PISTON_COLLANT_BAS) and x <= len(Niveau) - 2:
+        PISTON_BAS_expansion(Niveau, x, y)
+    elif (Case == PISTON_DROITE or Case == PISTON_COLLANT_DROITE) and y <= len(Niveau) - 2:
+        PISTON_DROITE_expansion(Niveau, x, y)
+
+def PISTON_HAUT_expansion(Niveau, x, y):
+    Case = Niveau[x][y]
+    Niveau[x][y] = PISTON_BLOCK_VERTICAL
+    save = []
+    for i in range(0, len(Niveau)):
+        save += [Niveau[i][y]]
+    i = x - 1
+    while save[i] != VIDE and i > 0:
+        if save[i] != POINT_ARRIVEE:
+            Niveau[i - 1][y] = save[i]
+        else:
+            break
+        i -= 1 
+    if Case == PISTON_COLLANT_HAUT:
+        Niveau[x-1][y] = PISTON_COLLANT_HAUT_ETIREE
+    else:
+        Niveau[x-1][y] = PISTON_HAUT_ETIREE
+def PISTON_BAS_expansion(Niveau, x, y):
+    Case = Niveau[x][y]
+    Niveau[x][y] = PISTON_BLOCK_VERTICAL
+    save = []
+    for i in range(0, len(Niveau)): 
+        save += [Niveau[i][y]]
+    i = x + 1 
+    while save[i] != VIDE and i < len(Niveau) - 1:
+        if save[i] != POINT_ARRIVEE:
+            Niveau[i + 1][y] = save[i] 
+        else:
+            break
+        i += 1 
+    if Case == PISTON_COLLANT_BAS:
+        Niveau[x + 1][y] = PISTON_COLLANT_BAS_ETIREE
+    else:
+        Niveau[x + 1][y] = PISTON_BAS_ETIREE
+def PISTON_GAUCHE_expansion(Niveau, x, y):
+    Case = Niveau[x][y]
+    Niveau[x][y] = PISTON_BLOCK_HORIZONTAL
+    save = []
+    for j in range(0, len(Niveau[x])):
+        save += [Niveau[x][j]]
+    j = y - 1
+    while save[j] != VIDE and j > 0:
+        if save[j] != POINT_ARRIVEE:
+            Niveau[x][j - 1] = save[j]
+        else:
+            break
+        j -= 1 
+    if Case == PISTON_COLLANT_GAUCHE:
+        Niveau[x][y - 1] = PISTON_COLLANT_GAUCHE_ETIREE
+    else:
+        Niveau[x][y - 1] = PISTON_GAUCHE_ETIREE
+def PISTON_DROITE_expansion(Niveau, x, y):
+    Case = Niveau[x][y]
+    Niveau[x][y] = PISTON_BLOCK_HORIZONTAL
+    save = []
+    for j in range(0, len(Niveau[x])): 
+        save += [Niveau[x][j]]
+    j = y + 1 
+    while save[j] != VIDE and j < len(Niveau) - 1:
+        if save[j] != POINT_ARRIVEE:    
+            Niveau[x][j + 1] = save[j]
+        else:
+            break
+        j += 1
+    if Case == PISTON_COLLANT_DROITE:
+        Niveau[x][y + 1] = PISTON_COLLANT_DROITE_ETIREE
+    else:
+        Niveau[x][y + 1] = PISTON_DROITE_ETIREE
+
+def isPistonPowered(x, y, Niveau):
+    isPowered = False
+    if x >= 1:
+        if Niveau[x-1][y] == ENERGIE:
+            isPowered = True
+    if y >= 1:
+        if Niveau[x][y-1] == ENERGIE:
+            isPowered = True
+    # On veut x inférieur strictement à len(Niveau) - 1
+    if x <= len(Niveau) - 2:  
+        if Niveau[x+1][y] == ENERGIE:
+            isPowered = True
+    # Idem pour y
+    if y <= len(Niveau) - 2:
+        if Niveau[x][y+1] == ENERGIE:
+            isPowered = True     
+    return isPowered
+
+def init_value_OK(Niveau):
+    Lettre_OK = []; Num_OK = []
+    for i in range(len(Niveau)):
+        Lettre_OK += [chr(97 + i)] # chr(97) = "A"
+        Lettre_OK += [chr(65 + i)] # chr(65) = "a"
+        Num_OK += [str(i+1)]
+    return Lettre_OK, Num_OK
+
+def placer_energie(R, Niveau):
+    XYvalues = getXYValue(R)
+    x_value, y_value = XYvalues[0], XYvalues[1]
+    Case = Niveau[x_value][y_value]
+    if Case != VIDE and Case != ENERGIE:
+        print("La case choisie n'est pas vide.")
+        return
+    clear_energie(Niveau)
+    if Case != ENERGIE:
+        Niveau[x_value][y_value] = ENERGIE
+    else:
+        Niveau[x_value][y_value] = VIDE
+
+def clear_energie(Niveau):
+    for x in range(len(Niveau)):
+        for y in range(len(Niveau[x])):
+            if Niveau[x][y] == ENERGIE:
+                Niveau[x][y] = VIDE
+
+def getXYValue(R: str):
+    if ord(R[0]) - 97 < 0:
+        y_value = int(ord(R[0]) - 65)
+    else: 
+        y_value = int(ord(R[0]) - 97)
+    x_value = int(R[1]) - 1 # Premier index à 1 et pas 0
+    return x_value, y_value
+
+def value_OK(R: str, Lettre_OK: list, Num_OK: list):
+
+    if len(R) == 2:
+        if R[0] in Lettre_OK and R[1] in Num_OK:
+            return True
+    return False
+
+def afficher_niveau(Niveau: list):
+    ch = "   "
+    if len(Niveau) >= 10:
+        ch += " "
+    for i in range(len(Niveau)):
+        ch += f"{chr(97 + i)}  "
+    print(ch)
+    
+    for i in range(len(Niveau)):
+        if len(Niveau) >= 10 and i < 9:
+            space = " "
+        else: 
+            space = ""
+        ligne = Niveau[i]
+        print(f"{i+1}{space}| ", end="")
+        for ch in ligne[:-1]:
+            print(ch, end="  ")
+        print(ligne[-1])
+    print("\n")
+
+def quitOrRestart(R):
+    if R in ("q", "Q"):
+        print("Merci d'avoir joué ! À bientôt.")
+        exit()
+    elif R in ("r", "R"):
+        print("Redémarrage du niveau...")
+        return True
+
+def copy_level(Niveau):
+    new_Niveau = []
+    for x in range(len(Niveau)):
+        new_ligne = []
+        for y in range(len(Niveau[x])):
+            new_ligne += [Niveau[x][y]]
+        new_Niveau += [new_ligne]
+    return new_Niveau
+
+def play_level(Niveau):
+    init_Niveau = copy_level(Niveau)
+    values_OK =  init_value_OK(Niveau)
+    Lettre_OK, Num_OK = values_OK[0], values_OK[1]
+
+    levelIsDone = False 
+    Niveau_points_arrivee = get_Niveau_points_arrivee(Niveau)
+    while not(levelIsDone):
+        afficher_niveau(Niveau)
+        R = input("Placez un cube d'énergie : ")
+        if quitOrRestart(R): 
+            play_level(init_Niveau)
+            return
+        if value_OK(R, Lettre_OK, Num_OK):
+            placer_energie(R, Niveau)
+            update_niveau(Niveau, Niveau_points_arrivee)
+            levelIsDone = getIsLevelEnded(Niveau, Niveau_points_arrivee)
+        else: 
+            print("Valeur incorrecte !")
+    afficher_niveau(Niveau)
+
+def Enigme2():
+    
+    # Le niveau doit être un carré
+    # Niveau 1
+    Niveau1 = [
+               [VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, PISTON_DROITE, BLOCK, POINT_ARRIVEE, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, PISTON_DROITE, BLOCK, POINT_ARRIVEE, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE],
+               ]
+    ecrire("""
+Vous entrez dans une pièce circulaire où se trouve une stèle au centre. En vous approchant, un hologramme apparaît devant vous.
+Bienvenue dans l'énigme 2 ! Placez de l'énergie pour activer les pistons faites glisser les blocs jusqu'au(x) point(s) d'arrivée(s).
+Piston = 🠖   Piston collant = ⇢   Energie = 🗲   Bloc = ◼
+Bonne chance !
+----------------------------------------------
+NIVEAU 1 : Placer un cube d'énergie autour du piston
+Vous ne pouvez placer qu'un seul cube d'énergie à la fois.
+
+""")
+    print("\nBienvenue dans l'énigme 2 ! Placez de l'énergie pour activer les pistons faites glisser les blocs jusqu'au(x) point(s) d'arrivée(s).")
+    print("Piston = 🠖   Piston collant = ⇢   Energie = 🗲   Bloc = ◼ \nBonne chance !")
+    print("----------------------------------------------")
+    print("NIVEAU 1 : Placer un cube d'énergie autour du piston")
+    print("Vous ne pouvez placer qu'un seul cube d'énergie à la fois.\n") 
+    play_level(Niveau1)
+    ecrire("""
+Félicitations ! Vous avez terminé le niveau 1""")
+
+    Niveau2 = [
+               [VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, PISTON_COLLANT_DROITE, POINT_ARRIVEE, BLOCK, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE,  PISTON_COLLANT_DROITE, POINT_ARRIVEE, BLOCK, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE],
+               ]
+
+    ecrire("""
+----------------------------------------------
+NIVEAU 2 : Utiliser un piston collant pour déplacer un bloc""")
+    play_level(Niveau2)
+    ecrire("""
+Félicitations ! Vous avez terminé le niveau 2
+----------------------------------------------
+    
+NIVEAU 3 : Combiner pistons normaux et collants, vous pouvez déclencher plusieurs pistons en même temps en plaçant un cube d'énergie entre eux.
+
+""")
+    Niveau3 = [
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, POINT_ARRIVEE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, BLOCK, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, PISTON_HAUT, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, VIDE, PISTON_COLLANT_DROITE, POINT_ARRIVEE, BLOCK, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               ]
+    play_level(Niveau3)
+    ecrire("""
+Félicitations ! Vous avez terminé le niveau 3
+-----------------------------------------------
+           
+Niveau 4 : Double piston extender
+""")
+    Niveau4 = [
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE,  PISTON_DROITE, PISTON_DROITE, BLOCK, VIDE, POINT_ARRIVEE, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               ]
+    play_level(Niveau4)
+    ecrire("""
+Félicitations ! Vous avez terminé le niveau 4
+------------------------------------------------
+Niveau 5 : Prendre l'habitude
+""")
+    Niveau5 = [
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, VIDE, PISTON_BAS, VIDE, VIDE, VIDE],
+               [VIDE,  PISTON_DROITE, BLOCK, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, VIDE, POINT_ARRIVEE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               ]
+    play_level(Niveau5)
+    ecrire("""
+Félicitations ! Vous avez terminé le niveau 5
+------------------------------------------------
+Niveau 6 : Combinaison avancée de pistons normaux et collants
+""")
+    Niveau6 = [
+               [VIDE, PISTON_BAS, VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, PISTON_DROITE, BLOCK, BLOCK, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, PISTON_COLLANT_HAUT, PISTON_COLLANT_HAUT, VIDE, VIDE, VIDE],
+               [VIDE, PISTON_DROITE, PISTON_COLLANT_HAUT, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               ]
+    Niveau6[2][4] = POINT_ARRIVEE
+    play_level(Niveau6)
+    ecrire("""
+Félicitations ! Vous avez terminé le niveau 6
+------------------------------------------------
+Niveau Final : Bonne chance !
+""")
+    Niveau_Final = [
+        [VIDE, VIDE, VIDE, VIDE, PISTON_BAS, VIDE, VIDE],
+        [PISTON_HAUT, VIDE, PISTON_DROITE, BLOCK, VIDE, VIDE, VIDE],
+        [VIDE, PISTON_COLLANT_BAS, VIDE, PISTON_COLLANT_DROITE, VIDE, PISTON_COLLANT_BAS, VIDE],
+        [VIDE, POINT_ARRIVEE, VIDE, VIDE, VIDE, POINT_ARRIVEE, VIDE],
+        [VIDE, BLOCK, PISTON_DROITE, PISTON_COLLANT_DROITE, VIDE, VIDE, POINT_ARRIVEE],
+        [VIDE, VIDE, VIDE, VIDE, PISTON_COLLANT_HAUT, BLOCK, VIDE],
+        [VIDE, VIDE, VIDE, VIDE, PISTON_COLLANT_HAUT, PISTON_HAUT, VIDE],
+    ]
+    play_level(Niveau_Final)
+    ecrire("""
+Félicitations ! Vous avez terminé l'énigme 2 !""")
+    Sherma["Emplacement"] = "CaverneCloches"
 
 def CaverneCloches():
     BeteDesCloches = {
@@ -1347,8 +1826,8 @@ def script(salle: str):
         case "Pierres" : Pierres()
         case "Exterieur" : Exterieur()
         case "GouffreDOs" : GouffreDOs()
-        case "Enigme1": pass
-        case "Enigme2": pass
+        case "Enigme1": Enigme1()
+        case "Enigme2": Enigme2()
         case "Enigme3": pass
         # case "EnigmeTuringMachine: pass"
         case "CaverneCloches" : CaverneCloches()
