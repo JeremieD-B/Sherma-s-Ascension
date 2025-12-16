@@ -1,6 +1,7 @@
 ## Sherma's Ascension 
 
 Sherma's Ascension est un jeu où le personnage principal **Sherma** doit atteindre une citadelle en hauteur. C'est un jeu textuel.
+**État** : v1 du projet finalisé
 
 To do list :
 
@@ -18,12 +19,10 @@ DONE- Implémenter les évènements de toutes nos salles déjà existantes dans 
 
 ------------------
 
-75% - Salle village gouffre d'os
+DONE - Salle village gouffre d'os
 
 DONE - Salle Énigme 1 => Salle Énigme 2 (si toutes enigmes faites => Salle Carvene des cloches)
 
-0% - Salle Énigme 2 => Salle Énigme 1 ou Salle Énigme 3
-
-0% - Salle Énigme 3 => Salle Énigme 1 ou Gouffre d'Os
+DONE - Salle Énigme 2 => Salle Énigme 1 ou Salle Énigme 3
 
 DONE - Caverne des cloches (boss)
