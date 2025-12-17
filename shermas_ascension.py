@@ -5,7 +5,7 @@
 # Diagramme activité ligne 1932 : Caverne des Cloches 
 # Lignes ~1400 - ~2100 = Fonctions de salle 
 # Dernière ligne : exécution du jeu
-# Pour les test ne pas hésiter à activer la fonction triche
+# Pour les test ne pas hésiter à activer la fonction triche (ligne commenté dans la fonction jouer à la fin du programme)
 
 
 ##### Imports
