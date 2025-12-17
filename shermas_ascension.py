@@ -951,7 +951,7 @@ def question(text : str,rep : tuple, timer = False) -> str:
         elif Renvoi[0] in Sherma["Inv"]["Objets"]:
             utiliser_objet(Renvoi[0])
         elif Renvoi[0] == "Suicide":
-            perdre_pv(Sherma["Stats"]["PV"], Sherma["Stats"]["PV"])
+            perdre_pv(Sherma["PV"], Sherma["PV"])
         if tour == 0 :
             ecrire(text)
         else : 
@@ -2121,5 +2121,6 @@ def jouer():
 ###### JEU
 
 jouer()
+
 
 
