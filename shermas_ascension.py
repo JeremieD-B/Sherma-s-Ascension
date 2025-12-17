@@ -15,14 +15,14 @@ from time import sleep, time # Fait une pause du programme pendant un temps donn
 
 #### Constantes de jeu 
 
-triche = False 
+want_triche = False 
 
-if triche : 
+if want_triche : 
     vitesse_texte = 0
     vitesse_pause = 0
 else :
-    vitesse_texte = 0.015 vitesse normale
-    vitesse_pause = 0.15 vitesse normale
+    vitesse_texte = 0.015 # vitesse normale
+    vitesse_pause = 0.15 # vitesse normale
 
 ### Constantes de description de salles
 
@@ -2108,7 +2108,7 @@ def jouer():
     """
     Sherma["a_finit"] = False
 
-    if triche : 
+    if want_triche : 
         triche() # Décommenter cette ligne pour activer le mode triche
     while not(Sherma["a_finit"]):
         script(Sherma["Emplacement"])
@@ -2121,6 +2121,3 @@ def jouer():
 ###### JEU
 
 jouer()
-
-
-
