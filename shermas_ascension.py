@@ -1290,11 +1290,12 @@ def PISTON_HAUT_expansion(Niveau, x, y):
     for i in range(0, len(Niveau)):
         save += [Niveau[i][y]]
     i = x - 1
-    while save[i] != VIDE and i > 0:
+    run = True
+    while save[i] != VIDE and i > 0 and run:
         if save[i] != POINT_ARRIVEE:
             Niveau[i - 1][y] = save[i]
         else:
-            break
+            run = False
         i -= 1 
     if Case == PISTON_COLLANT_HAUT:
         Niveau[x-1][y] = PISTON_COLLANT_HAUT_ETIREE
@@ -1307,11 +1308,12 @@ def PISTON_BAS_expansion(Niveau, x, y):
     for i in range(0, len(Niveau)): 
         save += [Niveau[i][y]]
     i = x + 1 
-    while save[i] != VIDE and i < len(Niveau) - 1:
+    run = True
+    while save[i] != VIDE and i < len(Niveau) - 1 and run:
         if save[i] != POINT_ARRIVEE:
             Niveau[i + 1][y] = save[i] 
         else:
-            break
+            run = False
         i += 1 
     if Case == PISTON_COLLANT_BAS:
         Niveau[x + 1][y] = PISTON_COLLANT_BAS_ETIREE
@@ -1324,11 +1326,12 @@ def PISTON_GAUCHE_expansion(Niveau, x, y):
     for j in range(0, len(Niveau[x])):
         save += [Niveau[x][j]]
     j = y - 1
-    while save[j] != VIDE and j > 0:
+    run = True
+    while save[j] != VIDE and j > 0 and run:
         if save[j] != POINT_ARRIVEE:
             Niveau[x][j - 1] = save[j]
         else:
-            break
+            run = False
         j -= 1 
     if Case == PISTON_COLLANT_GAUCHE:
         Niveau[x][y - 1] = PISTON_COLLANT_GAUCHE_ETIREE
@@ -1341,11 +1344,12 @@ def PISTON_DROITE_expansion(Niveau, x, y):
     for j in range(0, len(Niveau[x])): 
         save += [Niveau[x][j]]
     j = y + 1 
-    while save[j] != VIDE and j < len(Niveau) - 1:
+    run = True
+    while save[j] != VIDE and j < len(Niveau) - 1 and run:
         if save[j] != POINT_ARRIVEE:    
             Niveau[x][j + 1] = save[j]
         else:
-            break
+            run = False
         j += 1
     if Case == PISTON_COLLANT_DROITE:
         Niveau[x][y + 1] = PISTON_COLLANT_DROITE_ETIREE
@@ -1606,13 +1610,14 @@ def Sentier():
 def Sentier1():
     ecrire(TSentierQEvent3_1)
     i = 0
-    while i < 100:
+    run = True
+    while i < 100 and run:
         sleep(1)
         i += randint(10, 30)
         if i >= 100:
             print("..... 100%")
             Sherma["lacets_faits"] = True
-            break
+            run = False
         else: 
             print(f"..... {i}%")
 
@@ -1653,12 +1658,13 @@ def Caverne1_2():
 Vous descendez prudemment jusqu'à atteindre votre chaussure.
 """)
     i = 0
-    while i < 100:
+    run = True
+    while i < 100 and run:
         sleep(1)
         i += randint(10, 30)
         if i >= 100:
             print(f"..... 100%")
-            break
+            run = False
         else: 
             print(f"..... {i}%")
     ecrire(TCaverneQEvent3_2)
