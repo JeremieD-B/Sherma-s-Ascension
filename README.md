@@ -28,4 +28,4 @@ DONE - Salle Énigme 2 => Salle Énigme 1 ou Salle Énigme 3
 
 DONE - Caverne des cloches (boss)
 
-ajouter une modification de la vitesse d'écriture dans la fonction triche
+Modifier la triche
