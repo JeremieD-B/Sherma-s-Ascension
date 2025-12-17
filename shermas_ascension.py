@@ -2,6 +2,7 @@
 # Lignes   ~10 - ~900  = Déclaration de constantes de textes et initialisation des variables  
 # Lignes  ~900 - ~1100 = Fonctions de jeu principal
 # Lignes ~1100 - ~1400 = Fonctions de l'Enigme 2
+# Diagramme activité ligne 1932 : Caverne des Cloches 
 # Lignes ~1400 - ~2100 = Fonctions de salle 
 # Dernière ligne : exécution du jeu
 
@@ -12,8 +13,8 @@ from time import sleep, time # Fait une pause du programme pendant un temps donn
 
 #### Constantes de jeu 
 
-vitesse_texte = 0.01 # 0.025 vitesse normale
-vitesse_pause = 0.05 # 0.35 vitesse normale
+vitesse_texte = 0.015 vitesse normale
+vitesse_pause = 0.15 vitesse normale
 
 ### Constantes de description de salles
 
@@ -204,7 +205,7 @@ Cet arbre là par exemple, ses branches sont toutes courbées, pas une seule par
 Vous venez d'entendre le couloir que vous aviez vu précédemment s'effondrer.
 Cette caverne n'est définitivement pas accueillante.
 """
-
+0.01 # 
 TGrandeAlleeT2 = """
     Après avoir avancer dans cette grande allée, vous faites à un nouvel ennemis.
 Physiquement il ressemble fortement à la chenille croisée auparavant, mais celle-ci vole !
@@ -2111,4 +2112,5 @@ def jouer():
 ###### JEU
 
 jouer()
+
 
