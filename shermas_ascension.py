@@ -871,7 +871,7 @@ Inv = {"Arme": "Baguette de métal",
         "Mélodies" : [],
         "Carapaces" : 0,
         "Objets" : [],
-        "Perles" : 1000}
+        "Perles" : 0}
 
 Stats = {
 "PV": 5,
@@ -1818,6 +1818,7 @@ def Enigme1():
         if R == code:
             ecrire(TEnigme1_code_QEvent_2)
             if "Enigme1" not in Sherma["salle_visitee"]:
+                Sherma["Inv"]["Perles"] += 50
                 Sherma["salle_visitee"].append(Sherma["Emplacement"])
             Sherma["Emplacement"] = "Enigme2"
 
@@ -1919,6 +1920,7 @@ def Enigme2():
 
     R = question(TEnigme2_QEvent, TEnigme2_QEvent_Rep)
     if "Enigme1" not in Sherma["salle_visitee"]:
+            Sherma["Inv"]["Perles"] += 100
             Sherma["salle_visitee"].append(Sherma["Emplacement"])
     if R == "1":
         ecrire(TEnigme2_QEvent_1)
@@ -2109,3 +2111,4 @@ def jouer():
 ###### JEU
 
 jouer()
+
