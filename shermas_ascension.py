@@ -44,6 +44,7 @@ Avant tout, une petite explication sur vos capacités :
 - Vous pouvez consulter votre inventaire en ecrivant 'Inv'.
 - Vous pouvez consulter vos statistiques en ecrivant 'Stats'.
 
+
 Bon jeu !
 """
 
@@ -500,7 +501,7 @@ TGouffreDOsShopQEvent1 = """
 Vous décidez de lire les étiquettes: 
     1. Fragment de carapaces [30 perles]
     2. Épée d'argent cristallisée [140 perles]
-    3. Clé de déchiffrement [70 perles]
+    3. Clé de déchiffrement [20 perles]
     4. Parfum [20 perles]
     5. Orbe de vie [30 perles]
     6. Partir 
@@ -1749,6 +1750,7 @@ Vous êtes persévérant et continuez à combattre.
 
 def GouffreDOs(): 
     ecrire(TGouffreDOsDesc)
+    modif_perles(20)
     if "GouffreDOs" not in Sherma["salle_visitee"]:
         Sherma["salle_visitee"].append(Sherma["Emplacement"])
         ecrire(TGouffreDOsQEvent1_1)
@@ -1786,8 +1788,8 @@ def GouffreDOsShop() -> bool:
         else: 
             ecrire(TGouffreDOsShopQEvent1_PasAssezPerles)
     if R == "3":
-        if PerlesEtInventaireOK(70):
-            Sherma["Inv"]["Perles"] -= 70
+        if PerlesEtInventaireOK(20):
+            Sherma["Inv"]["Perles"] -= 20
             Sherma["Inv"]["Objets"] += ["Clé de déchiffrement"]
             ecrire(TGouffreDOsShopQEvent1_CleDechiffrement)
     if R == "4":
