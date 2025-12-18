@@ -15,7 +15,7 @@ from time import sleep, time # Fait une pause du programme pendant un temps donn
 
 #### Constantes de jeu 
 
-want_triche = False 
+want_triche = True
 
 if want_triche : 
     vitesse_texte = 0
@@ -24,7 +24,7 @@ else :
     vitesse_texte = 0.015 # vitesse normale
     vitesse_pause = 0.15 # vitesse normale
 
-### Constantes de description de salles
+### Constantes de description de salles 
 
 # QEvent = Question event
 # QEventRep = Réponse autorisé du Question event 
@@ -1675,7 +1675,7 @@ Vous descendez prudemment jusqu'à atteindre votre chaussure.
     elif R == "2":
         # Branche 2.1.1.2.2
         ecrire(TCaverneQEvent4_2)
-        R = question(TCaverneQEvent5)
+        R = question(TCaverneQEvent5, TCaverneQEvent5Rep)
         if R == 1:
             ecrire(TCaverneQEvent5_1)
             modif_agi(-1)
