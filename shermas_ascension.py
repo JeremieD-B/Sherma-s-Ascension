@@ -47,20 +47,19 @@ Avec cette nouvelle carapace vous améliorez la vôtre et gagner en Point de vie
 >>> Vos PV Max ont augmenté d'une unité"""
 
 TEntreeDesc = """
-    Le silence est dense. Une brume dorée se dissipe lentement autour de vous. Devant, se dresse une porte scellée, haute et fine, faite d’un métal chantant.
-Chaque souffle de vent fait vibrer sa surface, produisant un écho lointain — comme un souvenir d’hymne oublié.
-Derrière vous, les profondeurs. Devant, la Citadelle Mélodieuse, si haute que ses sommets se perdent dans les nuées. Vous savez qu’il faut atteindre son sommet — mais la voie reste voilée.
-À votre droite, un sentier s’enfonce dans les forêts sombres où se cache derrière un mont juxtaposé à la Citadelle.
-À votre gauche, un escalier de pierre descend vers des cavernes où l’eau résonne comme une harpe. Une lumière turquoise y palpite, irrégulière.
+    Le silence est dense. Une brume dorée se dissipe lentement autour de vous. Devant, se dresse une porte scellée, haute et fine, faite d'un métal chantant.
+Chaque souffle de vent fait vibrer sa surface, produisant un écho lointain — comme un souvenir d'hymne oublié.
+Derrière vous, les profondeurs. Devant, la Citadelle Mélodieuse, si haute que ses sommets se perdent dans les nuées. Vous savez qu'il faut atteindre son sommet — mais la voie reste voilée.
+À votre droite, un sentier s'enfonce dans les forêts sombres où se cache derrière un mont juxtaposé à la Citadelle.
+À votre gauche, un escalier de pierre descend vers des cavernes où l'eau résonne comme une harpe. Une lumière turquoise y palpite, irrégulière.
 """
 TGrandeAlleeDesc = """
 """
 
 TSentierDesc = """
 -----
-
-    Vous tournez à droite. Le sentier se fait étroit, bordé d’arbres aux troncs torsadés, dont les branches s’élancent comme des doigts vers le ciel.
-La lumière s’amenuise à mesure que vous avancez."""
+    Vous tournez à droite. Le sentier se fait étroit, bordé d'arbres aux troncs torsadés, dont les branches s'élancent comme des doigts vers le ciel.
+La lumière s'amenuise à mesure que vous avancez."""
 
 TCaverneDesc = """
 -----
@@ -68,8 +67,8 @@ TCaverneDesc = """
 Afin de monter plus haut, vous devez monter sur les pierres. En revanche, vous apercevez une lueur blanchâtre dans un coin similaire à celui d'une lanterne."""
 
 TPierresDesc = """
-À chaque geste, un son différent s’élève — grave, aigu, bref ou prolongé.
-En vous élevant, vous comprenez que l’éboulis tout entier est un instrument, un assemblage naturel et ancien, accordé au souffle du vent.
+À chaque geste, un son différent s'élève — grave, aigu, bref ou prolongé.
+En vous élevant, vous comprenez que l'éboulis tout entier est un instrument, un assemblage naturel et ancien, accordé au souffle du vent.
 ------
 
 Vous sentez la fatigue dans vos membres, la poussière dans vos poumons, mais aussi un appel : la montagne semble vous éprouver, jauger votre détermination.
@@ -278,12 +277,12 @@ Votre réponse : """
 TSentierQEvent1Rep = ("1", "2")
 
 TSentierQEvent1_1 = """
-    L’air est saturé d’humidité et d’un parfum âcre de mousse et de sève. Sous vos pas, le sol chante à peine — un bruissement discret, presque un murmure.
+    L'air est saturé d'humidité et d'un parfum âcre de mousse et de sève. Sous vos pas, le sol chante à peine — un bruissement discret, presque un murmure.
 Au loin, au-delà de la canopée, se dresse un mont gigantesque, une masse sombre collée contre la Citadelle Mélodieuse. Ses pentes abruptes semblent fusionner avec les fondations mêmes de la tour. 
 À sa base, les arbres se tordent, comme attirés ou repoussés par la musique silencieuse qui émane de la Citadelle.
-Par moments, un son traverse la forêt — une note isolée, pure, qui résonne dans l’air avant de se dissoudre dans le vent. Était-ce un instrument, un oiseau, ou la montagne elle-même qui soupire ?
-\nVous sentez que cette voie mène à quelque chose d’enfoui, peut-être une entrée dissimulée. Les branches s’entrelacent au-dessus de vous, formant une voûte presque organique. 
-L’obscurité devient tangible, épaisse, comme une étoffe que l’on pourrait écarter d’un geste."""
+Par moments, un son traverse la forêt — une note isolée, pure, qui résonne dans l'air avant de se dissoudre dans le vent. Était-ce un instrument, un oiseau, ou la montagne elle-même qui soupire ?
+\nVous sentez que cette voie mène à quelque chose d'enfoui, peut-être une entrée dissimulée. Les branches s'entrelacent au-dessus de vous, formant une voûte presque organique. 
+L'obscurité devient tangible, épaisse, comme une étoffe que l'on pourrait écarter d'un geste."""
 
 TSentierQEvent2 = """
 Puis soudain, un ennemi apparait d'entre les branches, celui-ci est laid et n'aurait peur de rien. Pris de panique, il décide de vous attaquer.
@@ -324,14 +323,14 @@ Votre réponse : """
 TCaverneQEvent1Rep = ("1", "2")
 
 TCaverneQEvent1_1 = """
-    Vous commencez à grimper. Les pierres sont glissantes, couvertes d’un lichen argenté.
-Sous vos doigts, certaines vibrent faiblement, comme si elles gardaient en elles la trace d’un ancien chant.
+    Vous commencez à grimper. Les pierres sont glissantes, couvertes d'un lichen argenté.
+Sous vos doigts, certaines vibrent faiblement, comme si elles gardaient en elles la trace d'un ancien chant.
 
 >>> Vous gagnez 1 d'Agilité.
 
 Puis vient un grondement.
 
-Une note fausse, un craquement, et la montagne semble s’éveiller. Des pierres roulent en contrebas. Le sol se dérobe un instant sous vos pieds.
+Une note fausse, un craquement, et la montagne semble s'éveiller. Des pierres roulent en contrebas. Le sol se dérobe un instant sous vos pieds.
 Votre chaussure est prise dans ces pierres."""
 
 TCaverneEvent2_1 = """
@@ -402,7 +401,7 @@ Vous le combattez et êtes légèrement blessé. Vous repreennez voter ascension
 
 TPierresQEvent1 = """
 Devant vous, deux passages se dessinent dans la paroi :
-    1. À gauche, une fissure étroite d’où s’échappe une lueur rougeâtre et un grondement profond.
+    1. À gauche, une fissure étroite d'où s'échappe une lueur rougeâtre et un grondement profond.
     2. À droite, un passage peu éclairé d'un ton blanc pâle.
 Votre réponse : """
 TPierresQEvent1Rep = ("1", "2")
