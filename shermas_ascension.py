@@ -882,7 +882,6 @@ Inv = {"Arme": "Baguette de métal",
         "Perles" : 0}
 
 Stats = {
-"PV": 5,
 "Pv_Max" : 5,
 "Atk": 0,
 "Agi" : 0,
@@ -891,6 +890,7 @@ Stats = {
 }
 
 Sherma = {
+"PV": 5,
 "Inv" : Inv, 
 "Stats" : Stats,
 "Emplacement" : "Tutoriel",
@@ -2126,3 +2126,4 @@ def jouer():
 ###### JEU
 
 jouer()
+
