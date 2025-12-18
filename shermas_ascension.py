@@ -8,6 +8,11 @@
 # Pour les test ne pas hésiter à activer la triche (booléen par défaut sur False dans les constantes)
 
 
+# Partie A du jeu De "Entrée" jusqu'à "Pierres" et "Grande Allee"
+# Partie B du jeu de "Gouffre d'Os" jusqu'à la "Caverne des Cloches"
+ 
+# Pour l'enigme 2 de la partie B, recommencer 3 fois vous donnera la solution.
+
 ##### Imports
 
 from random import randint # Génère des nombres aléatoires (dans une portée donnée)
@@ -15,7 +20,7 @@ from time import sleep, time # Fait une pause du programme pendant un temps donn
 
 #### Constantes de jeu 
 
-want_triche = True
+want_triche = True  # Mettre sur True pour activer la triche (vitesse de texte et pause à 0)
 
 if want_triche : 
     vitesse_texte = 0
@@ -36,6 +41,9 @@ Bienvenue.
 Avant tout, une petite explication sur vos capacités : 
 - Vous êtes capable faire des choix au fur et à mesure de votre avancée et de prendre les meilleurs décisions tout au long de votre aventure.
 - Vous pouvez quitter à tout moment l'aventure en appuyant sur 'q' ou 'Q'.
+- Vous pouvez consulter votre inventaire en ecrivant 'Inv'.
+- Vous pouvez consulter vos statistiques en ecrivant 'Stats'.
+
 Bon jeu !
 """
 
@@ -47,6 +55,7 @@ Avec cette nouvelle carapace vous améliorez la vôtre et gagner en Point de vie
 >>> Vos PV Max ont augmenté d'une unité"""
 
 TEntreeDesc = """
+-----
     Le silence est dense. Une brume dorée se dissipe lentement autour de vous. Devant, se dresse une porte scellée, haute et fine, faite d'un métal chantant.
 Chaque souffle de vent fait vibrer sa surface, produisant un écho lointain — comme un souvenir d'hymne oublié.
 Derrière vous, les profondeurs. Devant, la Citadelle Mélodieuse, si haute que ses sommets se perdent dans les nuées. Vous savez qu'il faut atteindre son sommet — mais la voie reste voilée.
@@ -212,7 +221,7 @@ Cet arbre là par exemple, ses branches sont toutes courbées, pas une seule par
 Vous venez d'entendre le couloir que vous aviez vu précédemment s'effondrer.
 Cette caverne n'est définitivement pas accueillante.
 """
-0.01 # 
+
 TGrandeAlleeT2 = """
     Après avoir avancer dans cette grande allée, vous faites à un nouvel ennemis.
 Physiquement il ressemble fortement à la chenille croisée auparavant, mais celle-ci vole !
@@ -281,7 +290,8 @@ TSentierQEvent1_1 = """
 Au loin, au-delà de la canopée, se dresse un mont gigantesque, une masse sombre collée contre la Citadelle Mélodieuse. Ses pentes abruptes semblent fusionner avec les fondations mêmes de la tour. 
 À sa base, les arbres se tordent, comme attirés ou repoussés par la musique silencieuse qui émane de la Citadelle.
 Par moments, un son traverse la forêt — une note isolée, pure, qui résonne dans l'air avant de se dissoudre dans le vent. Était-ce un instrument, un oiseau, ou la montagne elle-même qui soupire ?
-\nVous sentez que cette voie mène à quelque chose d'enfoui, peut-être une entrée dissimulée. Les branches s'entrelacent au-dessus de vous, formant une voûte presque organique. 
+
+Vous sentez que cette voie mène à quelque chose d'enfoui, peut-être une entrée dissimulée. Les branches s'entrelacent au-dessus de vous, formant une voûte presque organique. 
 L'obscurité devient tangible, épaisse, comme une étoffe que l'on pourrait écarter d'un geste."""
 
 TSentierQEvent2 = """
@@ -2092,6 +2102,7 @@ def triche():
     Permet de se téléporter dans n'importe quelle salle du jeu. Utile pour les tests. 
     Celle-ci sera conservée dans la version finale du jeu en tant que "mode triche".
     """
+    modif_perles(1000)
     nbr_salle = []
     nom_salle = []
     i = 0
@@ -2126,4 +2137,3 @@ def jouer():
 ###### JEU
 
 jouer()
-
