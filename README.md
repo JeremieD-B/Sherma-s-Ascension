@@ -6,8 +6,14 @@ Sherma's Ascension est un jeu où le personnage principal **Sherma** doit attein
 
 To do list :
 
-Énigme 2 : 3 essais à énigme avant dire réponse
+Énigme 2 : 5 essais à énigme avant dire réponse
+
+Énigme 2 : Option quitte et sauvegarde du niveau actuel pour permettre de faire autre chose 
+
+Énigme 2 : Expliciter plus de feature
+
 Fonc. Enigme 2 : à commenter
+
 Finir test partie Droite + énigmes
 
 DONE - Écrire les dictionnaires correspondant a chaque salle 100%
