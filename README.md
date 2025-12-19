@@ -34,4 +34,4 @@ DONE - Salle Énigme 2 => Salle Énigme 1 ou Salle Énigme 3
 
 DONE - Caverne des cloches (boss)
 
-Modifier la triche
+DONE - Modifier la triche
