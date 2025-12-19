@@ -530,7 +530,7 @@ TGouffreDOsShopQEvent1_Parfum = """
 
 TGouffreDOsShopQEvent1_OrbeDeVie = """
 >>> Vous obtenez une orbe de vie, celle-ci vous confère la possibilité de vous régénérer quand vous le souhaitez."""
-a = "aa"
+
 TGouffreDOsShopQEvent1_Exit = """
 Vous sortez de la boutique..."""
 
@@ -1623,6 +1623,8 @@ def Tutoriel():
     sleep(1)
     Sherma["Emplacement"] = "Entree"
 
+#-------
+
 def Entree(): 
     # Arriver à la porte
     ecrire(Salles["Entree"]["Desc"])
@@ -2265,4 +2267,3 @@ def jouer():
 ###### JEU
 
 jouer()
-
