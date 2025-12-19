@@ -898,7 +898,7 @@ Alesterm & Colddestructor
 
 ### Stats de base
 
-Inv = {"Arme": "Épée d'argent cristallisée", # Baguette de métal 
+Inv = {"Arme": "Baguette de métal", 
         "Mélodies" : [],
         "Carapaces" : 0,
         "Objets" : [],
@@ -2265,3 +2265,4 @@ def jouer():
 ###### JEU
 
 jouer()
+
