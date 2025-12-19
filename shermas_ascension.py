@@ -1,17 +1,19 @@
 # Sommaire : 
-# Lignes   ~10 - ~900  = Déclaration de constantes de textes et initialisation des variables  
-# Lignes  ~900 - ~1100 = Fonctions de jeu principal
-# Lignes ~1100 - ~1400 = Fonctions de l'Enigme 2
-# Diagramme activité ligne 1932 : Caverne des Cloches 
-# Lignes ~1400 - ~2100 = Fonctions de salle 
+# Lignes   ~20 - ~940  = Déclaration de constantes de textes et initialisation des variables  
+# Lignes  ~940 - ~1160 = Fonctions de jeu principal
+# Lignes ~1160 - ~1600 = Fonctions de l'Enigme 2
+# Lignes ~1600 - ~2200 = Fonctions de salle 
+# Lignes ~2200 - ~2250 = Fonction de jeu (boucle principale)
 # Dernière ligne : exécution du jeu
-# Pour les test ne pas hésiter à activer la triche (booléen par défaut sur False dans les constantes)
 
+# Diagramme activité ligne ~2080 - ~2190 : Caverne des Cloches 
+
+# Pour les tests ne pas hésiter à activer la triche (booléen par défaut sur False ligne 26)
 
 # Partie A du jeu De "Entrée" jusqu'à "Pierres" et "Grande Allee"
 # Partie B du jeu de "Gouffre d'Os" jusqu'à la "Caverne des Cloches"
  
-# Pour l'enigme 2 de la partie B, recommencer 3 fois vous donnera la solution.
+# Pour l'enigme 2 de la partie B, recommencer 5 fois vous donnera la solution.
 
 ##### Imports
 
@@ -20,7 +22,7 @@ from time import sleep, time # Fait une pause du programme pendant un temps donn
 
 #### Constantes de jeu 
 
-want_triche = True  # Mettre sur True pour activer la triche (vitesse de texte et pause à 0)
+want_triche = False  # Mettre sur True pour activer la triche (vitesse de texte et pause à 0 + 1000 perles au début)
 
 if want_triche : 
     vitesse_texte = 0
@@ -32,8 +34,10 @@ else :
 ### Constantes de description de salles 
 
 # QEvent = Question event
-# QEventRep = Réponse autorisé du Question event 
+# QEventRep = Réponses autorisées du Question event 
 # TEvent = Texte event
+
+## Textes Partie A (Jusqu'à Pierres / Grande Allée)
 
 TIntro = """
 Bienvenue.
@@ -111,7 +115,7 @@ TGrotteHumideTEvent1_1 = """
 Après avoir sursauté en recevant la pierre sur son dos, l'insecte se mets à trembler
 Après quelque seconde d'étranges pics aussi longs qu'un bras sortent tout d'un coup de tout son corps
 Vous avez bien fait de ne pas vous approcher
-Vous pouvez donc continuer votre avancée en contournant cet ennemis
+Vous pouvez donc continuer votre avancée en contournant cet ennemi.
 """
 TGrotteHumideTEvent1_2 = """
     Lorsque que vous vous approchez de cet étrange insecte,
@@ -186,7 +190,7 @@ Votre réponse :"""
 TGrandeAlleeQEvent1Rep = ("1","2")
 
 TGrandeAlleeTEvent1_1 = """
------
+
     En entrant dans ce couloir, la visibilitée est très faible. 
 Vous voyez des gouttes perler du plafonds, la pièce est très humide 
 Alors que vous continuiez votre avancée, vouss entendez l'entrée de ce couloir s'effondrer 
@@ -360,8 +364,7 @@ TCaverneQEvent3Rep = ("1", "2", "3")
 
 TCaverneQEvent3_1 = """
 Vous décidez de continuer votre ascension vertigineuse qui ne semble plus en finir.
-
->>> Vous perdez 1 PV."""
+"""
 
 TCaverneQEvent3_2 = """
 Vous êtes en bas, vous remettez votre chaussure. La lumière entre aperçu plus tôt a disparu.
@@ -448,12 +451,11 @@ TExterieurQEvent2Rep = ("1", "2")
 
 TExterieurQEvent2_1 = """"
 Vous êtes sur de vous et attaquez les monstres.
->>> Vous perdez 1 point de vie."""
+"""
 
 TExterieurQEvent2_2 = """
 Vous vous fatiguez et tombez le long des pierres qui vous tenait jusque là en position.
-
->>> Vous perdez 1 point de vie."""
+"""
 
 TExterieurQEvent3 = """
 Vous vous faites remarquer et les monstres vous attaque tous ensemble.
@@ -474,7 +476,9 @@ Vous fuyez mais glissez sur une pierre, les monstres vous rattrape.
 
 
 TGouffreDOsDesc = """
-Vous arrivez devant un gouffre où vous observez un petit village caché et oublié.
+-----
+
+    Vous arrivez devant un gouffre où vous observez un petit village caché et oublié.
 Vous décidez d'atteindre ce village. 
 """
 
@@ -502,7 +506,7 @@ Vous décidez de lire les étiquettes:
     1. Fragment de carapaces [30 perles]
     2. Épée d'argent cristallisée [140 perles]
     3. Clé de déchiffrement [20 perles]
-    4. Parfum [20 perles]
+    4. Parfum [10 perles]
     5. Orbe de vie [30 perles]
     6. Partir 
 Votre réponse : """
@@ -564,6 +568,7 @@ T_UseOrbeDeVie_NoEffect = """
 >>> L'orbe n'a pas eu d'effet sur vous."""
 
 TEnigme1_Desc = """
+-----
 Vous arrivez face à une stèle sur laquelle est présente le code suivant 0183 - 7162 - 9273 - 0124 - 0013 - 0128
 Vous trouvez un parchemin au pied de cette stèle. Vous observez un encadré et supposé qu'il faut résoudre une énigme à partir de se fameux code. 
 Ce code doit être uniquement connu des résidents du coin ou des personnes les plus braves."""
@@ -650,10 +655,16 @@ PISTON_BLOCK_HORIZONTAL = "═"
 PISTON_BLOCK_VERTICAL = "║"
 
 TEnigme2_Desc = """
+-----
 Vous entrez dans une pièce circulaire où se trouve une stèle au centre. En vous approchant, un hologramme apparaît devant vous.
-Bienvenue dans l'énigme 2 ! Placez de l'énergie pour activer les pistons faites glisser les blocs jusqu'au(x) point(s) d'arrivée(s).
+Un mur se ferme derrière vous vous obligeant à finir l'énigme. Vous decidez donc de vous concentrer pour achever votre mission. 
+Bienvenue dans l'Énigme 2 ! Placez de l'énergie pour activer les pistons faites glisser les blocs jusqu'au(x) point(s) d'arrivée(s).
 Piston = 🠖   Piston collant = ⇢   Energie = 🗲   Bloc = ◼
-Bonne chance ! (Pour placer les blocs d'énergie, entrez les coordonnées de la case Ex: A1, b2 etc...)"""
+Pour recommencer un niveau, appuyer sur r ou R.
+Pour placer les blocs d'énergie, entrez les coordonnées de la case Ex: A1, b2 etc...
+Rappel : Pour quitter le jeu EN ENTIER, indiquez q ou Q.
+Bonne chance ! 
+"""
 
 TEnigme2_Skip = """
 Vous êtes de retour dans la salle des énigmes à pistons. 
@@ -751,6 +762,7 @@ Vous décidez de repartir sur vos pas et de repartir dans la salle de l'Énigme 
 """
 
 TCaverneClocheDesc = """
+-----
 Vous entrez dans une caverne qui pourrait être une symphonie silencieuse de métal. 
 Des cloches de toutes formes et tailles ornent les murs, créant un labyrinthe obscur. 
 La lumière filtre à travers les fissures, révélant des ombres dansantes et une atmosphère mystérieuse.
@@ -886,7 +898,7 @@ Alesterm & Colddestructor
 
 ### Stats de base
 
-Inv = {"Arme": "Baguette de métal", 
+Inv = {"Arme": "Épée d'argent cristallisée", # Baguette de métal 
         "Mélodies" : [],
         "Carapaces" : 0,
         "Objets" : [],
@@ -1014,10 +1026,10 @@ def afficher_inv():
     """
     TStats = f"""
 ----------
+Vous tenez dans vos mains : {Sherma["Inv"]["Arme"]}.
+
 Vous avez {Sherma["PV"]}/{Sherma["Stats"]["Pv_Max"]} PV.
-
 Vous possédez {Sherma["Inv"]["Carapaces"]} Fragments de Carapaces.
-
 Vous possédez {Sherma["Inv"]["Perles"]} Perles.
 
 Objets : {Sherma["Inv"]["Objets"]}
@@ -1027,14 +1039,14 @@ Objets : {Sherma["Inv"]["Objets"]}
 
 def modif_agi(modif : int):
     """
-    Modifie l'agilité de Sherma
+    Modifie l'agilité de Sherma, ajoute modif à l'agilité actuelle
     """
     if Sherma["Stats"]["Agi"] + modif > 0 :
         Sherma["Stats"]["Agi"] += modif
 
 def modif_perles(modif: int):
     """
-    Modifie les perles de Sherma
+    Modifie les perles de Sherma, ajoute modif aux perles actuelles
     """
     Sherma["Inv"]["Perles"] += modif
     ecrire(f"\n>>> Vous gagnez {modif} perles.\n")
@@ -1099,10 +1111,10 @@ Votre réponse : """, ("1", "2"))
             if Sherma["Checkpoint"] == "Tutoriel":
                 Sherma["PV"] = 5
                 Inv = {"Arme": "Baguette de métal", 
-            "Mélodies" : [],
-            "Carapaces" : 0,
-            "Objets" : [],
-            "Perles" : 0
+                "Mélodies" : [],
+                "Carapaces" : 0,
+                "Objets" : [],
+                "Perles" : 0
                 }
 
                 Stats = {
@@ -1126,6 +1138,9 @@ Votre réponse : """, ("1", "2"))
         quit()
 
 def utiliser_objet(objet):
+    """
+    Permet d'utiliser l'objet voulu par l'utilisateur et gère l'action associée
+    """
     if objet == "Parfum":
         rand = randint(1, 10)
         if rand == 1: ecrire(T_UseParfum_Pique)
@@ -1139,17 +1154,22 @@ def utiliser_objet(objet):
         ecrire(T_UseOrbeDeVie)
         rand = randint(1, 100)
         if rand == 1: 
-            perdre_pv(Sherma["Stats"]["PV"], 2)
+            perdre_pv(Sherma["PV"], 2)
         elif 1 < rand <= 25:
             ecrire(T_UseOrbeDeVie_NoEffect)
         else:
-            gagner_pv(Sherma["Stats"]["PV"], 1)
+            gagner_pv(Sherma["PV"], 1)
     ecrire(f"\n>>> Vous venez de consommer {objet}.\n")
     Sherma["Inv"]["Objets"].remove(objet)
 
 ###### FONCTION DE L'ENIGME 2
 
 def get_Niveau_points_arrivee(Niveau):
+    """
+    Récupère les coordonnées de toutes les cases correspondant aux points d'arrivée.
+    list[tuple[int, int]]
+        Liste des coordonnées (x, y) des points d'arrivée.
+    """
     Niveau_points_arrivee = []
     for x in range(len(Niveau)):
         for y in range(len(Niveau[x])):
@@ -1158,6 +1178,13 @@ def get_Niveau_points_arrivee(Niveau):
     return Niveau_points_arrivee
 
 def update_niveau(Niveau, Niveau_points_arrivee):
+    """
+    Met à jour l'état du niveau.
+
+    - Restaure les points d'arrivée supprimés temporairement.
+    - Supprime les points d'arrivée déplacés.
+    - Gère l'expansion ou la rétraction des pistons en fonction de leur alimentation.
+    """
     Pistons = {PISTON_HAUT,
         PISTON_GAUCHE,
         PISTON_BAS, 
@@ -1188,6 +1215,14 @@ def update_niveau(Niveau, Niveau_points_arrivee):
                 piston_retraction(Niveau, x, y)
 
 def getIsLevelEnded(Niveau, Niveau_points_arrivee):
+    """
+    Vérifie si le niveau est terminé.
+
+    Le niveau est considéré comme terminé si toutes les cases correspondant
+    aux points d'arrivée sont occupées par des blocs.
+
+    Renvoie True si le niveau est terminé, False sinon.
+    """
     # Le niveau est terminé si toutes les cases autour du point d'arrivée sont des blocs
     for coords in Niveau_points_arrivee:
         if Niveau[coords[0]][coords[1]] != BLOCK:
@@ -1195,6 +1230,12 @@ def getIsLevelEnded(Niveau, Niveau_points_arrivee):
     return True  
 
 def piston_retraction(Niveau, x, y):
+    """
+    Gère la rétraction d'un piston (horizontal ou vertical).
+
+    Identifie le type de piston étiré adjacent et appelle la fonction
+    de rétraction correspondante.
+    """
     Case = Niveau[x][y]
     if Case == PISTON_BLOCK_HORIZONTAL:
         if y >= 1 and Niveau[x][y - 1] in {PISTON_GAUCHE_ETIREE, PISTON_COLLANT_GAUCHE_ETIREE}:
@@ -1208,6 +1249,10 @@ def piston_retraction(Niveau, x, y):
             PISTON_BAS_retraction(Niveau, x, y)
 
 def PISTON_HAUT_retraction(Niveau, x, y):
+    """
+    Rétracte un piston orienté vers le haut.
+    Replace le piston à son état initial et repositionne les blocs déplacés.
+    """
     before = None
     before2 = None
     if Niveau[x - 1][y] == PISTON_COLLANT_HAUT_ETIREE:
@@ -1226,6 +1271,10 @@ def PISTON_HAUT_retraction(Niveau, x, y):
     if x >= 2:
         Niveau[x - 2][y] = before2
 def PISTON_BAS_retraction(Niveau, x, y):
+    """
+    Rétracte un piston orienté vers le bas.
+    Replace le piston à son état initial et repositionne les blocs déplacés.
+    """
     before = None
     before2 = None
     if Niveau[x + 1][y] == PISTON_COLLANT_BAS_ETIREE:
@@ -1244,6 +1293,10 @@ def PISTON_BAS_retraction(Niveau, x, y):
     if x <= len(Niveau) - 3:
         Niveau[x + 2][y] = before2
 def PISTON_GAUCHE_retraction(Niveau, x, y):
+    """
+    Rétracte un piston orienté vers le gauche.
+    Replace le piston à son état initial et repositionne les blocs déplacés.
+    """
     before = VIDE
     before2 = VIDE
     if Niveau[x][y - 1] == PISTON_COLLANT_GAUCHE_ETIREE:
@@ -1262,6 +1315,10 @@ def PISTON_GAUCHE_retraction(Niveau, x, y):
     if y >= 2:
         Niveau[x][y - 2] = before2
 def PISTON_DROITE_retraction(Niveau, x, y):
+    """
+    Rétracte un piston orienté vers le droite.
+    Replace le piston à son état initial et repositionne les blocs déplacés.
+    """
     before = VIDE
     before2 = VIDE
     if Niveau[x][y + 1] == PISTON_COLLANT_DROITE_ETIREE:
@@ -1283,6 +1340,11 @@ def PISTON_DROITE_retraction(Niveau, x, y):
         Niveau[x][y + 2] = before2
 
 def piston_expansion(Niveau, x, y):
+    """
+    Gère l'expansion d'un piston selon son orientation.
+
+    Appelle la fonction d'expansion appropriée si l'espace le permet.
+    """
     Case = Niveau[x][y]
     if (Case == PISTON_HAUT or Case == PISTON_COLLANT_HAUT) and x >= 1:
         PISTON_HAUT_expansion(Niveau, x, y)
@@ -1294,6 +1356,10 @@ def piston_expansion(Niveau, x, y):
         PISTON_DROITE_expansion(Niveau, x, y)
 
 def PISTON_HAUT_expansion(Niveau, x, y):
+    """
+    Étend un piston vers le haut.
+    Déplace les blocs dans l'aligment du piston et place le piston en mode étiré.
+    """
     Case = Niveau[x][y]
     Niveau[x][y] = PISTON_BLOCK_VERTICAL
     save = []
@@ -1312,6 +1378,10 @@ def PISTON_HAUT_expansion(Niveau, x, y):
     else:
         Niveau[x-1][y] = PISTON_HAUT_ETIREE
 def PISTON_BAS_expansion(Niveau, x, y):
+    """
+    Étend un piston vers le bas.
+    Déplace les blocs dans l'aligment du piston et place le piston en mode étiré.
+    """
     Case = Niveau[x][y]
     Niveau[x][y] = PISTON_BLOCK_VERTICAL
     save = []
@@ -1330,6 +1400,10 @@ def PISTON_BAS_expansion(Niveau, x, y):
     else:
         Niveau[x + 1][y] = PISTON_BAS_ETIREE
 def PISTON_GAUCHE_expansion(Niveau, x, y):
+    """
+    Étend un piston vers le gauche.
+    Déplace les blocs dans l'aligment du piston et place le piston en mode étiré.
+    """
     Case = Niveau[x][y]
     Niveau[x][y] = PISTON_BLOCK_HORIZONTAL
     save = []
@@ -1348,6 +1422,10 @@ def PISTON_GAUCHE_expansion(Niveau, x, y):
     else:
         Niveau[x][y - 1] = PISTON_GAUCHE_ETIREE
 def PISTON_DROITE_expansion(Niveau, x, y):
+    """
+    Étend un piston vers le droite.
+    Déplace les blocs dans l'aligment du piston et place le piston en mode étiré.
+    """
     Case = Niveau[x][y]
     Niveau[x][y] = PISTON_BLOCK_HORIZONTAL
     save = []
@@ -1367,6 +1445,10 @@ def PISTON_DROITE_expansion(Niveau, x, y):
         Niveau[x][y + 1] = PISTON_DROITE_ETIREE
 
 def isPistonPowered(x, y, Niveau):
+    """
+    Détermine si un piston est alimenté par un cube d'énergie adjacent.
+    Renvoie True si le piston est alimenté, False sinon.
+    """
     isPowered = False
     if x >= 1:
         if Niveau[x-1][y] == ENERGIE:
@@ -1385,6 +1467,11 @@ def isPistonPowered(x, y, Niveau):
     return isPowered
 
 def init_value_OK(Niveau):
+    """
+    Initialise les valeurs valides pour la saisie utilisateur.
+    Génère les lettres (minuscules et majuscules) et numéros correspondant
+    aux coordonnées du niveau.
+    """
     Lettre_OK = []; Num_OK = []
     for i in range(len(Niveau)):
         Lettre_OK += [chr(97 + i)] # chr(97) = "A"
@@ -1393,6 +1480,9 @@ def init_value_OK(Niveau):
     return Lettre_OK, Num_OK
 
 def placer_energie(R, Niveau):
+    """
+    Place ou retire un cube d'énergie à la position indiquée par l'utilisateur.
+    """
     XYvalues = getXYValue(R)
     x_value, y_value = XYvalues[0], XYvalues[1]
     Case = Niveau[x_value][y_value]
@@ -1406,12 +1496,19 @@ def placer_energie(R, Niveau):
         Niveau[x_value][y_value] = VIDE
 
 def clear_energie(Niveau):
+    """
+    Supprime tous les cubes d'énergie présents dans le niveau.
+    """
     for x in range(len(Niveau)):
         for y in range(len(Niveau[x])):
             if Niveau[x][y] == ENERGIE:
                 Niveau[x][y] = VIDE
 
 def getXYValue(R: str):
+    """
+    Convertit une entrée utilisateur en coordonnées de grille.
+    Renvoie les coordonnées (x, y) correspondantes dans la grille.
+    """ 
     if ord(R[0]) - 97 < 0:
         y_value = int(ord(R[0]) - 65)
     else: 
@@ -1420,13 +1517,19 @@ def getXYValue(R: str):
     return x_value, y_value
 
 def value_OK(R: str, Lettre_OK: list, Num_OK: list):
-
+    """
+    Vérifie si l'entrée utilisateur est valide.
+    Renvoie True si la valeur est valide, False sinon.
+    """
     if len(R) == 2:
         if R[0] in Lettre_OK and R[1] in Num_OK:
-            return True
+            return True  
     return False
 
 def afficher_niveau(Niveau: list):
+    """
+    Affiche le niveau dans la console avec coordonnées.
+    """
     ch = "   "
     if len(Niveau) >= 10:
         ch += " "
@@ -1447,7 +1550,10 @@ def afficher_niveau(Niveau: list):
     print("\n")
 
 def quitOrRestart(R):
-    if R in ("q", "Q"):
+    """
+    Gère les commandes de sortie ou de redémarrage du niveau.
+    """
+    if R in ("q", "Q"): 
         ecrire("\nMerci d'avoir joué ! À bientôt.")
         quit()
     elif R in ("r", "R"):
@@ -1455,6 +1561,9 @@ def quitOrRestart(R):
         return True
 
 def copy_level(Niveau):
+    """
+    Crée une copie indépendante du niveau.
+    """
     new_Niveau = []
     for x in range(len(Niveau)):
         new_ligne = []
@@ -1463,29 +1572,50 @@ def copy_level(Niveau):
         new_Niveau += [new_ligne]
     return new_Niveau
 
-def play_level(Niveau):
-    init_Niveau = copy_level(Niveau)
+def play_level(index_Niveau, liste_niveaux, numero_essai = 0):
+    """
+    Lance la boucle principale de jeu pour un niveau.
+
+    Gère l'affichage, les entrées utilisateur, l'énergie,
+    la mise à jour des pistons et la condition de victoire.
+    """
+    full_Niveau = liste_niveaux[index_Niveau]
+    ecrire(full_Niveau["T_Debut"])
+    init_Niveau = full_Niveau["niveau"]
+    Niveau = copy_level(init_Niveau)
     values_OK =  init_value_OK(Niveau)
     Lettre_OK, Num_OK = values_OK[0], values_OK[1]
-
     levelIsDone = False 
     Niveau_points_arrivee = get_Niveau_points_arrivee(Niveau)
     while not(levelIsDone):
         afficher_niveau(Niveau)
-        ecrire("\nPlacez un cube d'énergie : ")
+        if numero_essai >= 5:
+            ecrire("Ecrivez 'solution' pour obtenir la solution.\n")
+        ecrire("Placez un cube d'énergie : ")
         R = input()
-        if quitOrRestart(R): 
-            play_level(init_Niveau)
-            return
-        if value_OK(R, Lettre_OK, Num_OK):
+        if numero_essai >= 5 and R == "solution":
+            ecrire(f"\n>>> La solution du niveau {index_Niveau + 1} est : {full_Niveau['solution']}\n")
+        elif quitOrRestart(R): 
+            numero_essai += 1
+            numero_essai = play_level(index_Niveau, liste_niveaux, numero_essai)
+            return numero_essai
+        elif value_OK(R, Lettre_OK, Num_OK):
             placer_energie(R, Niveau)
             update_niveau(Niveau, Niveau_points_arrivee)
             levelIsDone = getIsLevelEnded(Niveau, Niveau_points_arrivee)
         else: 
             ecrire("\nValeur incorrecte !\n")
     afficher_niveau(Niveau)
+    return numero_essai + 1
 
 ###### FONCTION DE SALLE
+
+# Chaque fonction ou groupe de fonction de cette partie est associée à une salle 
+# Ainsi pour ajouter des sallles supplémentaires, il faut :
+#       1. Ajouter la salle dans le dictionnaire des salles
+#       2. Créer une fonction (ou groupe de fonction) associée à cette salle
+#       3. Ajouter la fonction principale de la salle dans la fonction script
+#       (4. Permettre dans les salles déjà existante d'y accéder)
 
 def Tutoriel():
     ## TUTORIEL
@@ -1641,10 +1771,10 @@ def Caverne():
         ecrire(TCaverneQEvent1_1)
         if Sherma["lacets_faits"]:
             ## Branche 2.1.1
+            ecrire(TCaverneEvent2_1)
             Sherma["Emplacement"] = "Pierres"
         else: 
             # Branche 2.1.2
-            ecrire(TCaverneEvent2_1)
             Caverne1()
     elif R == "2":
         # Branche 2.2
@@ -1658,12 +1788,15 @@ def Caverne1():
         ecrire(TCaverneQEvent3_1)
         Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
         Sherma["Emplacement"] = "Pierres"
-        
     elif R == "2":
         # Branche 2.1.1.2
         Caverne1_2()
+    elif R == "3":
+        # Branche 2.1.1.3
+        mourir(TCaverneQEvent3_3)  
 def Caverne1_2():
     # Branche 2.1.1.2
+    # Peu importe les choix du joueur, il finira forcément dans la salle Pierres
     ecrire("""
 Vous descendez prudemment jusqu'à atteindre votre chaussure.
 """)
@@ -1683,25 +1816,23 @@ Vous descendez prudemment jusqu'à atteindre votre chaussure.
         ## Branche 2.1.1.2.1 = Branche 2.1.1
         ecrire(TCaverneQEvent4_1)
         Inv["Objets"] += ["Parchemin : Entre pierres et cordes"]
+        Sherma["Emplacement"] = "Pierres"
     elif R == "2":
-        # Branche 2.1.1.2.2
+        # Branche 2.2.1.2.2
         ecrire(TCaverneQEvent4_2)
         R = question(TCaverneQEvent5, TCaverneQEvent5Rep)
-        if R == 1:
+        if R == "1":
             ecrire(TCaverneQEvent5_1)
             modif_agi(-1)
             Sherma["Emplacement"] = "Pierres"
-        elif R == 2:
+        elif R == "2":
             ecrire(TCaverneQEvent5_2)
             Sherma["PV"] = perdre_pv(Sherma["PV"], 1)
             Sherma["Emplacement"] = "Pierres"
-        elif R == 3: 
+        elif R == "3": 
             Sherma["Emplacement"] = "Pierres"
         ecrire("""
 Vous décidez de reprendre l'ascension.""")
-    elif R == "3":
-        # Branche 2.1.1.2.3
-        mourir(TCaverneQEvent3_3)
 
 def Pierres(): 
     # Branche 2.1.1
@@ -1750,9 +1881,9 @@ Vous êtes persévérant et continuez à combattre.
 
 def GouffreDOs(): 
     ecrire(TGouffreDOsDesc)
-    modif_perles(20)
     if "GouffreDOs" not in Sherma["salle_visitee"]:
         Sherma["salle_visitee"].append(Sherma["Emplacement"])
+        modif_perles(20)
         ecrire(TGouffreDOsQEvent1_1)
         Sherma["Checkpoint"] = Sherma["Emplacement"]
         remplir_pv()
@@ -1793,8 +1924,8 @@ def GouffreDOsShop() -> bool:
             Sherma["Inv"]["Objets"] += ["Clé de déchiffrement"]
             ecrire(TGouffreDOsShopQEvent1_CleDechiffrement)
     if R == "4":
-        if PerlesEtInventaireOK(20):
-            Sherma["Inv"]["Perles"] -= 20
+        if PerlesEtInventaireOK(10):
+            Sherma["Inv"]["Perles"] -= 10
             Sherma["Inv"]["Objets"] += ["Parfum"]
             ecrire(TGouffreDOsShopQEvent1_Parfum)
     if R == "5":
@@ -1849,7 +1980,7 @@ def Enigme1():
             Sherma["Emplacement"] = "Enigme2"
 
 def Enigme2():
-    
+
     if "Enigme2" in Sherma["salle_visitee"]:
         ecrire(TEnigme2_Skip)
         R = question(TEnigme2_Skip_QEvent, TEnigme2_Skip_QEvent_Rep)
@@ -1863,8 +1994,7 @@ def Enigme2():
 
     ecrire(TEnigme2_Desc)
 
-    # Le niveau doit être un carré
-    # Niveau 1
+    # Le niveau doit être une matrice carrée
     Niveau1 = [
                [VIDE, VIDE, VIDE, VIDE, VIDE],
                [VIDE, PISTON_DROITE, BLOCK, POINT_ARRIVEE, VIDE],
@@ -1872,21 +2002,13 @@ def Enigme2():
                [VIDE, PISTON_DROITE, BLOCK, POINT_ARRIVEE, VIDE],
                [VIDE, VIDE, VIDE, VIDE, VIDE],
                ]
-    
-    ecrire(TEnigme2_Niveau1)
-    play_level(Niveau1)
-
     Niveau2 = [
                [VIDE, VIDE, VIDE, VIDE, VIDE],
                [VIDE, PISTON_COLLANT_DROITE, POINT_ARRIVEE, BLOCK, VIDE],
                [VIDE, VIDE, VIDE, VIDE, VIDE],
-               [VIDE,  PISTON_COLLANT_DROITE, POINT_ARRIVEE, BLOCK, VIDE],
+               [VIDE, PISTON_COLLANT_DROITE, POINT_ARRIVEE, BLOCK, VIDE],
                [VIDE, VIDE, VIDE, VIDE, VIDE],
                ]
-
-    ecrire(TEnigme2_Niveau2)
-    play_level(Niveau2)
-    ecrire(TEnigme2_Niveau3)
     Niveau3 = [
                [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
                [VIDE, VIDE, POINT_ARRIVEE, VIDE, VIDE, VIDE, VIDE],
@@ -1896,19 +2018,15 @@ def Enigme2():
                [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
                [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
                ]
-    play_level(Niveau3)
-    ecrire(TEnigme2_Niveau4)
     Niveau4 = [
                [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
                [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
                [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
-               [VIDE,  PISTON_DROITE, PISTON_DROITE, BLOCK, VIDE, POINT_ARRIVEE, VIDE],
+               [VIDE, PISTON_DROITE, PISTON_DROITE, BLOCK, VIDE, POINT_ARRIVEE, VIDE],
                [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
                [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
                [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
                ]
-    play_level(Niveau4)
-    ecrire(TEnigme2_Niveau5)
     Niveau5 = [
                [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
                [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
@@ -1918,20 +2036,15 @@ def Enigme2():
                [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
                [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
                ]
-    play_level(Niveau5)
-    ecrire(TEnigme2_Niveau6)
     Niveau6 = [
                [VIDE, PISTON_BAS, VIDE, VIDE, VIDE, VIDE, VIDE],
                [VIDE, PISTON_DROITE, BLOCK, BLOCK, VIDE, VIDE, VIDE],
-               [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
+               [VIDE, VIDE, VIDE, VIDE, POINT_ARRIVEE, VIDE, VIDE],
                [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
                [VIDE, VIDE, PISTON_COLLANT_HAUT, PISTON_COLLANT_HAUT, VIDE, VIDE, VIDE],
                [VIDE, PISTON_DROITE, PISTON_COLLANT_HAUT, VIDE, VIDE, VIDE, VIDE],
                [VIDE, VIDE, VIDE, VIDE, VIDE, VIDE, VIDE],
                ]
-    Niveau6[2][4] = POINT_ARRIVEE
-    play_level(Niveau6)
-    ecrire(TEnigme2_Niveau_Final)
     Niveau_Final = [
         [VIDE, VIDE, VIDE, VIDE, PISTON_BAS, VIDE, VIDE],
         [PISTON_HAUT, VIDE, PISTON_DROITE, BLOCK, VIDE, VIDE, VIDE],
@@ -1941,11 +2054,29 @@ def Enigme2():
         [VIDE, VIDE, VIDE, VIDE, PISTON_COLLANT_HAUT, BLOCK, VIDE],
         [VIDE, VIDE, VIDE, VIDE, PISTON_COLLANT_HAUT, PISTON_HAUT, VIDE],
     ]
-    play_level(Niveau_Final)
+
+    niveaux = [
+        # On utilise le texte plutôt que le niveau comme clé car une liste ne peut pas être utilisé en clé ...
+        # Il aurait fallu utiliser une classe Niveau avec chaque fonction étant des méthodes du niveau
+        # et les variables dont la grille ou encore le texte est stocké comme self.variable (dans le __init__)
+        # Finalement on ferait une liste de tous les niveaux et utiliserait un for pour les exécuter les uns à la suite des autres
+        # On peut même faire une sous-classe Game qui permet de toutes les gérer mais ce n'est sûrement pas nécessaire ...
+        {"niveau": Niveau1, "T_Debut" : TEnigme2_Niveau1, "solution" : "b3"},
+        {"niveau": Niveau2, "T_Debut" : TEnigme2_Niveau2, "solution" : "b3x2"},
+        {"niveau": Niveau3, "T_Debut" : TEnigme2_Niveau3, "solution" : "c5x2"},
+        {"niveau": Niveau4, "T_Debut" : TEnigme2_Niveau4, "solution" : "b5 d5"},
+        {"niveau": Niveau5, "T_Debut" : TEnigme2_Niveau5, "solution" : "b3 e3"},
+        {"niveau": Niveau6, "T_Debut" : TEnigme2_Niveau6, "solution" : "c7 b4 c7 a1 a6 e6 e4 e6x2 a3"},
+        {"niveau": Niveau_Final, "T_Debut" : TEnigme2_Niveau_Final, "solution" : "b2 f1 d7 f5 d7 g7 d6x2 c6 g3x2"}
+    ]
+
+    for ind_niveau in range(len(niveaux)):
+        play_level(ind_niveau, niveaux)
+
     ecrire(TEnigme2_Fin)
 
     R = question(TEnigme2_QEvent, TEnigme2_QEvent_Rep)
-    if "Enigme1" not in Sherma["salle_visitee"]:
+    if "Enigme2" not in Sherma["salle_visitee"]:
             modif_perles(100)
             Sherma["salle_visitee"].append(Sherma["Emplacement"])
     if R == "1":
@@ -1969,7 +2100,7 @@ def CaverneCloches():
     while BeteDesCloches["PV"] > 0:
         BeteDesCloches["PV"] += BeteDesClochesAtkEnrage(BeteDesCloches["TpsAtk"])
     ecrire(TCaverneClocheVictoire)
-    Sherma["a_finit"] = True
+    Sherma["Emplacement"] = "Fin"
 def BeteDesClochesAtkNormale(TpsAtk):
     Atk = randint(1,3)
     if Atk == 1 :
@@ -2118,7 +2249,7 @@ def triche():
     
     R = question(question_triche, nbr_salle)
     
-    Sherma["Emplacement"] =  nom_salle[int(R)]
+    Sherma["Emplacement"] = nom_salle[int(R)]
 
 def jouer():
     """
@@ -2130,11 +2261,6 @@ def jouer():
         triche() # Décommenter cette ligne pour activer le mode triche
     while not(Sherma["a_finit"]):
         script(Sherma["Emplacement"])
-
-    # Ne s'exécute pas car une salle fin appelle quit() mais force l'arrêt du jeu si nécessaire
-    ecrire("\nFélicitations ! Vous avez terminé le jeu.")
-    input()
-    quit()
 
 ###### JEU
 
