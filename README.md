@@ -2,19 +2,15 @@
 
 Sherma's Ascension est un jeu où le personnage principal **Sherma** doit atteindre une citadelle en hauteur. C'est un jeu textuel.
 
-**État** : v1 du projet finalisé
+**État** : v1.1 du projet finalisé
 
 To do list :
 
-Énigme 2 : 5 essais à énigme avant dire réponse
+DONE - Énigme 2 : 5 essais à énigme avant dire réponse
 
-Énigme 2 : Option quitte et sauvegarde du niveau actuel pour permettre de faire autre chose 
+DONE - Énigme 2 : Expliciter plus de feature
 
-Énigme 2 : Expliciter plus de feature
-
-Fonc. Enigme 2 : à commenter
-
-Finir test partie Droite + énigmes
+DONE - Fonc. Enigme 2 : à commenter
 
 DONE - Écrire les dictionnaires correspondant a chaque salle 100%
 
